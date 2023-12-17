@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfNewToolsFinder }
+Package { #name : 'BaselineOfNewToolsFinder' }
