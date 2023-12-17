@@ -6,12 +6,14 @@ for selectors.
 
 "
 Class {
-	#name : #StFinderSelectorSearch,
-	#superclass : #StFinderSearch,
-	#category : #'NewTools-Finder-Search'
+	#name : 'StFinderSelectorSearch',
+	#superclass : 'StFinderSearch',
+	#category : 'NewTools-Finder-Search',
+	#package : 'NewTools-Finder',
+	#tag : 'Search'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 StFinderSelectorSearch >> buildResult: aListOfMethods [
 
 	| results |
@@ -34,14 +36,14 @@ StFinderSelectorSearch >> buildResult: aListOfMethods [
 	^ results
 ]
 
-{ #category : #information }
+{ #category : 'information' }
 StFinderSelectorSearch >> name [
 	"Returns the name of the search."
 
 	^ 'Selectors'
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 StFinderSelectorSearch >> searchByRegex: aRegex in: anEnvironment [
 	"Perform a search given aRegex in anEnvironment."
 
@@ -49,7 +51,7 @@ StFinderSelectorSearch >> searchByRegex: aRegex in: anEnvironment [
 			   aRegex search: method selector asString ] in: anEnvironment)
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 StFinderSelectorSearch >> searchByString: aString in: anEnvironment [
 	"Perform a search given aString in anEnvironment."
 
@@ -57,7 +59,7 @@ StFinderSelectorSearch >> searchByString: aString in: anEnvironment [
 			   method selector includesSubstring: aString caseSensitive: false ] in: anEnvironment)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StFinderSelectorSearch >> searchMethods: aSelectBlock in: anEnvironment [
 
 	^ OrderedCollection streamContents: [ :stream |

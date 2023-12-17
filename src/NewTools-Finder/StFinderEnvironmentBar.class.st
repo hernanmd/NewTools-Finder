@@ -2,31 +2,33 @@
 I am a widget for the ̀Finder̀ tool. I contain all widgets regarding the search environment.
 "
 Class {
-	#name : #StFinderEnvironmentBar,
-	#superclass : #SpPresenter,
+	#name : 'StFinderEnvironmentBar',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'chosenPackagesButton',
 		'allPackagesButton',
 		'statusLabel'
 	],
-	#category : #'NewTools-Finder-Widgets'
+	#category : 'NewTools-Finder-Widgets',
+	#package : 'NewTools-Finder',
+	#tag : 'Widgets'
 }
 
-{ #category : #'updating - widgets' }
+{ #category : 'updating - widgets' }
 StFinderEnvironmentBar >> activateAllPackages [
 
 	allPackagesButton iconName: #radioButtonSelected.
 	chosenPackagesButton iconName: #radioButtonUnselected
 ]
 
-{ #category : #'updating - widgets' }
+{ #category : 'updating - widgets' }
 StFinderEnvironmentBar >> activateChosenPackages [
 
 	allPackagesButton iconName: #radioButtonUnselected.
 	chosenPackagesButton iconName: #radioButtonSelected
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 StFinderEnvironmentBar >> defaultLayout [
 
 	^ SpBoxLayout newLeftToRight
@@ -38,7 +40,7 @@ StFinderEnvironmentBar >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StFinderEnvironmentBar >> initializePresenters [
 
 	statusLabel := self newLabel.
@@ -52,19 +54,19 @@ StFinderEnvironmentBar >> initializePresenters [
 		                     yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 StFinderEnvironmentBar >> status: aString [
 
 	statusLabel label: aString
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 StFinderEnvironmentBar >> whenAllPackagesSelectedDo: aBlock [
 
 	allPackagesButton action: aBlock
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 StFinderEnvironmentBar >> whenPackagesSelectedDo: aBlock [
 
 	chosenPackagesButton action: aBlock

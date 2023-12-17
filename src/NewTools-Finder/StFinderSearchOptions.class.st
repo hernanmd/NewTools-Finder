@@ -2,15 +2,17 @@
 I am a widget for the ̀Finder̀ tool. I contain all widgets regarding the search options.
 "
 Class {
-	#name : #StFinderSearchOptions,
-	#superclass : #SpPresenter,
+	#name : 'StFinderSearchOptions',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'regexpCheckBox'
 	],
-	#category : #'NewTools-Finder-Widgets'
+	#category : 'NewTools-Finder-Widgets',
+	#package : 'NewTools-Finder',
+	#tag : 'Widgets'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 StFinderSearchOptions >> defaultLayout [
 
 	^ SpBoxLayout newLeftToRight
@@ -20,19 +22,19 @@ StFinderSearchOptions >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StFinderSearchOptions >> initializePresenters [
 
 	regexpCheckBox := self newCheckBox label: 'Regexp'
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 StFinderSearchOptions >> whenRegexActivatedDo: aBlock [
 
 	regexpCheckBox whenActivatedDo: aBlock
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 StFinderSearchOptions >> whenRegexDeactivatedDo: aBlock [
 
 	regexpCheckBox whenDeactivatedDo: aBlock

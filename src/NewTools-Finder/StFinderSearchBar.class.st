@@ -2,17 +2,19 @@
 I am a widget for the ̀Finder̀ tool. I contain all widgets regarding the search bar.
 "
 Class {
-	#name : #StFinderSearchBar,
-	#superclass : #SpPresenter,
+	#name : 'StFinderSearchBar',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'searchInput',
 		'searchButton',
 		'searchModeDropList'
 	],
-	#category : #'NewTools-Finder-Widgets'
+	#category : 'NewTools-Finder-Widgets',
+	#package : 'NewTools-Finder',
+	#tag : 'Widgets'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 StFinderSearchBar >> defaultLayout [
 
 	^ SpBoxLayout newLeftToRight
@@ -22,7 +24,7 @@ StFinderSearchBar >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StFinderSearchBar >> initializePresenters [
 
 	searchInput := self newSearchInput
@@ -34,44 +36,44 @@ StFinderSearchBar >> initializePresenters [
 		                      yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderSearchBar >> searchButton [
 
 	^ searchButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderSearchBar >> searchInput [
 
 	^ searchInput
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderSearchBar >> searchModeDropList [
 
 	^ searchModeDropList
 ]
 
-{ #category : #'updating - widgets' }
+{ #category : 'updating - widgets' }
 StFinderSearchBar >> searchModes: aListOfSearches [
 
 	searchModeDropList items: aListOfSearches
 ]
 
-{ #category : #'updating - widgets' }
+{ #category : 'updating - widgets' }
 StFinderSearchBar >> updateSearchModes [
 
 	searchModeDropList items: self owner model availableSearches
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 StFinderSearchBar >> whenSearchModeChangedDo: aOneArgumentBlock [
 	"aOneArgumentBlock gets the new search mode passed as the argument."
 
 	searchModeDropList whenSelectedItemChangedDo: aOneArgumentBlock
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 StFinderSearchBar >> whenSubmitSearchDo: aOneArgumentBlock [
 	"aOneArgumentBlock gets the search text passed as the argument."
 

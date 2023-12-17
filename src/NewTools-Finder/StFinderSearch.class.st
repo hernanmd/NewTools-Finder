@@ -15,12 +15,14 @@ The following methods must be provided by subclasses of me.
 
 "
 Class {
-	#name : #StFinderSearch,
-	#superclass : #Object,
-	#category : #'NewTools-Finder-Search'
+	#name : 'StFinderSearch',
+	#superclass : 'Object',
+	#category : 'NewTools-Finder-Search',
+	#package : 'NewTools-Finder',
+	#tag : 'Search'
 }
 
-{ #category : #information }
+{ #category : 'information' }
 StFinderSearch >> name [
 
 	"Returns the name of the search."
@@ -28,14 +30,14 @@ StFinderSearch >> name [
 	self subclassResponsibility
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 StFinderSearch >> searchByRegex: aRegex in: anEnvironment [
 	"Perform a search given aRegex in anEnvironment."
 
 	self subclassResponsibility
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 StFinderSearch >> searchByString: aString in: anEnvironment [
 	"Perform a search given aString in anEnvironment."
 

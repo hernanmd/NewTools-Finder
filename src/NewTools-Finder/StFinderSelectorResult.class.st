@@ -2,12 +2,14 @@
 I represent a selector as a ̀FinderResult̀.
 "
 Class {
-	#name : #StFinderSelectorResult,
-	#superclass : #StFinderResult,
-	#category : #'NewTools-Finder-Result'
+	#name : 'StFinderSelectorResult',
+	#superclass : 'StFinderResult',
+	#category : 'NewTools-Finder-Result',
+	#package : 'NewTools-Finder',
+	#tag : 'Result'
 }
 
-{ #category : #action }
+{ #category : 'action' }
 StFinderSelectorResult >> browseAction [
 
 	self hasBrowseAction ifFalse: [ ^ self ].
@@ -17,55 +19,55 @@ StFinderSelectorResult >> browseAction [
 		selector: self content
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 StFinderSelectorResult >> displayIcon [
 
 	^ self iconNamed: #book
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderSelectorResult >> hasBrowseAction [
 
 	^ self hasClassParent
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderSelectorResult >> hasClassParent [
 
 	^ self parent notNil and: [ self parent isClassResult ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderSelectorResult >> hasHierarchyAction [
 
 	^ self hasClassParent
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderSelectorResult >> hasImplementersAction [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderSelectorResult >> hasInheritanceAction [
 
 	^ self hasClassParent
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderSelectorResult >> hasSendersAction [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderSelectorResult >> hasVersionsAction [
 
 	^ self parent notNil and: [ self parent isClassResult ]
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StFinderSelectorResult >> hierarchyAction [
 
 	self hasHierarchyAction ifFalse: [ ^ self ].
@@ -75,13 +77,13 @@ StFinderSelectorResult >> hierarchyAction [
 		selector: self content
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StFinderSelectorResult >> implementersAction [
 
 	self navigation browseAllImplementorsOf: content
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StFinderSelectorResult >> inheritanceAction [
 
 	self hasInheritanceAction ifFalse: [ ^ self ].
@@ -91,13 +93,13 @@ StFinderSelectorResult >> inheritanceAction [
 		selector: self content
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderSelectorResult >> isSelectorResult [
 
 	^ true
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StFinderSelectorResult >> sendersAction [
 
 	self navigation
@@ -106,7 +108,7 @@ StFinderSelectorResult >> sendersAction [
 		autoSelect: content asString
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StFinderSelectorResult >> versionsAction [
 
 	self versionBrowser

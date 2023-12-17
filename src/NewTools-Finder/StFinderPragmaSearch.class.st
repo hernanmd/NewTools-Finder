@@ -6,12 +6,14 @@ for selectors.
 
 "
 Class {
-	#name : #StFinderPragmaSearch,
-	#superclass : #StFinderSearch,
-	#category : #'NewTools-Finder-Search'
+	#name : 'StFinderPragmaSearch',
+	#superclass : 'StFinderSearch',
+	#category : 'NewTools-Finder-Search',
+	#package : 'NewTools-Finder',
+	#tag : 'Search'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 StFinderPragmaSearch >> buildResult: aDictionary [
 	"PragmaResult
 		|
@@ -53,14 +55,14 @@ StFinderPragmaSearch >> buildResult: aDictionary [
 	^ results
 ]
 
-{ #category : #information }
+{ #category : 'information' }
 StFinderPragmaSearch >> name [
 	"Returns the name of the search."
 
 	^ 'Pragmas'
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 StFinderPragmaSearch >> searchByRegex: aRegex in: anEnvironment [
 	"Perform a search given aRegex in anEnvironment."
 
@@ -69,7 +71,7 @@ StFinderPragmaSearch >> searchByRegex: aRegex in: anEnvironment [
 			   in: anEnvironment)
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 StFinderPragmaSearch >> searchByString: aString in: anEnvironment [
 	"Perform a search given aString in anEnvironment."
 
@@ -82,7 +84,7 @@ StFinderPragmaSearch >> searchByString: aString in: anEnvironment [
 			   in: anEnvironment)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StFinderPragmaSearch >> searchPragmas: aSelectBlock in: anEnvironment [
 
 	| findings |

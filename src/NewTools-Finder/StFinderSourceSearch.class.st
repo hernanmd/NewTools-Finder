@@ -6,19 +6,21 @@ for selectors.
 
 "
 Class {
-	#name : #StFinderSourceSearch,
-	#superclass : #StFinderSelectorSearch,
-	#category : #'NewTools-Finder-Search'
+	#name : 'StFinderSourceSearch',
+	#superclass : 'StFinderSelectorSearch',
+	#category : 'NewTools-Finder-Search',
+	#package : 'NewTools-Finder',
+	#tag : 'Search'
 }
 
-{ #category : #information }
+{ #category : 'information' }
 StFinderSourceSearch >> name [
 	"Returns the name of the search."
 
 	^ 'Source'
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 StFinderSourceSearch >> searchByRegex: aRegex in: anEnvironment [
 	"Perform a search given aRegex in anEnvironment."
 
@@ -27,7 +29,7 @@ StFinderSourceSearch >> searchByRegex: aRegex in: anEnvironment [
 			   in: anEnvironment)
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 StFinderSourceSearch >> searchByString: aString in: anEnvironment [
 	"Perform a search given aString in anEnvironment."
 

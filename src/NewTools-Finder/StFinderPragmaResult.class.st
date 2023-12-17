@@ -2,18 +2,20 @@
 I represent a pragma as a ̀FinderResult̀.
 "
 Class {
-	#name : #StFinderPragmaResult,
-	#superclass : #StFinderResult,
-	#category : #'NewTools-Finder-Result'
+	#name : 'StFinderPragmaResult',
+	#superclass : 'StFinderResult',
+	#category : 'NewTools-Finder-Result',
+	#package : 'NewTools-Finder',
+	#tag : 'Result'
 }
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 StFinderPragmaResult >> displayIcon [
 
 	^ self iconNamed: #changeUpdate
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderPragmaResult >> isPragmaResult [
 
 	^ true

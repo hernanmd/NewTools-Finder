@@ -9,8 +9,8 @@ should therefor be subclasses of ̀FinderSearch̀.
 
 "
 Class {
-	#name : #StFinderModel,
-	#superclass : #Model,
+	#name : 'StFinderModel',
+	#superclass : 'Model',
 	#instVars : [
 		'searchString',
 		'useRegex',
@@ -20,10 +20,12 @@ Class {
 		'currentSearch',
 		'results'
 	],
-	#category : #'NewTools-Finder-Core'
+	#category : 'NewTools-Finder-Core',
+	#package : 'NewTools-Finder',
+	#tag : 'Core'
 }
 
-{ #category : #'default values' }
+{ #category : 'default values' }
 StFinderModel class >> defaultSearches [
 	"Returns a list of supported searches. Each item in the list is a subclass of `FinderSearch`."
 
@@ -36,7 +38,7 @@ StFinderModel class >> defaultSearches [
 		  StFinderPragmaSearch }
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 StFinderModel >> addSearch: aFinderSearch [
 	"Add aFinderSearch to the availableSearches."
 
@@ -44,7 +46,7 @@ StFinderModel >> addSearch: aFinderSearch [
 	self searchTypesChanged
 ]
 
-{ #category : #information }
+{ #category : 'information' }
 StFinderModel >> availablePackages [
 	"Returns for searching available packages by name."
 
@@ -53,28 +55,28 @@ StFinderModel >> availablePackages [
 		  as: OrderedCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderModel >> availableSearches [
 	"Returns the searches available to the model. The first one is used as the default search mode."
 
 	^ availableSearches
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderModel >> currentSearch [
 	"Returns the current search used by the model."
 
 	^ currentSearch
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderModel >> currentSearch: aSearch [
 	"Sets the search used by the model to aSearch. aSearch should be one of the availableSearches."
 
 	currentSearch := aSearch
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StFinderModel >> initialize [
 
 	super initialize.
@@ -91,7 +93,7 @@ StFinderModel >> initialize [
 	self selectAllPackages
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 StFinderModel >> removeSearchByName: aString [
 	"Removes a search from availableSearches by its name."
 
@@ -99,13 +101,13 @@ StFinderModel >> removeSearchByName: aString [
 	self searchTypesChanged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderModel >> results [
 
 	^ results
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 StFinderModel >> search [
 	"Performs a search and stores the results in `self resultsDictionary`."
 
@@ -126,7 +128,7 @@ StFinderModel >> search [
 	self searchEnded ] asJob run
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 StFinderModel >> searchBy: aString [
 
 	"Perform a search by aString."
@@ -135,7 +137,7 @@ StFinderModel >> searchBy: aString [
 	self search
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 StFinderModel >> searchEnded [
 	"Announce the start of a new search."
 
@@ -145,7 +147,7 @@ StFinderModel >> searchEnded [
 		(StFinderSearchEnded results: self results)
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 StFinderModel >> searchStarted [
 	"Announce the start of a new search."
 
@@ -154,21 +156,21 @@ StFinderModel >> searchStarted [
 	self announcer announce: StFinderSearchStarted new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderModel >> searchString [
 	"Return the current search string."
 
 	^ searchString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderModel >> searchString: aString [
 	"Set the search string, which is to be used for further searches."
 
 	searchString := aString
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 StFinderModel >> searchTypesChanged [
 	"Announce a modification of availableSearches."
 
@@ -178,7 +180,7 @@ StFinderModel >> searchTypesChanged [
 		(StFinderSearchTypesChanged newValue: self availableSearches)
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 StFinderModel >> selectAllPackages [
 
 	"Selects all packages for searching."
@@ -186,7 +188,7 @@ StFinderModel >> selectAllPackages [
 	searchEnvironment := environment forPackages: environment packages
 ]
 
-{ #category : #information }
+{ #category : 'information' }
 StFinderModel >> selectedPackages [
 
 	"Returns for searching selected packages by name."
@@ -194,7 +196,7 @@ StFinderModel >> selectedPackages [
 	^ searchEnvironment packageNames asOrderedCollection
 ]
 
-{ #category : #selection }
+{ #category : 'selection' }
 StFinderModel >> selectedPackagesByName: aCollection [
 
 	"Selects all packages given in aCollection by their names for searching."
@@ -202,7 +204,7 @@ StFinderModel >> selectedPackagesByName: aCollection [
 	searchEnvironment := environment forPackageNames: aCollection
 ]
 
-{ #category : #information }
+{ #category : 'information' }
 StFinderModel >> unselectedPackages [
 
 	"Returns for searching unselected packages by name."
@@ -210,19 +212,19 @@ StFinderModel >> unselectedPackages [
 	^ self availablePackages removeAllFoundIn: self selectedPackages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderModel >> useRegex [
 
 	^ useRegex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderModel >> useRegex: aBoolean [
 
 	useRegex := aBoolean
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 StFinderModel >> whenSearchEnded: aBlock [
 	"Calls aBlock everytime a search has ended and passes the results to it."
 
@@ -234,19 +236,22 @@ StFinderModel >> whenSearchEnded: aBlock [
 		         cull: announcement results
 		         cull: announcement
 		         cull: ann ].
-	self announcer when: StFinderSearchEnded do: block
+	self announcer when: StFinderSearchEnded do: block for: self
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 StFinderModel >> whenSearchStarted: aBlock [
 	"Calls aBlock everytime a search is started."
 
 	"aBlock [ :announcement :announcer | ... ]"
 
-	self announcer when: StFinderSearchStarted do: aBlock
+	self announcer
+		when: StFinderSearchStarted
+		do: aBlock
+		for: aBlock receiver
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 StFinderModel >> whenSearchTypesChanged: aBlock [
 	"Calls aBlock everytime a search has been added or removed from availableSearches."
 
@@ -259,5 +264,8 @@ StFinderModel >> whenSearchTypesChanged: aBlock [
 		         cull: announcement oldValue
 		         cull: announcement
 		         cull: ann ].
-	self announcer when: StFinderSearchTypesChanged do: aBlock
+	self announcer
+		when: StFinderSearchTypesChanged
+		do: aBlock
+		for: aBlock receiver
 ]

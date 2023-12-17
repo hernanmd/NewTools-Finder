@@ -2,27 +2,29 @@
 A SearchEnded is an announcement raised when a search has ended.
 "
 Class {
-	#name : #StFinderSearchEnded,
-	#superclass : #Announcement,
+	#name : 'StFinderSearchEnded',
+	#superclass : 'Announcement',
 	#instVars : [
 		'results'
 	],
-	#category : #'NewTools-Finder-Announcement'
+	#category : 'NewTools-Finder-Announcement',
+	#package : 'NewTools-Finder',
+	#tag : 'Announcement'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderSearchEnded class >> results: anObject [
 
 	^ self new results: anObject; yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderSearchEnded >> results [
 
 	^ results
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderSearchEnded >> results: anObject [
 
 	results := anObject
