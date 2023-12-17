@@ -2,12 +2,14 @@
 I represent a class as a ̀FinderResult̀.
 "
 Class {
-	#name : #StFinderClassResult,
-	#superclass : #StFinderResult,
-	#category : #'NewTools-Finder-Result'
+	#name : 'StFinderClassResult',
+	#superclass : 'StFinderResult',
+	#category : 'NewTools-Finder-Result',
+	#package : 'NewTools-Finder',
+	#tag : 'Result'
 }
 
-{ #category : #action }
+{ #category : 'action' }
 StFinderClassResult >> browseAction [
 	"Opens the system browser on its content. If it has a `StFinderSelectorResult` as a parent,
 	then opens the system browser on its content with the selector from its parent focused."
@@ -20,7 +22,7 @@ StFinderClassResult >> browseAction [
 		ifFalse: [ content browse ]
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 StFinderClassResult >> displayIcon [
 
 	self content isTrait ifTrue: [ ^ self iconNamed: #trait ].
@@ -29,37 +31,37 @@ StFinderClassResult >> displayIcon [
 	^ self iconNamed: #class
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderClassResult >> hasBrowseAction [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderClassResult >> hasHierarchyAction [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderClassResult >> hasInheritanceAction [
 
 	^ self hasSelectorParent
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderClassResult >> hasSelectorParent [
 
 	^ self parent notNil and: [ self parent isSelectorResult ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderClassResult >> hasVersionsAction [
 
 	^ self hasSelectorParent
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StFinderClassResult >> hierarchyAction [
 
 	self hasSelectorParent ifTrue: [
@@ -71,7 +73,7 @@ StFinderClassResult >> hierarchyAction [
 	self navigation browseHierarchy: content
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StFinderClassResult >> inheritanceAction [
 
 	self hasInheritanceAction ifFalse: [ ^ self ].
@@ -80,13 +82,13 @@ StFinderClassResult >> inheritanceAction [
 		selector: self parent content
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderClassResult >> isClassResult [
 
 	^ true
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StFinderClassResult >> versionsAction [
 
 	self hasVersionsAction ifFalse: [ ^ self ].

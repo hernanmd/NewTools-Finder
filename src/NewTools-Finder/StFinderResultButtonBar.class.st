@@ -3,8 +3,8 @@ I am a widget for the ̀Finder̀ tool. I represent contain the buttons used for
 interacting with the results of a search.
 "
 Class {
-	#name : #StFinderResultButtonBar,
-	#superclass : #SpPresenter,
+	#name : 'StFinderResultButtonBar',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'browseButton',
 		'sendersButton',
@@ -13,22 +13,24 @@ Class {
 		'hierarchyButton',
 		'implementersButton'
 	],
-	#category : #'NewTools-Finder-Widgets'
+	#category : 'NewTools-Finder-Widgets',
+	#package : 'NewTools-Finder',
+	#tag : 'Widgets'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 StFinderResultButtonBar >> browseAction: aBlock [
 
 	self browseButton action: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderResultButtonBar >> browseButton [
 
 	^ browseButton
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 StFinderResultButtonBar >> defaultLayout [
 
 	^ 	SpBoxLayout newHorizontal
@@ -42,7 +44,7 @@ StFinderResultButtonBar >> defaultLayout [
 		yourself
 ]
 
-{ #category : #enabling }
+{ #category : 'enabling' }
 StFinderResultButtonBar >> disableAll [
 
 	browseButton disable.
@@ -53,7 +55,7 @@ StFinderResultButtonBar >> disableAll [
 	hierarchyButton disable
 ]
 
-{ #category : #enabling }
+{ #category : 'enabling' }
 StFinderResultButtonBar >> enableButtonsFor: aFinderResult [
 	"Enables or disables result buttons depending on the defined
 	 actions for aFinderResult."
@@ -66,43 +68,43 @@ StFinderResultButtonBar >> enableButtonsFor: aFinderResult [
 	hierarchyButton enabled: aFinderResult hasHierarchyAction
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 StFinderResultButtonBar >> hierarchyAction: aBlock [
 
 	self hierarchyButton action: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderResultButtonBar >> hierarchyButton [
 
 	^ hierarchyButton
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 StFinderResultButtonBar >> implementersAction: aBlock [
 
 	self implementersButton action: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderResultButtonBar >> implementersButton [
 
 	^ implementersButton
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 StFinderResultButtonBar >> inheritanceAction: aBlock [
 
 	self inheritanceButton action: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderResultButtonBar >> inheritanceButton [
 
 	^ inheritanceButton
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StFinderResultButtonBar >> initializePresenters [
 
 	browseButton := self newButton label: 'Browse'.
@@ -115,25 +117,25 @@ StFinderResultButtonBar >> initializePresenters [
 	self disableAll
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 StFinderResultButtonBar >> sendersAction: aBlock [
 
 	self sendersButton action: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderResultButtonBar >> sendersButton [
 
 	^ sendersButton
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 StFinderResultButtonBar >> versionsAction: aBlock [
 
 	self versionsButton action: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderResultButtonBar >> versionsButton [
 
 	^ versionsButton

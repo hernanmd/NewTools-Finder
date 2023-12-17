@@ -6,12 +6,14 @@ for classes.
 
 "
 Class {
-	#name : #StFinderClassSearch,
-	#superclass : #StFinderSearch,
-	#category : #'NewTools-Finder-Search'
+	#name : 'StFinderClassSearch',
+	#superclass : 'StFinderSearch',
+	#category : 'NewTools-Finder-Search',
+	#package : 'NewTools-Finder',
+	#tag : 'Search'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 StFinderClassSearch >> buildResult: aListOfClasses [
 
 	^ aListOfClasses
@@ -25,14 +27,14 @@ StFinderClassSearch >> buildResult: aListOfClasses [
 		  as: OrderedCollection
 ]
 
-{ #category : #information }
+{ #category : 'information' }
 StFinderClassSearch >> name [
 	"Returns the name of the search."
 
 	^ 'Classes'
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 StFinderClassSearch >> searchByRegex: aRegex in: anEnvironment [
 	"Perform a search given aRegex in anEnvironment."
 
@@ -40,7 +42,7 @@ StFinderClassSearch >> searchByRegex: aRegex in: anEnvironment [
 		  (self searchClasses: [ :class | aRegex search: class name ] in: anEnvironment)
 ]
 
-{ #category : #searching }
+{ #category : 'searching' }
 StFinderClassSearch >> searchByString: aString in: anEnvironment [
 	"Perform a search given aString in anEnvironment."
 
@@ -48,7 +50,7 @@ StFinderClassSearch >> searchByString: aString in: anEnvironment [
 			   class name includesSubstring: aString caseSensitive: false ] in: anEnvironment)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StFinderClassSearch >> searchClasses: aSelectBlock in: anEnvironment [
 
 	^ OrderedCollection streamContents: [ :stream |

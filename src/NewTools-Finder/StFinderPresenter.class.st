@@ -4,8 +4,8 @@ I am the presenter for the ̀Finder̀ tool.
 I define the user interface of the finder tool.
 "
 Class {
-	#name : #StFinderPresenter,
-	#superclass : #SpPresenterWithModel,
+	#name : 'StFinderPresenter',
+	#superclass : 'SpPresenterWithModel',
 	#instVars : [
 		'searchBar',
 		'resultTree',
@@ -15,10 +15,12 @@ Class {
 		'helpButton',
 		'resultStatusBar'
 	],
-	#category : #'NewTools-Finder-Core'
+	#category : 'NewTools-Finder-Core',
+	#package : 'NewTools-Finder',
+	#tag : 'Core'
 }
 
-{ #category : #'default values' }
+{ #category : 'default values' }
 StFinderPresenter class >> defaultExplanation [
 
 	^ 'The Finder can be used by default in 4 different ways:
@@ -37,7 +39,7 @@ The ''Select classes'' button opened a dialog window  to select which classes wi
 The ''All classes'' button is used to reset the classes selection.'
 ]
 
-{ #category : #'default values' }
+{ #category : 'default values' }
 StFinderPresenter class >> methodFinderExplanation [
 	"MethodFinder new findMethodsByExampleInput: #( 1 2 ) andExpectedResult: 3."
 	"may be this method can be moved to the corresponding search "
@@ -104,14 +106,14 @@ The Method Finder is not trying all methods in the system so if it will find not
 
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 StFinderPresenter class >> open [
 	<script>
 	
 	(self on: StFinderModel new) open
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StFinderPresenter >> connectPresenters [
 
 	searchBar
@@ -144,7 +146,7 @@ StFinderPresenter >> connectPresenters [
 	self subscribeToAnnouncements
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StFinderPresenter >> connectResultButtons [
 
 	resultButtonBar browseAction: [ self selectedResult ifNotNil: [ :result | result browseAction ] ].
@@ -155,7 +157,7 @@ StFinderPresenter >> connectResultButtons [
 	resultButtonBar hierarchyAction: [ self selectedResult ifNotNil: [ :result | result hierarchyAction ] ]
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 StFinderPresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -183,7 +185,7 @@ StFinderPresenter >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StFinderPresenter >> initializePresenters [
 
 	searchBar := self instantiate: StFinderSearchBar.
@@ -207,7 +209,7 @@ StFinderPresenter >> initializePresenters [
 	resultStatusBar := self newStatusBar
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StFinderPresenter >> initializeWindow: aWindowPresenter [
 
 	self flag: #todo. "Find a way to set minimal needed extent for contents."
@@ -217,7 +219,14 @@ StFinderPresenter >> initializeWindow: aWindowPresenter [
 		windowIcon: (self iconNamed: #smallFind)
 ]
 
-{ #category : #private }
+{ #category : 'updating - widgets' }
+StFinderPresenter >> notifySearchStarted [
+	"Do nothing for now"
+
+
+]
+
+{ #category : 'private' }
 StFinderPresenter >> openPackageChooserDialog [
 	"Opens a `SpChooserPresenter` dialog to allow the user to choose the packages to search in."
 
@@ -231,25 +240,25 @@ StFinderPresenter >> openPackageChooserDialog [
 		okAction: [ :dialog | self searchInPackages: dialog presenter chosenItems ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderPresenter >> resultButtonBar [
 
 	^ resultButtonBar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderPresenter >> resultTree [
 
 	^ resultTree
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderPresenter >> searchBar [
 
 	^ searchBar
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StFinderPresenter >> searchInAllPackages [
 	"Selects all packages for searching."
 
@@ -258,7 +267,7 @@ StFinderPresenter >> searchInAllPackages [
 	self updateEnvironmentStatusFor: self model selectedPackages
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StFinderPresenter >> searchInPackages: aCollection [
 	"Sets the search environment in the model to the package names given in aCollection."
 
@@ -267,35 +276,34 @@ StFinderPresenter >> searchInPackages: aCollection [
 	self updateEnvironmentStatusFor: aCollection
 ]
 
-{ #category : #information }
+{ #category : 'information' }
 StFinderPresenter >> selectedResult [
 
 	^ resultTree selectedItem
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StFinderPresenter >> subscribeToAnnouncements [
 
-	self model whenSearchStarted: [  ].
-	self model whenSearchEnded: [ :results |
-		self updateResultsWith: results ].
+	self model whenSearchStarted: [ self notifySearchStarted ].
+	self model whenSearchEnded: [ :results | self updateResultsWith: results ].
 	self model whenSearchTypesChanged: [ self searchBar updateSearchModes ]
 ]
 
-{ #category : #'updating - widgets' }
+{ #category : 'updating - widgets' }
 StFinderPresenter >> updateEnvironmentStatusFor: packages [
 
 	environmentBar status: packages size asString , ' Packages selected'
 ]
 
-{ #category : #'updating - widgets' }
+{ #category : 'updating - widgets' }
 StFinderPresenter >> updateResults [
 	"Call to update resultTree from the model."
 
 	self updateResultsWith: self model results
 ]
 
-{ #category : #'updating - widgets' }
+{ #category : 'updating - widgets' }
 StFinderPresenter >> updateResultsWith: results [
 	"Call to update resultTree with results."
 

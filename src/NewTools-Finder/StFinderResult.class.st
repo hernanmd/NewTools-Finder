@@ -7,29 +7,31 @@ I have a content, which is the actual result, and define a specified set of acti
 for it.
 "
 Class {
-	#name : #StFinderResult,
-	#superclass : #Object,
+	#name : 'StFinderResult',
+	#superclass : 'Object',
 	#instVars : [
 		'content',
 		'parent',
 		'children'
 	],
-	#category : #'NewTools-Finder-Result'
+	#category : 'NewTools-Finder-Result',
+	#package : 'NewTools-Finder',
+	#tag : 'Result'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 StFinderResult >> addChild: aFinderResult [
 
 	aFinderResult parent: self.
 	children add: aFinderResult
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StFinderResult >> browseAction [
 	"Default does nothing. Subclasses may implement their own action for browsing."
 ]
 
-{ #category : #'system tool access' }
+{ #category : 'system tool access' }
 StFinderResult >> browser [
 	"We should check how to do it via the stApplication but ok for now"
 
@@ -37,118 +39,118 @@ StFinderResult >> browser [
 	^ Smalltalk tools browser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderResult >> children [
 
 	^ children
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderResult >> children: anObject [
 
 	children := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderResult >> content [
 
 	^ content
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderResult >> content: anObject [
 
 	content := anObject
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 StFinderResult >> displayIcon [
 
 	^ nil
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 StFinderResult >> displayString [
 
 	^ content asString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderResult >> hasBrowseAction [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderResult >> hasHierarchyAction [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderResult >> hasImplementersAction [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderResult >> hasInheritanceAction [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderResult >> hasSendersAction [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderResult >> hasVersionsAction [
 
 	^ false
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StFinderResult >> hierarchyAction [
 	"Default does nothing. Subclasses may implement their own action for hieracchy."
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StFinderResult >> implementersAction [
 	"Default does nothing. Subclasses may implement their own action for implementers."
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StFinderResult >> inheritanceAction [
 	"Default does nothing. Subclasses may implement their own action for inheritance."
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StFinderResult >> initialize [
 
 	children := OrderedCollection new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderResult >> isClassResult [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderResult >> isPragmaResult [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 StFinderResult >> isSelectorResult [
 
 	^ false
 ]
 
-{ #category : #'system tool access' }
+{ #category : 'system tool access' }
 StFinderResult >> navigation [
 	"We should check how to do it via the stApplication but ok for now"
 
@@ -156,31 +158,31 @@ StFinderResult >> navigation [
 	^ SystemNavigation default
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderResult >> parent [
 
 	^ parent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StFinderResult >> parent: anObject [
 
 	parent := anObject
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StFinderResult >> sendersAction [
 	"Default does nothing. Subclasses may implement their own action for senders."
 ]
 
-{ #category : #'system tool access' }
+{ #category : 'system tool access' }
 StFinderResult >> versionBrowser [
 	"We should check how to do it via the stApplication but ok for now"
 	self flag: #comeBack.
 	^ Smalltalk tools versionBrowser
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 StFinderResult >> versionsAction [
 	"Default does nothing. Subclasses may implement their own action for versions."
 ]
