@@ -20,3 +20,10 @@ StFinderPragmaResult >> isPragmaResult [
 
 	^ true
 ]
+
+{ #category : 'accessing' }
+StFinderPragmaResult >> resultPreview [
+	"Private - See superimplementor's comment"
+
+	^ self shouldBeImplemented 
+]

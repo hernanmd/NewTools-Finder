@@ -45,7 +45,7 @@ StFinderPragmaSearch >> buildResult: aDictionary [
 				ifNone: [
 					| selectorResult |
 					selectorResult := StFinderSelectorResult new
-						                  content: method selector;
+						                  content: method;
 						                  addChild: classResult;
 						                  yourself.
 					pragmaResult addChild: selectorResult ] ].

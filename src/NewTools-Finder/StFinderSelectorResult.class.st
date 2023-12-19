@@ -99,6 +99,15 @@ StFinderSelectorResult >> isSelectorResult [
 	^ true
 ]
 
+{ #category : 'accessing' }
+StFinderSelectorResult >> resultPreview [
+	"Private - See superimplementor's comment"
+
+	^ self parent 
+		ifNotNil: [ : p | (p content >>  self content) sourceCode ]
+		ifNil: [ String empty ].
+]
+
 { #category : 'action' }
 StFinderSelectorResult >> sendersAction [
 

@@ -13,7 +13,8 @@ Class {
 		'environmentBar',
 		'searchOptions',
 		'helpButton',
-		'resultStatusBar'
+		'resultStatusBar',
+		'previewSourcePresenter'
 	],
 	#category : 'NewTools-Finder-Core',
 	#package : 'NewTools-Finder',
@@ -139,7 +140,9 @@ StFinderPresenter >> connectPresenters [
 	resultTree whenSelectedItemChangedDo: [ :newResult |
 		newResult
 			ifNil: [ self resultButtonBar disableAll ]
-			ifNotNil: [ self resultButtonBar enableButtonsFor: newResult ] ].
+			ifNotNil: [ 
+				previewSourcePresenter text: newResult resultPreview.
+				self resultButtonBar enableButtonsFor: newResult ] ].
 
 	self connectResultButtons.
 
@@ -203,6 +206,7 @@ StFinderPresenter >> initializePresenters [
 	resultTree := self newTree
 		display: [ :result | result displayString ];
 		displayIcon: [ :result | result displayIcon ].
+	previewSourcePresenter := self newCode.
 
 	resultButtonBar := self instantiate: StFinderResultButtonBar.
 

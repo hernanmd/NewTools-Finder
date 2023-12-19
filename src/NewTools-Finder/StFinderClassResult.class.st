@@ -88,6 +88,13 @@ StFinderClassResult >> isClassResult [
 	^ true
 ]
 
+{ #category : 'accessing' }
+StFinderClassResult >> resultPreview [
+	"Private - See superimplementor's comment"
+	
+	^ self content definitionString
+]
+
 { #category : 'action' }
 StFinderClassResult >> versionsAction [
 

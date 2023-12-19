@@ -170,6 +170,13 @@ StFinderResult >> parent: anObject [
 	parent := anObject
 ]
 
+{ #category : 'accessing' }
+StFinderResult >> resultPreview [
+	"Answer a <String> representing the receiver's preview"
+	
+	self subclassResponsibility
+]
+
 { #category : 'action' }
 StFinderResult >> sendersAction [
 	"Default does nothing. Subclasses may implement their own action for senders."
