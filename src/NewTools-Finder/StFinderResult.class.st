@@ -70,6 +70,14 @@ StFinderResult >> displayIcon [
 ]
 
 { #category : 'displaying' }
+StFinderResult >> displaySource: aCompiledMethod in: aSpCodePresenter [
+
+	aSpCodePresenter 
+		beForMethod: aCompiledMethod;
+		text: aCompiledMethod sourceCode
+]
+
+{ #category : 'displaying' }
 StFinderResult >> displayString [
 
 	^ content asString

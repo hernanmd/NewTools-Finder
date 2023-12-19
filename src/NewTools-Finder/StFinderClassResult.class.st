@@ -31,6 +31,20 @@ StFinderClassResult >> displayIcon [
 	^ self iconNamed: #class
 ]
 
+{ #category : 'private' }
+StFinderClassResult >> forFinderPreview: aSpCodePresenter [ 
+
+	^ (self content isClass and: [ self parent notNil ])
+		ifTrue: [ 
+			self 
+				displaySource: (self content >> self parent content) 
+				in: aSpCodePresenter ]
+		ifFalse: [ 
+			aSpCodePresenter 
+				beForScripting;
+				text: self content definitionString ]
+]
+
 { #category : 'testing' }
 StFinderClassResult >> hasBrowseAction [
 

@@ -15,6 +15,17 @@ StFinderPragmaResult >> displayIcon [
 	^ self iconNamed: #changeUpdate
 ]
 
+{ #category : 'private' }
+StFinderPragmaResult >> forFinderPreview: aSpCodePresenter [ 
+
+	self parent
+		ifNil: [ aSpCodePresenter text: 'Please select a method expanding the selected item' ]
+		ifNotNil: [ 
+			self 
+				displaySource: (self content >> self parent content) 
+				in: aSpCodePresenter ]
+]
+
 { #category : 'testing' }
 StFinderPragmaResult >> isPragmaResult [
 

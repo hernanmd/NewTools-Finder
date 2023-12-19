@@ -25,6 +25,20 @@ StFinderSelectorResult >> displayIcon [
 	^ self iconNamed: #book
 ]
 
+{ #category : 'private' }
+StFinderSelectorResult >> forFinderPreview: aSpCodePresenter [ 
+
+	self parent
+		ifNil: [ 
+			aSpCodePresenter 
+				beForScripting;
+				text: 'Please select a method implementation expanding the selected item' ]
+		ifNotNil: [ 
+			self 
+				displaySource: (self parent content >> self content) 
+				in: aSpCodePresenter ]
+]
+
 { #category : 'testing' }
 StFinderSelectorResult >> hasBrowseAction [
 

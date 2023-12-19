@@ -141,7 +141,7 @@ StFinderPresenter >> connectPresenters [
 		newResult
 			ifNil: [ self resultButtonBar disableAll ]
 			ifNotNil: [ 
-				previewSourcePresenter text: newResult resultPreview.
+				newResult forFinderPreview: previewSourcePresenter.
 				self resultButtonBar enableButtonsFor: newResult ] ].
 
 	self connectResultButtons.
@@ -179,6 +179,7 @@ StFinderPresenter >> defaultLayout [
 				   yourself)
 		  expand: false;
 		  add: resultTree;
+		  add: previewSourcePresenter;
 		  add: (SpBoxLayout newLeftToRight
 				   spacing: 2;
 				   add: resultButtonBar expand: false;

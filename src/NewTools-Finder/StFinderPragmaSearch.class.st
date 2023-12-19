@@ -30,7 +30,7 @@ StFinderPragmaSearch >> buildResult: aDictionary [
 		"Sadly Pragmas with the same selector are not unique keys in a Dictionary."
 		pragmaResult := results
 			                detect: [ :result |
-			                result content selector = pragma selector ]
+			                result content selector = pragma ]
 			                ifFound: [ :result |
 				                isNewResult := false.
 				                result ]

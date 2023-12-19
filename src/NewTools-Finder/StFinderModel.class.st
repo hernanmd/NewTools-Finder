@@ -115,7 +115,6 @@ StFinderModel >> search [
 
 	[ :job |
 	self searchStarted.
-	job title: 'Searching...' translated.
 	results := useRegex
 		           ifTrue: [
 		           currentSearch
@@ -125,7 +124,11 @@ StFinderModel >> search [
 		           currentSearch
 			           searchByString: searchString
 			           in: environment ].
-	self searchEnded ] asJob run
+	self searchEnded ] 
+		asJob
+			title: 'Searching...';
+			run.
+
 ]
 
 { #category : 'searching' }
