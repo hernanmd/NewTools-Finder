@@ -18,7 +18,9 @@ Class {
 		'searchEnvironment',
 		'availableSearches',
 		'currentSearch',
-		'results'
+		'results',
+		'useExact',
+		'useCase'
 	],
 	#category : 'NewTools-Finder-Core',
 	#package : 'NewTools-Finder',
@@ -213,6 +215,30 @@ StFinderModel >> unselectedPackages [
 	"Returns for searching unselected packages by name."
 
 	^ self availablePackages removeAllFoundIn: self selectedPackages
+]
+
+{ #category : 'accessing' }
+StFinderModel >> useCase [
+
+	^ useCase
+]
+
+{ #category : 'accessing' }
+StFinderModel >> useCase: aBoolean [
+
+	useCase := aBoolean
+]
+
+{ #category : 'accessing' }
+StFinderModel >> useExact [
+
+	^ useExact
+]
+
+{ #category : 'accessing' }
+StFinderModel >> useExact: aBoolean [ 
+
+	useExact := aBoolean
 ]
 
 { #category : 'accessing' }

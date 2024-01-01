@@ -129,9 +129,7 @@ StFinderPresenter >> connectPresenters [
 			 text: self class defaultExplanation;
 			 openDialog) title: 'Finder Help' ].
 
-	searchOptions
-		whenRegexActivatedDo: [ self model useRegex: true ];
-		whenRegexDeactivatedDo: [ self model useRegex: false ].
+	self connectSearchOptions.
 
 	environmentBar
 		whenAllPackagesSelectedDo: [ self searchInAllPackages ];
@@ -158,6 +156,22 @@ StFinderPresenter >> connectResultButtons [
 	resultButtonBar versionsAction: [ self selectedResult ifNotNil: [ :result | result versionsAction ] ].
 	resultButtonBar inheritanceAction: [ self selectedResult ifNotNil: [ :result | result inheritanceAction ] ].
 	resultButtonBar hierarchyAction: [ self selectedResult ifNotNil: [ :result | result hierarchyAction ] ]
+]
+
+{ #category : 'initialization' }
+StFinderPresenter >> connectSearchOptions [
+
+	searchOptions
+		whenRegexActivatedDo: [ self model useRegex: true ];
+		whenRegexDeactivatedDo: [ self model useRegex: false ];
+		whenCaseActivatedDo: [ self model useCase: true ];
+		whenCaseDeactivatedDo: [ self model useCase: false ];
+		whenExactActivatedDo: [
+			self model useExact: true.
+			searchOptions disableRegex  ];
+		whenExactDeactivatedDo: [ 
+			self model useExact: false.
+			searchOptions enableRegex ].
 ]
 
 { #category : 'layout' }

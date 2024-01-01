@@ -16,19 +16,6 @@ StFinderTraitResult class >> matches: aCompiledMethod [
 	^ aCompiledMethod methodClass isTrait
 ]
 
-{ #category : 'action' }
-StFinderTraitResult >> browseAction [
-	"Opens the system browser on its content. If it has a `StFinderSelectorResult` as a parent,
-	then opens the system browser on its content with the selector from its parent focused."
-
-	self hasSelectorParent
-		ifTrue: [
-			self browser
-				openOnClass: self content innerClass
-				selector: self parent content ]
-		ifFalse: [ content browse ]
-]
-
 { #category : 'accessing' }
 StFinderTraitResult >> content: aCompiledMethod [
 
