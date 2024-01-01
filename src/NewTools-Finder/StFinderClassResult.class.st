@@ -9,6 +9,13 @@ Class {
 	#tag : 'Result'
 }
 
+{ #category : 'testing' }
+StFinderClassResult class >> matches: aCompiledMethod [ 
+	"Answer <true> if aClassOraTaCompositionElement is a <Class>"
+	
+	^ aCompiledMethod methodClass isClass
+]
+
 { #category : 'action' }
 StFinderClassResult >> browseAction [
 	"Opens the system browser on its content. If it has a `StFinderSelectorResult` as a parent,
@@ -22,22 +29,27 @@ StFinderClassResult >> browseAction [
 		ifFalse: [ content browse ]
 ]
 
+{ #category : 'accessing' }
+StFinderClassResult >> content: aCompiledMethod [
+
+	content := aCompiledMethod methodClass
+]
+
 { #category : 'displaying' }
 StFinderClassResult >> displayIcon [
 
-	self content isTrait ifTrue: [ ^ self iconNamed: #trait ].
 	(self content inheritsFrom: Exception) ifTrue: [ ^ self iconNamed: #exception ].
 	self content isAbstract ifTrue: [ ^ self iconNamed: #classAbstract ].
 	^ self iconNamed: #class
 ]
 
-{ #category : 'private' }
+{ #category : 'action' }
 StFinderClassResult >> forFinderPreview: aSpCodePresenter [ 
 
 	^ (self content isClass and: [ self parent notNil ])
 		ifTrue: [ 
 			self 
-				displaySource: (self content >> self parent content) 
+				displaySource: self getContentSource
 				in: aSpCodePresenter ]
 		ifFalse: [ 
 			aSpCodePresenter 
@@ -45,37 +57,44 @@ StFinderClassResult >> forFinderPreview: aSpCodePresenter [
 				text: self content definitionString ]
 ]
 
-{ #category : 'testing' }
+{ #category : 'accessing' }
+StFinderClassResult >> getContentSource [
+	"Answer a <CompiledMethod> representing the currently found content"
+
+	^ self content >> self parent content
+]
+
+{ #category : 'as yet unclassified' }
 StFinderClassResult >> hasBrowseAction [
 
 	^ true
 ]
 
-{ #category : 'testing' }
+{ #category : 'as yet unclassified' }
 StFinderClassResult >> hasHierarchyAction [
 
 	^ true
 ]
 
-{ #category : 'testing' }
+{ #category : 'as yet unclassified' }
 StFinderClassResult >> hasInheritanceAction [
 
 	^ self hasSelectorParent
 ]
 
-{ #category : 'testing' }
+{ #category : 'as yet unclassified' }
 StFinderClassResult >> hasSelectorParent [
 
 	^ self parent notNil and: [ self parent isSelectorResult ]
 ]
 
-{ #category : 'testing' }
+{ #category : 'as yet unclassified' }
 StFinderClassResult >> hasVersionsAction [
 
 	^ self hasSelectorParent
 ]
 
-{ #category : 'action' }
+{ #category : 'as yet unclassified' }
 StFinderClassResult >> hierarchyAction [
 
 	self hasSelectorParent ifTrue: [
@@ -87,7 +106,7 @@ StFinderClassResult >> hierarchyAction [
 	self navigation browseHierarchy: content
 ]
 
-{ #category : 'action' }
+{ #category : 'as yet unclassified' }
 StFinderClassResult >> inheritanceAction [
 
 	self hasInheritanceAction ifFalse: [ ^ self ].
@@ -96,20 +115,27 @@ StFinderClassResult >> inheritanceAction [
 		selector: self parent content
 ]
 
-{ #category : 'testing' }
+{ #category : 'as yet unclassified' }
+StFinderClassResult >> isClassOrTrait: aClassOraTaCompositionElement [ 
+	"Answer <true> if aClassOraTaCompositionElement is a <Class> or has a trait"
+	
+	^ aClassOraTaCompositionElement isClass or: [ aClassOraTaCompositionElement traits notEmpty ]
+]
+
+{ #category : 'as yet unclassified' }
 StFinderClassResult >> isClassResult [
 
 	^ true
 ]
 
-{ #category : 'accessing' }
+{ #category : 'as yet unclassified' }
 StFinderClassResult >> resultPreview [
 	"Private - See superimplementor's comment"
 	
 	^ self content definitionString
 ]
 
-{ #category : 'action' }
+{ #category : 'as yet unclassified' }
 StFinderClassResult >> versionsAction [
 
 	self hasVersionsAction ifFalse: [ ^ self ].

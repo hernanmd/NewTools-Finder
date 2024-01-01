@@ -20,16 +20,17 @@ StFinderSelectorSearch >> buildResult: aListOfMethods [
 	results := OrderedCollection new.
 
 	aListOfMethods do: [ :method |
-		| classResult |
-		classResult := StFinderClassResult new content: method methodClass.
+		| foundResult |
+
+		foundResult := StFinderResult newFor: method.
 		results
 			detect: [ :elem | elem content = method selector ]
-			ifFound: [ :elem | elem addChild: classResult ]
+			ifFound: [ :elem | elem addChild: foundResult ]
 			ifNone: [
 				| newResult |
 				newResult := StFinderSelectorResult new
 					             content: method selector;
-					             addChild: classResult;
+					             addChild: foundResult;
 					             yourself.
 				results add: newResult ] ].
 

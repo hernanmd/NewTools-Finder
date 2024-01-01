@@ -9,6 +9,12 @@ Class {
 	#tag : 'Result'
 }
 
+{ #category : 'testing' }
+StFinderPragmaResult class >> matches: anObject [ 
+
+	^ anObject hasPragma
+]
+
 { #category : 'displaying' }
 StFinderPragmaResult >> displayIcon [
 

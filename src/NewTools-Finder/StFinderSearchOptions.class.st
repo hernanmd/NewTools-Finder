@@ -25,7 +25,10 @@ StFinderSearchOptions >> defaultLayout [
 { #category : 'initialization' }
 StFinderSearchOptions >> initializePresenters [
 
-	regexpCheckBox := self newCheckBox label: 'Regexp'
+	regexpCheckBox := self newCheckBox 
+		label: 'Regexp';
+		help: 'Use regular expression';
+		yourself
 ]
 
 { #category : 'events' }

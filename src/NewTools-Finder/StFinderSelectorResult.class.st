@@ -9,6 +9,12 @@ Class {
 	#tag : 'Result'
 }
 
+{ #category : 'testing' }
+StFinderSelectorResult class >> matches: anObject [ 
+
+	^ false
+]
+
 { #category : 'action' }
 StFinderSelectorResult >> browseAction [
 

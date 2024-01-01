@@ -19,6 +19,16 @@ Class {
 	#tag : 'Result'
 }
 
+{ #category : 'instance creation' }
+StFinderResult class >> newFor: aCompiledMethod [
+
+	^ self allSubclasses
+		detect: [ : subclass | subclass matches: aCompiledMethod ]
+		ifFound: [ : subclass | subclass new content: aCompiledMethod ]
+		ifNone: [ self error: 'No matching result for ' , aCompiledMethod selector ]
+
+]
+
 { #category : 'adding' }
 StFinderResult >> addChild: aFinderResult [
 
