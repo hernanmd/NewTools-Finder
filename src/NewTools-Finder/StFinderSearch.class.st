@@ -30,6 +30,20 @@ StFinderSearch >> name [
 	self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+StFinderSearch >> previewPresenter [
+	"Answer the presenter <Class> responsible to display the preview in the Finder according to the receiver's contents"
+	
+	^ SpCodePresenter 
+
+]
+
+{ #category : 'accessing' }
+StFinderSearch >> previewText [
+
+	^ String empty
+]
+
 { #category : 'searching' }
 StFinderSearch >> searchByRegex: aRegex in: anEnvironment [
 	"Perform a search given aRegex in anEnvironment."
@@ -38,8 +52,15 @@ StFinderSearch >> searchByRegex: aRegex in: anEnvironment [
 ]
 
 { #category : 'searching' }
-StFinderSearch >> searchByString: aString in: anEnvironment [
+StFinderSearch >> searchBySubstring: aString in: anEnvironment [
 	"Perform a search given aString in anEnvironment."
 
 	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+StFinderSearch >> validSearchOptions [
+	"Answer a <Collection> of valid search options for the receiver"
+	
+	^ #(#activateAll)
 ]

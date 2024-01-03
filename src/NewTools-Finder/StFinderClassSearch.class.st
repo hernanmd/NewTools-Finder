@@ -42,12 +42,29 @@ StFinderClassSearch >> searchByRegex: aRegex in: anEnvironment [
 		  (self searchClasses: [ :class | aRegex search: class name ] in: anEnvironment)
 ]
 
+{ #category : 'accessing' }
+StFinderClassSearch >> searchByStringExactInsensitiveCase: aString in: aRBBrowserEnvironment [ 
+
+	^ self buildResult: (self 
+		searchClasses: [ : class | class name asLowercase = aString asLowercase ] 
+		in: aRBBrowserEnvironment)
+]
+
+{ #category : 'accessing' }
+StFinderClassSearch >> searchByStringExactSensitiveCase: aString in: aRBBrowserEnvironment [ 
+
+	^ self buildResult: (self 
+		searchClasses: [ : class | class name = aString ] 
+		in: aRBBrowserEnvironment)
+]
+
 { #category : 'searching' }
-StFinderClassSearch >> searchByString: aString in: anEnvironment [
+StFinderClassSearch >> searchBySubstring: aString in: anEnvironment [
 	"Perform a search given aString in anEnvironment."
 
-	^ self buildResult: (self searchClasses: [ :class |
-			   class name includesSubstring: aString caseSensitive: false ] in: anEnvironment)
+	^ self 
+		buildResult: (self searchClasses: [ :class | class name includesSubstring: aString caseSensitive: false ] 
+		in: anEnvironment)
 ]
 
 { #category : 'private' }

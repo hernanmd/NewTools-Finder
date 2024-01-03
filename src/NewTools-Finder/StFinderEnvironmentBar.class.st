@@ -34,9 +34,9 @@ StFinderEnvironmentBar >> defaultLayout [
 	^ SpBoxLayout newLeftToRight
 		  spacing: 2;
 		  vAlignCenter;
-		  add: statusLabel expand: false;
-		  add: allPackagesButton expand: false;
-		  add: chosenPackagesButton expand: false;
+		  add: statusLabel width: 180;
+		  add: allPackagesButton;
+		  add: chosenPackagesButton;
 		  yourself
 ]
 

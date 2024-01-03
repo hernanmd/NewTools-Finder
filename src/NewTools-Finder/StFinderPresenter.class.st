@@ -168,7 +168,7 @@ StFinderPresenter >> connectSearchOptions [
 		whenCaseDeactivatedDo: [ self model useCase: false ];
 		whenExactActivatedDo: [
 			self model useExact: true.
-			searchOptions disableRegex  ];
+			searchOptions disableRegex ];
 		whenExactDeactivatedDo: [ 
 			self model useExact: false.
 			searchOptions enableRegex ].
@@ -186,10 +186,8 @@ StFinderPresenter >> defaultLayout [
 				   yourself)
 		  expand: false;
 		  add: (SpBoxLayout newLeftToRight
-				   spacing: 2;
-				   add: searchOptions expand: false;
-				   add: SpNullPresenter new;
-				   add: environmentBar expand: false;
+				   add: searchOptions;
+				   add: environmentBar;
 				   yourself)
 		  expand: false;
 		  add: resultTree;
@@ -201,6 +199,12 @@ StFinderPresenter >> defaultLayout [
 				   yourself)
 		  expand: false;
 		  yourself
+]
+
+{ #category : 'initialization' }
+StFinderPresenter >> initialExtentForWindow [
+
+	^ (700 @ 500) scaledByDisplayScaleFactor
 ]
 
 { #category : 'initialization' }
@@ -229,13 +233,13 @@ StFinderPresenter >> initializePresenters [
 ]
 
 { #category : 'initialization' }
-StFinderPresenter >> initializeWindow: aWindowPresenter [
+StFinderPresenter >> initializeWindow: aSpWindowPresenter [
 
-	self flag: #todo. "Find a way to set minimal needed extent for contents."
-	aWindowPresenter
-		title: 'Finder';
-		initialExtent: 800 @ 600;
-		windowIcon: (self iconNamed: #smallFind)
+	super initializeWindow: aSpWindowPresenter.
+
+	self setTitleTo: aSpWindowPresenter.
+	self setWindowIconTo: aSpWindowPresenter.
+	self setInitialExtentTo: aSpWindowPresenter
 ]
 
 { #category : 'updating - widgets' }
@@ -302,6 +306,26 @@ StFinderPresenter >> selectedResult [
 ]
 
 { #category : 'initialization' }
+StFinderPresenter >> setInitialExtentTo: aSpWindowPresenter [
+	
+	aSpWindowPresenter initialExtent: self initialExtentForWindow
+]
+
+{ #category : 'initialization' }
+StFinderPresenter >> setTitleTo: aSpWindowPresenter [
+
+	aSpWindowPresenter title: 'Finder'
+
+]
+
+{ #category : 'initialization' }
+StFinderPresenter >> setWindowIconTo: aSpWindowPresenter [
+	
+	aSpWindowPresenter	windowIcon: (self iconNamed: #smallFind).
+
+]
+
+{ #category : 'initialization' }
 StFinderPresenter >> subscribeToAnnouncements [
 
 	self model whenSearchStarted: [ self notifySearchStarted ].
@@ -313,6 +337,20 @@ StFinderPresenter >> subscribeToAnnouncements [
 StFinderPresenter >> updateEnvironmentStatusFor: packages [
 
 	environmentBar status: packages size asString , ' Packages selected'
+]
+
+{ #category : 'updating - widgets' }
+StFinderPresenter >> updatePreview: aStFinderSearch [ 
+
+	previewSourcePresenter ifNotNil: [ : p | p text: aStFinderSearch previewText ].
+	"| newPresenter presenterToReplace |
+
+	newPresenter := self instantiate: aStFinderSearch previewPresenter.
+	newPresenter text: aStFinderSearch previewText.
+	presenterToReplace := self layout subpresenterOrLayoutNamed: #previewSourcePresenter of: self.
+	self layout 
+		replaceAtIndex: 3 
+		with: newPresenter"
 ]
 
 { #category : 'updating - widgets' }
@@ -329,5 +367,17 @@ StFinderPresenter >> updateResultsWith: results [
 	resultTree
 		roots: results;
 		children: [ :result | result children ].
-	resultStatusBar pushMessage: 'Found ',results size asString,' results'
+	resultStatusBar pushMessage: (String streamContents: [ : stream |
+		stream
+			<< 'Found ';
+			<< results size asString;
+			<< ' results' ])
+]
+
+{ #category : 'updating - widgets' }
+StFinderPresenter >> updateSearchOptions: aCollection [ 
+	"Private - Update the receiver's search options using aCollection which contains the selectors to enable"
+	
+	searchOptions
+		ifNotNil: [ aCollection do: [ : selector | searchOptions perform: selector ] ]
 ]

@@ -29,12 +29,35 @@ StFinderSourceSearch >> searchByRegex: aRegex in: anEnvironment [
 			   in: anEnvironment)
 ]
 
+{ #category : 'accessing' }
+StFinderSourceSearch >> searchByStringExactInsensitiveCase: aString in: aRBBrowserEnvironment [ 
+
+	^ self buildResult: (self 
+		searchMethods: [ :method | method sourceCode asLowercase = aString asLowercase ] 
+		in: aRBBrowserEnvironment)
+]
+
+{ #category : 'accessing' }
+StFinderSourceSearch >> searchByStringExactSensitiveCase: aString in: aRBBrowserEnvironment [ 
+
+	^ self buildResult: (self 
+		searchMethods: [ :method | method sourceCode = aString ] 
+		in: aRBBrowserEnvironment)
+]
+
+{ #category : 'accessing' }
+StFinderSourceSearch >> searchByStringSensitiveCase: aString in: aRBBrowserEnvironment [ 
+
+	^ self buildResult: (self 
+		searchMethods: [ :method | method sourceCode includesSubstring: aString caseSensitive: true ] 
+		in: aRBBrowserEnvironment)
+]
+
 { #category : 'searching' }
-StFinderSourceSearch >> searchByString: aString in: anEnvironment [
+StFinderSourceSearch >> searchBySubstring: aString in: anEnvironment [
 	"Perform a search given aString in anEnvironment."
 
 	^ self buildResult: (self
-			   searchMethods: [ :method |
-				   method sourceCode includesSubstring: aString caseSensitive: false ]
-			   in: anEnvironment)
+	   searchMethods: [ :method | method sourceCode includesSubstring: aString caseSensitive: false ]
+	   in: anEnvironment)
 ]

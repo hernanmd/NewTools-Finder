@@ -55,6 +55,12 @@ StFinderPragmaSearch >> buildResult: aDictionary [
 	^ results
 ]
 
+{ #category : 'searching' }
+StFinderPragmaSearch >> excludePragmaDelimiters: aString [
+
+	^ aString trimBoth: [ :c | { $< .$> } includes: c ]
+]
+
 { #category : 'information' }
 StFinderPragmaSearch >> name [
 	"Returns the name of the search."
@@ -71,15 +77,38 @@ StFinderPragmaSearch >> searchByRegex: aRegex in: anEnvironment [
 			   in: anEnvironment)
 ]
 
+{ #category : 'accessing' }
+StFinderPragmaSearch >> searchByStringExactInsensitiveCase: aString in: aRBBrowserEnvironment [ 
+
+	^ self buildResult: (self 
+		searchPragmas: [ : pragma | pragma selector asLowercase = (self excludePragmaDelimiters: aString asLowercase) ] 
+		in: aRBBrowserEnvironment)
+]
+
+{ #category : 'accessing' }
+StFinderPragmaSearch >> searchByStringExactSensitiveCase: aString in: aRBBrowserEnvironment [ 
+
+	^ self buildResult: (self 
+		searchPragmas: [ : pragma | pragma selector = (self excludePragmaDelimiters: aString) ] 
+		in: aRBBrowserEnvironment)
+]
+
+{ #category : 'accessing' }
+StFinderPragmaSearch >> searchByStringSensitiveCase: aString in: aRBBrowserEnvironment [ 
+
+	^ self buildResult: (self 
+		searchPragmas: [ : pragma | pragma selector includesSubstring: (self excludePragmaDelimiters: aString) caseSensitive: true ] 
+		in: aRBBrowserEnvironment)
+]
+
 { #category : 'searching' }
-StFinderPragmaSearch >> searchByString: aString in: anEnvironment [
+StFinderPragmaSearch >> searchBySubstring: aString in: anEnvironment [
 	"Perform a search given aString in anEnvironment."
 
 	^ self buildResult: (self
 			   searchPragmas: [ :pragma |
-				   pragma selector
-					   includesSubstring:
-					   (aString trimBoth: [ :c | { $< .$> } includes: c ])
+				   pragma selector 
+					   includesSubstring: (self excludePragmaDelimiters: aString)
 					   caseSensitive: false ]
 			   in: anEnvironment)
 ]

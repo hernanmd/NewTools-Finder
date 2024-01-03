@@ -18,10 +18,11 @@ Class {
 StFinderSearchBar >> defaultLayout [
 
 	^ SpBoxLayout newLeftToRight
-		  spacing: 2;
-		  add: searchModeDropList expand: false;
-		  add: searchInput;
-		  yourself
+			spacing: 2;
+			add: searchModeDropList expand: false;
+			add: searchInput;
+			add: searchButton;
+			yourself
 ]
 
 { #category : 'initialization' }
@@ -30,16 +31,31 @@ StFinderSearchBar >> initializePresenters [
 	searchInput := self newSearchInput
 		               placeholder: 'Search... Hit return to accept';
 		               yourself.
-	searchButton := self newButton label: 'Search'.
+	searchButton := self newButton 
+		label: 'Search';
+		icon: (self iconNamed: #smallFind);
+		action: [ self searchBy: searchInput text ];
+		yourself.
 	searchModeDropList := self newDropList
-		                      display: [ :search | search name ];
-		                      yourself
+		help: 'Select the type of elements to search for';
+		display: [ :search | search name ];
+		whenSelectedItemChangedDo: [ : modeType | 
+			self 
+				updateSearchOptions: modeType;
+				updatePreview: modeType ];
+		yourself
 ]
 
 { #category : 'accessing' }
 StFinderSearchBar >> searchButton [
 
 	^ searchButton
+]
+
+{ #category : 'searching' }
+StFinderSearchBar >> searchBy: aString [ 
+
+	owner model searchBy: aString
 ]
 
 { #category : 'accessing' }
@@ -61,9 +77,25 @@ StFinderSearchBar >> searchModes: aListOfSearches [
 ]
 
 { #category : 'updating - widgets' }
+StFinderSearchBar >> updatePreview: aStFinderSelectorSearch [ 
+	"Private - Search mode changed, update the valid search options for the selected aStFinderSelectorSearch"
+
+	owner updatePreview: aStFinderSelectorSearch
+
+]
+
+{ #category : 'updating - widgets' }
 StFinderSearchBar >> updateSearchModes [
 
 	searchModeDropList items: self owner model availableSearches
+]
+
+{ #category : 'updating - widgets' }
+StFinderSearchBar >> updateSearchOptions: aStFinderSelectorSearch [ 
+	"Private - Search mode changed, update the valid search options for the selected aStFinderSelectorSearch"
+
+	owner updateSearchOptions: aStFinderSelectorSearch validSearchOptions
+
 ]
 
 { #category : 'events' }

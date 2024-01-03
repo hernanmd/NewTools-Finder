@@ -30,9 +30,9 @@ StFinderClassResult >> browseAction [
 ]
 
 { #category : 'accessing' }
-StFinderClassResult >> content: aCompiledMethod [
+StFinderClassResult >> content: aClass [
 
-	content := aCompiledMethod methodClass
+	content := aClass
 ]
 
 { #category : 'displaying' }

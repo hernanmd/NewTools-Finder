@@ -52,12 +52,37 @@ StFinderSelectorSearch >> searchByRegex: aRegex in: anEnvironment [
 			   aRegex search: method selector asString ] in: anEnvironment)
 ]
 
+{ #category : 'accessing' }
+StFinderSelectorSearch >> searchByStringExactInsensitiveCase: aString in: aRBBrowserEnvironment [ 
+
+	^ self buildResult: (self 
+		searchMethods: [ :method | method selector asLowercase = aString asLowercase ] 
+		in: aRBBrowserEnvironment)
+]
+
+{ #category : 'accessing' }
+StFinderSelectorSearch >> searchByStringExactSensitiveCase: aString in: aRBBrowserEnvironment [ 
+
+	^ self buildResult: (self 
+		searchMethods: [ :method | method selector = aString ] 
+		in: aRBBrowserEnvironment)
+]
+
+{ #category : 'accessing' }
+StFinderSelectorSearch >> searchByStringSensitiveCase: aString in: aRBBrowserEnvironment [ 
+
+	^ self buildResult: (self 
+		searchMethods: [ :method | method selector includesSubstring: aString caseSensitive: true ] 
+		in: aRBBrowserEnvironment)
+]
+
 { #category : 'searching' }
-StFinderSelectorSearch >> searchByString: aString in: anEnvironment [
+StFinderSelectorSearch >> searchBySubstring: aString in: anEnvironment [
 	"Perform a search given aString in anEnvironment."
 
-	^ self buildResult: (self searchMethods: [ :method |
-			   method selector includesSubstring: aString caseSensitive: false ] in: anEnvironment)
+	^ self buildResult: (self 
+		searchMethods: [ :method | method selector includesSubstring: aString caseSensitive: false ] 
+		in: anEnvironment)
 ]
 
 { #category : 'private' }

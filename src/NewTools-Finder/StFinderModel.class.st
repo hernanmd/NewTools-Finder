@@ -34,10 +34,12 @@ StFinderModel class >> defaultSearches [
 	"The first element is used as the default search mode."
 
 	^ {
-		  StFinderSelectorSearch.
-		  StFinderClassSearch.
-		StFinderSourceSearch.
-		  StFinderPragmaSearch }
+		StFinderSelectorSearch .
+		StFinderClassSearch .
+		StFinderSourceSearch .
+		StFinderPragmaSearch .
+		StFinderExampleSearch 
+		}
 ]
 
 { #category : 'adding' }
@@ -85,6 +87,8 @@ StFinderModel >> initialize [
 	searchString := ''.
 	results := StFinderResult new.
 	useRegex := false.
+	useExact := false.
+	useCase := false.
 
 	availableSearches := self class defaultSearches
 		                     collect: [ :search | search new ]
@@ -115,22 +119,46 @@ StFinderModel >> search [
 
 	searchString isEmpty ifTrue: [ ^ self ].
 
-	[ :job |
-	self searchStarted.
-	results := useRegex
-		           ifTrue: [
-		           currentSearch
-			           searchByRegex: searchString asRegex
-			           in: environment ]
-		           ifFalse: [
-		           currentSearch
-			           searchByString: searchString
-			           in: environment ].
-	self searchEnded ] 
-		asJob
+	[ : job |
+		self searchStarted.
+		results := self search: searchString.
+		self searchEnded 
+	] asJob
 			title: 'Searching...';
 			run.
 
+]
+
+{ #category : 'accessing' }
+StFinderModel >> search: aString [ 
+
+	^ useRegex
+		ifTrue: [
+			currentSearch
+				searchByRegex: searchString asRegex
+				in: environment ]
+		ifFalse: [
+			(useExact and: [ useCase ])
+				ifTrue: [ 
+					currentSearch
+						searchByStringExactSensitiveCase: searchString
+						in: environment ]
+				ifFalse: [
+					(useExact and: [ useCase not ])
+						ifTrue: [ 
+							currentSearch
+								searchByStringExactInsensitiveCase: searchString
+								in: environment ]
+						ifFalse: [ 
+							(useExact not and: [ useCase ])
+								ifTrue: [ 
+									currentSearch
+										searchByStringSensitiveCase: searchString
+										in: environment ]
+								ifFalse: [ 
+									currentSearch
+										searchBySubstring: searchString 
+										in: environment ] ] ] ]
 ]
 
 { #category : 'searching' }
