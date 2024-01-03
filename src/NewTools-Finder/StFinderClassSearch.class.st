@@ -35,11 +35,15 @@ StFinderClassSearch >> name [
 ]
 
 { #category : 'searching' }
-StFinderClassSearch >> searchByRegex: aRegex in: anEnvironment [
+StFinderClassSearch >> searchByRegex: aString in: anEnvironment [
 	"Perform a search given aRegex in anEnvironment."
 
-	^ self buildResult:
-		  (self searchClasses: [ :class | aRegex search: class name ] in: anEnvironment)
+	| regex |
+	regex := aString asRegex.
+	^ self 
+		buildResult: (self 
+			searchClasses: [ :class | regex search: class name ] 
+			in: anEnvironment)
 ]
 
 { #category : 'accessing' }
@@ -67,7 +71,7 @@ StFinderClassSearch >> searchBySubstring: aString in: anEnvironment [
 		in: anEnvironment)
 ]
 
-{ #category : 'private' }
+{ #category : 'as yet unclassified' }
 StFinderClassSearch >> searchClasses: aSelectBlock in: anEnvironment [
 
 	^ OrderedCollection streamContents: [ :stream |

@@ -17,6 +17,9 @@ The following methods must be provided by subclasses of me.
 Class {
 	#name : 'StFinderSearch',
 	#superclass : 'Object',
+	#instVars : [
+		'searchSelector'
+	],
 	#category : 'NewTools-Finder-Search',
 	#package : 'NewTools-Finder',
 	#tag : 'Search'
@@ -44,6 +47,17 @@ StFinderSearch >> previewText [
 	^ String empty
 ]
 
+{ #category : 'accessing' }
+StFinderSearch >> search: aString in: aRBBrowserEnvironment [ 
+	"Answer a <Collection> of results"
+
+	^ self 
+		perform: searchSelector 
+		withArguments: {
+			aString .
+			aRBBrowserEnvironment }
+]
+
 { #category : 'searching' }
 StFinderSearch >> searchByRegex: aRegex in: anEnvironment [
 	"Perform a search given aRegex in anEnvironment."
@@ -56,6 +70,13 @@ StFinderSearch >> searchBySubstring: aString in: anEnvironment [
 	"Perform a search given aString in anEnvironment."
 
 	self subclassResponsibility
+]
+
+{ #category : 'initialization' }
+StFinderSearch >> setSearchStrategyFrom: aDictionary [
+	"Set the receiver's search strategy according to aCollection of options"
+	
+	searchSelector := aDictionary keyAtValue: true.
 ]
 
 { #category : 'accessing' }

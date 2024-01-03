@@ -21,11 +21,13 @@ StFinderSourceSearch >> name [
 ]
 
 { #category : 'searching' }
-StFinderSourceSearch >> searchByRegex: aRegex in: anEnvironment [
+StFinderSourceSearch >> searchByRegex: aString in: anEnvironment [
 	"Perform a search given aRegex in anEnvironment."
 
+	| regex |
+	regex := aString asRegex.
 	^ self buildResult: (self
-			   searchMethods: [ :method | aRegex search: method sourceCode ]
+			   searchMethods: [ :method | regex search: method sourceCode ]
 			   in: anEnvironment)
 ]
 

@@ -45,11 +45,15 @@ StFinderSelectorSearch >> name [
 ]
 
 { #category : 'searching' }
-StFinderSelectorSearch >> searchByRegex: aRegex in: anEnvironment [
+StFinderSelectorSearch >> searchByRegex: aString in: anEnvironment [
 	"Perform a search given aRegex in anEnvironment."
 
-	^ self buildResult: (self searchMethods: [ :method |
-			   aRegex search: method selector asString ] in: anEnvironment)
+	| regex |
+	regex := aString asRegex.
+	^ self buildResult: 
+		(self 
+			searchMethods: [ :method | regex search: method selector asString ] 
+			in: anEnvironment)
 ]
 
 { #category : 'accessing' }

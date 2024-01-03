@@ -118,7 +118,9 @@ StFinderPresenter class >> open [
 StFinderPresenter >> connectPresenters [
 
 	searchBar
-		whenSubmitSearchDo: [ :text | self model searchBy: text ];
+		whenSubmitSearchDo: [ :text | 
+			self model searchBy: text.
+			previewSourcePresenter clearContent ];
 		whenSearchModeChangedDo: [ :new | self model currentSearch: new ].
 
 	helpButton action: [
@@ -185,19 +187,15 @@ StFinderPresenter >> defaultLayout [
 				   addLast: helpButton;
 				   yourself)
 		  expand: false;
-		  add: (SpBoxLayout newLeftToRight
+			add: (SpBoxLayout newLeftToRight
 				   add: searchOptions;
 				   add: environmentBar;
 				   yourself)
-		  expand: false;
-		  add: resultTree;
-		  add: previewSourcePresenter;
-		  add: (SpBoxLayout newLeftToRight
-				   spacing: 2;
-				   add: resultButtonBar expand: false;
-				   addLast: resultStatusBar;
-				   yourself)
-		  expand: false;
+			expand: false;
+			add: resultTree;
+			add: resultButtonBar expand: false;		
+			add: previewSourcePresenter;
+			addLast: resultStatusBar expand: false;
 		  yourself
 ]
 

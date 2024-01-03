@@ -69,11 +69,13 @@ StFinderPragmaSearch >> name [
 ]
 
 { #category : 'searching' }
-StFinderPragmaSearch >> searchByRegex: aRegex in: anEnvironment [
+StFinderPragmaSearch >> searchByRegex: aString in: anEnvironment [
 	"Perform a search given aRegex in anEnvironment."
 
+	| regex |
+	regex := aString asRegex.
 	^ self buildResult: (self
-			   searchPragmas: [ :pragma | aRegex search: pragma selector ]
+			   searchPragmas: [ :pragma | regex search: pragma selector ]
 			   in: anEnvironment)
 ]
 

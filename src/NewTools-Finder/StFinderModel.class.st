@@ -36,6 +36,7 @@ StFinderModel class >> defaultSearches [
 	^ {
 		StFinderSelectorSearch .
 		StFinderClassSearch .
+		StFinderPackageSearch .
 		StFinderSourceSearch .
 		StFinderPragmaSearch .
 		StFinderExampleSearch 
@@ -131,34 +132,12 @@ StFinderModel >> search [
 
 { #category : 'accessing' }
 StFinderModel >> search: aString [ 
+	"Main search callback method. Answer a ..."
 
-	^ useRegex
-		ifTrue: [
-			currentSearch
-				searchByRegex: searchString asRegex
-				in: environment ]
-		ifFalse: [
-			(useExact and: [ useCase ])
-				ifTrue: [ 
-					currentSearch
-						searchByStringExactSensitiveCase: searchString
-						in: environment ]
-				ifFalse: [
-					(useExact and: [ useCase not ])
-						ifTrue: [ 
-							currentSearch
-								searchByStringExactInsensitiveCase: searchString
-								in: environment ]
-						ifFalse: [ 
-							(useExact not and: [ useCase ])
-								ifTrue: [ 
-									currentSearch
-										searchByStringSensitiveCase: searchString
-										in: environment ]
-								ifFalse: [ 
-									currentSearch
-										searchBySubstring: searchString 
-										in: environment ] ] ] ]
+	^ (currentSearch setSearchStrategyFrom: self searchOptions)
+		search: searchString
+		in: environment.
+
 ]
 
 { #category : 'searching' }
@@ -178,6 +157,20 @@ StFinderModel >> searchEnded [
 
 	self announcer announce:
 		(StFinderSearchEnded results: self results)
+]
+
+{ #category : 'accessing' }
+StFinderModel >> searchOptions [
+	"Answer a <Dictionary> of searching options"
+	
+	^ Dictionary new
+		at: #searchByRegex:in: put: useRegex;
+		at: #searchByStringExactSensitiveCase:in: put: (useExact and: [ useCase ]);
+		at: #searchByStringExactInsensitiveCase:in: put: (useExact and: [ useCase not ]);
+		at: #searchByStringSensitiveCase:in: put: (useExact not and: [ useCase ]);
+		at: #searchBySubstring:in: put: (useExact not and: [ useCase not ]);
+		yourself
+
 ]
 
 { #category : 'announcing' }

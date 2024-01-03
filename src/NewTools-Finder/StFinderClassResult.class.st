@@ -30,9 +30,11 @@ StFinderClassResult >> browseAction [
 ]
 
 { #category : 'accessing' }
-StFinderClassResult >> content: aClass [
+StFinderClassResult >> content: aCompiledMethodOrClass [
 
-	content := aClass
+	content := aCompiledMethodOrClass isCompiledMethod 
+		ifTrue: [  aCompiledMethodOrClass methodClass ]
+		ifFalse: [ aCompiledMethodOrClass ]
 ]
 
 { #category : 'displaying' }
@@ -61,7 +63,12 @@ StFinderClassResult >> forFinderPreview: aSpCodePresenter [
 StFinderClassResult >> getContentSource [
 	"Answer a <CompiledMethod> representing the currently found content"
 
-	^ self content >> self parent content
+	| methodOrClass |
+	
+	methodOrClass := self parent content.
+	^ methodOrClass isCompiledMethod
+		ifFalse: [ self content >> methodOrClass ]
+		ifTrue: [ methodOrClass ]
 ]
 
 { #category : 'as yet unclassified' }

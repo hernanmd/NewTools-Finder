@@ -45,16 +45,12 @@ StFinderExampleSearch >> previewPresenter [
 { #category : 'accessing' }
 StFinderExampleSearch >> previewText [
 	
-	^ '# Example search
-	
-Use an example to find a method in the system.
+	^ '"Use an example to find a method in the system.
 
-```smalltalk
    ''a''. ''b''. ''ab'' "will find the message #, for strings concatenation"
    2. -2                "will find the message #negated"
    3. 6                 "will find the message #factorial"
    20. 10. 15. 15       "will find the message #min:max:"
-```
 
 It works on collections too:
 
@@ -105,7 +101,7 @@ This will find the message #next.
 
 This will find the message #dayOfWeekName
 
-The Method Finder is not trying all methods in the system so if it will find nothing, a method with requested behavior may still exist. '
+The Method Finder is not trying all methods in the system so if it will find nothing, a method with requested behavior may still exist." '
 ]
 
 { #category : 'accessing' }
