@@ -6,14 +6,32 @@ Class {
 	#tag : 'Result'
 }
 
+{ #category : 'testing' }
+StFinderPackageResult class >> matches: aCollection [ 
+	
+	^ false
+]
+
 { #category : 'displaying' }
 StFinderPackageResult >> displayIcon [
 
 	^ self iconNamed: #package
 ]
 
+{ #category : 'displaying' }
+StFinderPackageResult >> displayString [
+
+	^ self content name
+]
+
 { #category : 'private' }
 StFinderPackageResult >> forFinderPreview: aSpCodePresenter [ 
 
 	^ String empty
+]
+
+{ #category : 'testing' }
+StFinderPackageResult >> isPackageResult [
+
+	^ true
 ]

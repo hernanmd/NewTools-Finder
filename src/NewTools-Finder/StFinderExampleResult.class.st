@@ -23,7 +23,7 @@ StFinderExampleResult >> forFinderPreview: aSpCodePresenter [
 
 	self halt.
 	^ self parent
-		  ifNotNil: [ self displaySource: self getContentSource in: aSpCodePresenter ]
+		  ifNotNil: [ self displaySource: self getCompiledMethod in: aSpCodePresenter ]
 		  ifNil: [
 			  aSpCodePresenter
 				  beForScripting;

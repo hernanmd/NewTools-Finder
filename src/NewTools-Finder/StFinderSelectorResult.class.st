@@ -41,19 +41,15 @@ StFinderSelectorResult >> forFinderPreview: aSpCodePresenter [
 				text: 'Please select a method implementation expanding the selected item' ]
 		ifNotNil: [ 
 			self 
-				displaySource: self getContentSource
+				displaySource: self getCompiledMethod
 				in: aSpCodePresenter ]
 ]
 
 { #category : 'accessing' }
-StFinderSelectorResult >> getContentSource [
+StFinderSelectorResult >> getCompiledMethod [
 	"Answer a <CompiledMethod> representing the currently found content"
 
-	| methodOrClass |
-	
-	^ (methodOrClass := self content) isCompiledMethod
-		ifFalse: [ self parent content >> methodOrClass ]
-		ifTrue: [ methodOrClass ]
+	^ self parent content >> self content
 ]
 
 { #category : 'testing' }

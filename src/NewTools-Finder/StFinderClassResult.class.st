@@ -48,10 +48,10 @@ StFinderClassResult >> displayIcon [
 { #category : 'action' }
 StFinderClassResult >> forFinderPreview: aSpCodePresenter [ 
 
-	^ (self content isClass and: [ self parent notNil ])
+	^ (self content isClass and: [ self parent notNil and: [ self parent isPackageResult not ] ])
 		ifTrue: [ 
 			self 
-				displaySource: self getContentSource
+				displaySource: self getCompiledMethod
 				in: aSpCodePresenter ]
 		ifFalse: [ 
 			aSpCodePresenter 
@@ -60,15 +60,10 @@ StFinderClassResult >> forFinderPreview: aSpCodePresenter [
 ]
 
 { #category : 'accessing' }
-StFinderClassResult >> getContentSource [
+StFinderClassResult >> getCompiledMethod [
 	"Answer a <CompiledMethod> representing the currently found content"
 
-	| methodOrClass |
-	
-	methodOrClass := self parent content.
-	^ methodOrClass isCompiledMethod
-		ifFalse: [ self content >> methodOrClass ]
-		ifTrue: [ methodOrClass ]
+	^ self content >> self parent content.
 ]
 
 { #category : 'as yet unclassified' }
@@ -133,13 +128,6 @@ StFinderClassResult >> isClassOrTrait: aClassOraTaCompositionElement [
 StFinderClassResult >> isClassResult [
 
 	^ true
-]
-
-{ #category : 'as yet unclassified' }
-StFinderClassResult >> resultPreview [
-	"Private - See superimplementor's comment"
-	
-	^ self content definitionString
 ]
 
 { #category : 'as yet unclassified' }

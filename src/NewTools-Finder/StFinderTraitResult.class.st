@@ -35,7 +35,7 @@ StFinderTraitResult >> displayIcon [
 StFinderTraitResult >> forFinderPreview: aSpCodePresenter [
 
 	^ self parent
-		  ifNotNil: [ self displaySource: self getContentSource in: aSpCodePresenter ]
+		  ifNotNil: [ self displaySource: self getCompiledMethod in: aSpCodePresenter ]
 		  ifNil: [
 			  aSpCodePresenter
 				  beForScripting;

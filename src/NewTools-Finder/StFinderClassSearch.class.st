@@ -22,8 +22,7 @@ StFinderClassSearch >> buildResult: aListOfClasses [
 			  newResult := StFinderClassResult new content: each.
 			  each selectors sort do: [ :selector |
 				 newResult addChild: (StFinderSelectorResult new content: selector) ].
-			  newResult
-			 ]
+			  newResult ]
 		  as: OrderedCollection
 ]
 
@@ -59,6 +58,14 @@ StFinderClassSearch >> searchByStringExactSensitiveCase: aString in: aRBBrowserE
 
 	^ self buildResult: (self 
 		searchClasses: [ : class | class name = aString ] 
+		in: aRBBrowserEnvironment)
+]
+
+{ #category : 'accessing' }
+StFinderClassSearch >> searchByStringSensitiveCase: aString in: aRBBrowserEnvironment [ 
+
+	^ self buildResult: (self 
+		searchClasses: [ :class | class name includesSubstring: aString caseSensitive: true ] 
 		in: aRBBrowserEnvironment)
 ]
 

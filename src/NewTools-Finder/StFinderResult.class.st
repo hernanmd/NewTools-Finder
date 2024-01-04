@@ -157,6 +157,12 @@ StFinderResult >> isClassResult [
 ]
 
 { #category : 'testing' }
+StFinderResult >> isPackageResult [
+
+	^ false
+]
+
+{ #category : 'testing' }
 StFinderResult >> isPragmaResult [
 
 	^ false
@@ -186,13 +192,6 @@ StFinderResult >> parent [
 StFinderResult >> parent: anObject [
 
 	parent := anObject
-]
-
-{ #category : 'accessing' }
-StFinderResult >> resultPreview [
-	"Answer a <String> representing the receiver's preview"
-	
-	self subclassResponsibility
 ]
 
 { #category : 'action' }

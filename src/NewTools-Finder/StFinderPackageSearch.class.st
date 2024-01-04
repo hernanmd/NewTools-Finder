@@ -61,6 +61,14 @@ StFinderPackageSearch >> searchByStringExactSensitiveCase: aString in: aRBBrowse
 		in: aRBBrowserEnvironment)
 ]
 
+{ #category : 'accessing' }
+StFinderPackageSearch >> searchByStringSensitiveCase: aString in: aRBBrowserEnvironment [ 
+
+	^ self buildResult: (self 
+		searchPackages: [ :package | package name includesSubstring: aString caseSensitive: true ] 
+		in: aRBBrowserEnvironment)
+]
+
 { #category : 'searching' }
 StFinderPackageSearch >> searchBySubstring: aString in: anEnvironment [
 	"Perform a search given aString in anEnvironment."
