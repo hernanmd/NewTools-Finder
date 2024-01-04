@@ -164,7 +164,8 @@ StFinderModel >> searchOptions [
 	"Answer a <Dictionary> of searching options"
 	
 	^ Dictionary new
-		at: #searchByRegex:in: put: useRegex;
+		at: #searchByRegexCaseInsensitive:in: put: (useRegex and: [ useCase not ]);
+		at: #searchByRegexCaseSensitive:in: put: (useRegex and: [ useCase]);
 		at: #searchByStringExactSensitiveCase:in: put: (useExact and: [ useCase ]);
 		at: #searchByStringExactInsensitiveCase:in: put: (useExact and: [ useCase not ]);
 		at: #searchByStringSensitiveCase:in: put: (useExact not and: [ useCase ]);

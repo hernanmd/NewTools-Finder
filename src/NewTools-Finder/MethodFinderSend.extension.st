@@ -1,75 +1,72 @@
-Class {
-	#name : 'StFinderExampleSearch',
-	#superclass : 'StFinderSearch',
-	#category : 'NewTools-Finder-Search',
-	#package : 'NewTools-Finder',
-	#tag : 'Search'
-}
+Extension { #name : 'MethodFinderSend' }
 
-{ #category : 'execution' }
-StFinderExampleSearch >> computeDataObjects: aString [
-
-	| data dataObjects |
-	(aString includes: $.) ifFalse: [ ^ #(  ) ].
-	data := aString trimRight: [ :char |
-		        char isSeparator or: [ char = $. ] ].
-	
-	[
-		dataObjects := self parseAsNodes: data.
-		dataObjects do: [ : e | e evaluateWithTimeOut: self evaluationTimeout ] ]
-	on: CodeError , RuntimeSyntaxError
-	do: [ :e |
-		self inform: 'Error: ' , e messageText.
-		^ #(  ) ] .
-
-	dataObjects size < 2 ifFalse: [ ^ dataObjects ].
-	self inform:
-		'If you are giving an example of receiver, \args, and result, please put periods between the parts.\Otherwise just type one selector fragment'
-			withCRs.
-	^ #(  )
+{ #category : '*NewTools-Finder' }
+MethodFinderSend >> children [
+	^ Array empty
 ]
 
-{ #category : 'execution' }
-StFinderExampleSearch >> computeWithMethodFinder: aString [
-	"Compute the selectors for the single example of receiver and args, in the very top pane"
+{ #category : '*NewTools-Finder' }
+MethodFinderSend >> displayIcon [
 
-	^ (self computeDataObjects: aString) 
-		ifNotEmpty: [ : dataObjects | 
-			MethodFinder new 
-				findMethodsByExampleInput: dataObjects allButLast 
-				andExpectedResult: dataObjects last ]
-		ifEmpty: [ Array empty ]
+	^ self iconNamed: #page
 ]
 
-{ #category : 'execution' }
-StFinderExampleSearch >> evaluationTimeout [
-	"Answer a <Number> representing the timeout for individual calls in the receiver's search"
+{ #category : '*NewTools-Finder' }
+MethodFinderSend >> forFinderPreview: aSpCodePresenter [ 
 
-	^ StFinderSettings evaluationTimeout
+	self flag: #toRemove.
+	aSpCodePresenter 
+		beForScripting;
+		text: self previewText
 ]
 
-{ #category : 'information' }
-StFinderExampleSearch >> name [
-	"Returns the name of the search."
+{ #category : '*NewTools-Finder' }
+MethodFinderSend >> hasBrowseAction [
 
-	^ 'Examples'
+	^ false
 ]
 
-{ #category : 'parsing' }
-StFinderExampleSearch >> parseAsNodes: anExpression [
+{ #category : '*NewTools-Finder' }
+MethodFinderSend >> hasHierarchyAction [
 
-	^ (RBParser parseExpression: '{', anExpression , '}') statements asArray
+	^ false
 ]
 
-{ #category : 'accessing' }
-StFinderExampleSearch >> previewPresenter [
+{ #category : '*NewTools-Finder' }
+MethodFinderSend >> hasImplementersAction [
 
-	^ MicrodownPresenter
+	^ true
 ]
 
-{ #category : 'accessing' }
-StFinderExampleSearch >> previewText [
-	
+{ #category : '*NewTools-Finder' }
+MethodFinderSend >> hasInheritanceAction [
+
+	^ false
+]
+
+{ #category : '*NewTools-Finder' }
+MethodFinderSend >> hasSendersAction [
+
+	^ true
+]
+
+{ #category : '*NewTools-Finder' }
+MethodFinderSend >> hasVersionsAction [
+
+	^ false
+]
+
+{ #category : '*NewTools-Finder' }
+MethodFinderSend >> implementersAction [
+
+	SystemNavigation default browseAllImplementorsOf: self selector
+]
+
+{ #category : '*NewTools-Finder' }
+MethodFinderSend >> previewText [
+
+	self flag: #toRemove.
+
 	^ '"Use an example to find a method in the system.
 
    ''a''. ''b''. ''ab'' "will find the message #, for strings concatenation"
@@ -129,24 +126,11 @@ This will find the message #dayOfWeekName
 The Method Finder is not trying all methods in the system so if it will find nothing, a method with requested behavior may still exist." '
 ]
 
-{ #category : 'accessing' }
-StFinderExampleSearch >> search: aString in: aRBBrowserEnvironment [ 
-	"Answer a <Collection> of results"
-	"ToDo: Evaluate in the context of aRBBrowserEnvironment methodsDo: [ : method |"
+{ #category : '*NewTools-Finder' }
+MethodFinderSend >> sendersAction [
 
-	^ self computeWithMethodFinder: aString
-
-]
-
-{ #category : 'initialization' }
-StFinderExampleSearch >> setSearchStrategyFrom: aDictionary [
-	"Set the receiver's search strategy according to aCollection of options"
-
-]
-
-{ #category : 'accessing' }
-StFinderExampleSearch >> validSearchOptions [
-	"Answer a <Collection> of valid search options for the receiver"
-	
-	^ #(#deactivateAll)
+	SystemNavigation default
+		browseSendersOf: self selector
+		name: 'Senders of ' , self selector
+		autoSelect: self selector
 ]

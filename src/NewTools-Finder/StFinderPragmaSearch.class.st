@@ -69,17 +69,17 @@ StFinderPragmaSearch >> name [
 ]
 
 { #category : 'searching' }
-StFinderPragmaSearch >> searchByRegex: aString in: anEnvironment [
+StFinderPragmaSearch >> searchByRegexCaseInsensitive: aString in: anEnvironment [
 	"Perform a search given aRegex in anEnvironment."
 
 	| regex |
-	regex := aString asRegex.
+	regex := aString asRegexIgnoringCase.
 	^ self buildResult: (self
 			   searchPragmas: [ :pragma | regex search: pragma selector ]
 			   in: anEnvironment)
 ]
 
-{ #category : 'accessing' }
+{ #category : 'searching' }
 StFinderPragmaSearch >> searchByStringExactInsensitiveCase: aString in: aRBBrowserEnvironment [ 
 
 	^ self buildResult: (self 
@@ -87,7 +87,7 @@ StFinderPragmaSearch >> searchByStringExactInsensitiveCase: aString in: aRBBrows
 		in: aRBBrowserEnvironment)
 ]
 
-{ #category : 'accessing' }
+{ #category : 'searching' }
 StFinderPragmaSearch >> searchByStringExactSensitiveCase: aString in: aRBBrowserEnvironment [ 
 
 	^ self buildResult: (self 
@@ -95,7 +95,7 @@ StFinderPragmaSearch >> searchByStringExactSensitiveCase: aString in: aRBBrowser
 		in: aRBBrowserEnvironment)
 ]
 
-{ #category : 'accessing' }
+{ #category : 'searching' }
 StFinderPragmaSearch >> searchByStringSensitiveCase: aString in: aRBBrowserEnvironment [ 
 
 	^ self buildResult: (self 

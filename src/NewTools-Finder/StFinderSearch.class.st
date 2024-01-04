@@ -59,7 +59,7 @@ StFinderSearch >> search: aString in: aRBBrowserEnvironment [
 ]
 
 { #category : 'searching' }
-StFinderSearch >> searchByRegex: aRegex in: anEnvironment [
+StFinderSearch >> searchByRegexCaseInsensitive: aRegex in: anEnvironment [
 	"Perform a search given aRegex in anEnvironment."
 
 	self subclassResponsibility

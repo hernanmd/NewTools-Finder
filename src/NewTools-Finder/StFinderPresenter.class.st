@@ -12,9 +12,9 @@ Class {
 		'resultButtonBar',
 		'environmentBar',
 		'searchOptions',
-		'helpButton',
 		'resultStatusBar',
-		'previewSourcePresenter'
+		'previewSourcePresenter',
+		'configButton'
 	],
 	#category : 'NewTools-Finder-Core',
 	#package : 'NewTools-Finder',
@@ -117,19 +117,10 @@ StFinderPresenter class >> open [
 { #category : 'initialization' }
 StFinderPresenter >> connectPresenters [
 
-	searchBar
-		whenSubmitSearchDo: [ :text | 
-			self model searchBy: text.
-			previewSourcePresenter clearContent ];
-		whenSearchModeChangedDo: [ :new | self model currentSearch: new ].
+	self connectSearchBar.
 
-	helpButton action: [
-		self flag: #todo. "Make better help text dialog."
-		(self newText
-			 beNotEditable;
-			 withoutEditionContextMenu;
-			 text: self class defaultExplanation;
-			 openDialog) title: 'Finder Help' ].
+	configButton action: [
+		(self instantiate: StFinderOptionsPresenter on: self) open ].
 
 	self connectSearchOptions.
 
@@ -138,11 +129,9 @@ StFinderPresenter >> connectPresenters [
 		whenPackagesSelectedDo: [ self openPackageChooserDialog ].
 
 	resultTree whenSelectedItemChangedDo: [ :newResult |
-		newResult
-			ifNil: [ self resultButtonBar disableAll ]
-			ifNotNil: [ 
-				newResult forFinderPreview: previewSourcePresenter.
-				self resultButtonBar enableButtonsFor: newResult ] ].
+		newResult ifNil: [ self resultButtonBar disableAll ] ifNotNil: [
+			newResult forFinderPreview: previewSourcePresenter.
+			self resultButtonBar enableButtonsFor: newResult ] ].
 
 	self connectResultButtons.
 
@@ -161,11 +150,25 @@ StFinderPresenter >> connectResultButtons [
 ]
 
 { #category : 'initialization' }
+StFinderPresenter >> connectSearchBar [
+
+	searchBar
+		whenSubmitSearchDo: [ :text |
+			self model searchBy: text.
+			previewSourcePresenter clearContent ];
+		whenSearchModeChangedDo: [ :new | self model currentSearch: new ]
+]
+
+{ #category : 'initialization' }
 StFinderPresenter >> connectSearchOptions [
 
 	searchOptions
-		whenRegexActivatedDo: [ self model useRegex: true ];
-		whenRegexDeactivatedDo: [ self model useRegex: false ];
+		whenRegexActivatedDo: [ 
+			self model useRegex: true.
+			searchOptions disableExact. ];
+		whenRegexDeactivatedDo: [ 
+			self model useRegex: false.
+			searchOptions enableExact ];
 		whenCaseActivatedDo: [ self model useCase: true ];
 		whenCaseDeactivatedDo: [ self model useCase: false ];
 		whenExactActivatedDo: [
@@ -184,7 +187,7 @@ StFinderPresenter >> defaultLayout [
 		  add: (SpBoxLayout newLeftToRight
 				   spacing: 2;
 				   add: searchBar;
-				   addLast: helpButton;
+				   addLast: configButton;
 				   yourself)
 		  expand: false;
 			add: (SpBoxLayout newLeftToRight
@@ -211,8 +214,8 @@ StFinderPresenter >> initializePresenters [
 	searchBar := self instantiate: StFinderSearchBar.
 	searchBar searchModes: self model availableSearches.
 
-	helpButton := self newButton
-		              icon: (Smalltalk ui icons iconNamed: #help);
+	configButton := self newButton
+		              icon: (self iconNamed: #config);
 		              yourself.
 
 	searchOptions := self instantiate: StFinderSearchOptions.
@@ -340,6 +343,7 @@ StFinderPresenter >> updateEnvironmentStatusFor: packages [
 { #category : 'updating - widgets' }
 StFinderPresenter >> updatePreview: aStFinderSearch [ 
 
+	self flag: #toDo.
 	previewSourcePresenter ifNotNil: [ : p | p text: aStFinderSearch previewText ].
 	"| newPresenter presenterToReplace |
 

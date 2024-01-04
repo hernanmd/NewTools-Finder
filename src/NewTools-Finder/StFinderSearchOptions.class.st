@@ -66,9 +66,21 @@ StFinderSearchOptions >> defaultLayout [
 ]
 
 { #category : 'accessing' }
+StFinderSearchOptions >> disableExact [
+
+	exactCheckBox enabled: false.
+]
+
+{ #category : 'accessing' }
 StFinderSearchOptions >> disableRegex [
 
 	regexpCheckBox enabled: false.
+]
+
+{ #category : 'accessing' }
+StFinderSearchOptions >> enableExact [
+
+	exactCheckBox enabled: true.
 ]
 
 { #category : 'accessing' }

@@ -34,18 +34,30 @@ StFinderClassSearch >> name [
 ]
 
 { #category : 'searching' }
-StFinderClassSearch >> searchByRegex: aString in: anEnvironment [
+StFinderClassSearch >> searchByRegexCaseInsensitive: aString in: anEnvironment [
 	"Perform a search given aRegex in anEnvironment."
 
 	| regex |
-	regex := aString asRegex.
+	regex := aString asRegexIgnoringCase.
 	^ self 
 		buildResult: (self 
 			searchClasses: [ :class | regex search: class name ] 
 			in: anEnvironment)
 ]
 
-{ #category : 'accessing' }
+{ #category : 'searching' }
+StFinderClassSearch >> searchByRegexCaseSensitive: aString in: aRBBrowserEnvironment [ 
+	"Perform a search given aString representing a regular expression in aRBBrowserEnvironment."
+
+	| regex |
+	regex := aString asRegex.
+	^ self 
+		buildResult: (self 
+			searchClasses: [ :class | regex search: class name ] 
+			in: aRBBrowserEnvironment)
+]
+
+{ #category : 'searching' }
 StFinderClassSearch >> searchByStringExactInsensitiveCase: aString in: aRBBrowserEnvironment [ 
 
 	^ self buildResult: (self 
@@ -53,7 +65,7 @@ StFinderClassSearch >> searchByStringExactInsensitiveCase: aString in: aRBBrowse
 		in: aRBBrowserEnvironment)
 ]
 
-{ #category : 'accessing' }
+{ #category : 'searching' }
 StFinderClassSearch >> searchByStringExactSensitiveCase: aString in: aRBBrowserEnvironment [ 
 
 	^ self buildResult: (self 
@@ -61,7 +73,7 @@ StFinderClassSearch >> searchByStringExactSensitiveCase: aString in: aRBBrowserE
 		in: aRBBrowserEnvironment)
 ]
 
-{ #category : 'accessing' }
+{ #category : 'searching' }
 StFinderClassSearch >> searchByStringSensitiveCase: aString in: aRBBrowserEnvironment [ 
 
 	^ self buildResult: (self 
