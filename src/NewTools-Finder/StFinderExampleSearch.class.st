@@ -35,9 +35,10 @@ StFinderExampleSearch >> computeWithMethodFinder: aString [
 
 	^ (self computeDataObjects: aString) 
 		ifNotEmpty: [ : dataObjects | 
-			MethodFinder new 
+			StMethodFinder new 
 				findMethodsByExampleInput: dataObjects allButLast 
-				andExpectedResult: dataObjects last ]
+				andExpectedResult: dataObjects last
+				timeout: self evaluationTimeout ]
 		ifEmpty: [ Array empty ]
 ]
 

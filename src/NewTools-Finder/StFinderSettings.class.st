@@ -2,7 +2,10 @@ Class {
 	#name : 'StFinderSettings',
 	#superclass : 'Object',
 	#classVars : [
-		'EvaluationTimeout'
+		'EvaluationTimeout',
+		'LogErrorFile',
+		'LogErrorsToFile',
+		'LogErrorsToTranscript'
 	],
 	#category : 'NewTools-Finder-Core',
 	#package : 'NewTools-Finder',
@@ -36,4 +39,56 @@ StFinderSettings class >> groupSettingsOn: aBuilder [
 		label: 'Finder';
 		description: '';
 		parent: #tools
+]
+
+{ #category : 'system settings' }
+StFinderSettings class >> logErrorFile [
+	"Modified by settings Finder: self classSide >> #logErrorsToTranscriptOn:"
+
+	^ LogErrorFile
+		ifNil: [ LogErrorFile := '' ]
+]
+
+{ #category : 'system settings' }
+StFinderSettings class >> logErrorFileReference [
+	"Answer a <FileReference> used to log evaluation errors"
+
+	^ self logErrorFile asFileReference
+]
+
+{ #category : 'system settings' }
+StFinderSettings class >> logErrorsToFile [
+	"Answer <true> if the receiver should log errors to a file"
+
+	^ self logErrorFile notEmpty
+]
+
+{ #category : 'system settings' }
+StFinderSettings class >> logErrorsToFileOn: aBuilder [
+	<systemsettings>
+	(aBuilder setting: #logErrorsToFile)
+		parent: #finder;
+		default: true;
+		label: 'Log errors to file';
+		description: 'Log evaluation errors in the examples search to a file';
+		target: self
+]
+
+{ #category : 'system settings' }
+StFinderSettings class >> logErrorsToTranscript [
+	"Modified by settings Finder: self classSide >> #logErrorsToTranscriptOn:"
+
+	^ LogErrorsToTranscript
+		ifNil: [ LogErrorsToTranscript := true ]
+]
+
+{ #category : 'system settings' }
+StFinderSettings class >> logErrorsToTranscriptOn: aBuilder [
+	<systemsettings>
+	(aBuilder setting: #logErrorsToTranscript)
+		parent: #finder;
+		default: true;
+		label: 'Log errors to Transcript';
+		description: 'Log evaluation errors in the examples search to the Transcript';
+		target: self
 ]

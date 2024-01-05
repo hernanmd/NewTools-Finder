@@ -1,18 +1,45 @@
-Extension { #name : 'MethodFinderSend' }
+"
+Extends `MethodFinderSend` to support Finder UI operations for searching examples.
 
-{ #category : '*NewTools-Finder' }
-MethodFinderSend >> children [
+- Timeout execution.
+- Logging errors.
+
+"
+Class {
+	#name : 'StMethodFinderSend',
+	#superclass : 'MethodFinderSend',
+	#category : 'NewTools-Finder-Search',
+	#package : 'NewTools-Finder',
+	#tag : 'Search'
+}
+
+{ #category : 'accessing' }
+StMethodFinderSend >> children [
 	^ Array empty
 ]
 
-{ #category : '*NewTools-Finder' }
-MethodFinderSend >> displayIcon [
+{ #category : 'accessing' }
+StMethodFinderSend >> displayIcon [
 
 	^ self iconNamed: #page
 ]
 
-{ #category : '*NewTools-Finder' }
-MethodFinderSend >> forFinderPreview: aSpCodePresenter [ 
+{ #category : 'accessing' }
+StMethodFinderSend >> evaluateWithTimeOut: anInteger [ 
+
+	| runner result |
+
+	runner := TKTLocalProcessTaskRunner new.
+	runner 
+		schedule: [ 
+			result := [ self evaluate ] onErrorDo: [ : e | self handleError: e ] ] asTask
+		timeout: anInteger milliSeconds.
+	^ result
+
+]
+
+{ #category : 'accessing' }
+StMethodFinderSend >> forFinderPreview: aSpCodePresenter [ 
 
 	self flag: #toRemove.
 	aSpCodePresenter 
@@ -20,50 +47,79 @@ MethodFinderSend >> forFinderPreview: aSpCodePresenter [
 		text: self previewText
 ]
 
-{ #category : '*NewTools-Finder' }
-MethodFinderSend >> hasBrowseAction [
+{ #category : 'accessing' }
+StMethodFinderSend >> handleError: e [
+
+	StFinderSettings logErrorsToTranscript
+		ifTrue: [ (self logInfo: e) traceCr ].
+	StFinderSettings logErrorsToFile
+		ifTrue: [ StFinderSettings logErrorFileReference 
+			writeStreamDo: [ : stream | stream nextPutAll: (self logInfo: e) ] ].
+
+]
+
+{ #category : 'accessing' }
+StMethodFinderSend >> hasBrowseAction [
 
 	^ false
 ]
 
-{ #category : '*NewTools-Finder' }
-MethodFinderSend >> hasHierarchyAction [
+{ #category : 'accessing' }
+StMethodFinderSend >> hasHierarchyAction [
 
 	^ false
 ]
 
-{ #category : '*NewTools-Finder' }
-MethodFinderSend >> hasImplementersAction [
+{ #category : 'accessing' }
+StMethodFinderSend >> hasImplementersAction [
 
 	^ true
 ]
 
-{ #category : '*NewTools-Finder' }
-MethodFinderSend >> hasInheritanceAction [
+{ #category : 'accessing' }
+StMethodFinderSend >> hasInheritanceAction [
 
 	^ false
 ]
 
-{ #category : '*NewTools-Finder' }
-MethodFinderSend >> hasSendersAction [
+{ #category : 'accessing' }
+StMethodFinderSend >> hasSendersAction [
 
 	^ true
 ]
 
-{ #category : '*NewTools-Finder' }
-MethodFinderSend >> hasVersionsAction [
+{ #category : 'accessing' }
+StMethodFinderSend >> hasVersionsAction [
 
 	^ false
 ]
 
-{ #category : '*NewTools-Finder' }
-MethodFinderSend >> implementersAction [
+{ #category : 'accessing' }
+StMethodFinderSend >> implementersAction [
 
 	SystemNavigation default browseAllImplementorsOf: self selector
 ]
 
-{ #category : '*NewTools-Finder' }
-MethodFinderSend >> previewText [
+{ #category : 'accessing' }
+StMethodFinderSend >> logInfo: e [
+	"Answer a <String> representing the error e to be logged"
+	
+	^ String streamContents: [ : stream |
+		stream
+			<< e messageText;
+			tab;
+			<< 'Receiver: ';
+			<< receiver asString;
+			tab;
+			<< 'Selector: ';
+			<< selector asString;
+			tab;
+			<< 'Arguments: ';
+			<< arguments asString ]
+]
+
+{ #category : 'accessing' }
+StMethodFinderSend >> previewText [
 
 	self flag: #toRemove.
 
@@ -126,8 +182,17 @@ This will find the message #dayOfWeekName
 The Method Finder is not trying all methods in the system so if it will find nothing, a method with requested behavior may still exist." '
 ]
 
-{ #category : '*NewTools-Finder' }
-MethodFinderSend >> sendersAction [
+{ #category : 'accessing' }
+StMethodFinderSend >> resultIn: expectedResult timeout: anInteger [
+
+	[ [ ^ expectedResult = (self evaluateWithTimeOut: anInteger) ]
+		onErrorDo: [ :anError | ^ false ] ]
+			on: Deprecation
+			do: [ :depr | ^ false ]
+]
+
+{ #category : 'accessing' }
+StMethodFinderSend >> sendersAction [
 
 	SystemNavigation default
 		browseSendersOf: self selector
