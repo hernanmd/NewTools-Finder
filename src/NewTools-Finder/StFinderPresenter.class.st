@@ -21,6 +21,58 @@ Class {
 	#tag : 'Core'
 }
 
+{ #category : 'commands' }
+StFinderPresenter class >> buildBrowsingOperationsGroupWith: presenterInstance [
+
+	^ (CmCommandGroup named: 'BrowseOperationsMenu') asSpecGroup
+		register: ((StFinderExpandAllCommand
+			forSpecWithIconNamed: #expandBox
+			shortcutKey: 'E' asShortcut) 
+				context: presenterInstance);
+		"register: ((PFCtxBrowseBaselineCommand
+			forSpecWithIconNamed: #glamorousBrowse
+			shortcutKey: 'M' asShortcut) 
+				context: presenterInstance);				
+		register: ((PFCtxBrowsePkgCommand
+			forSpecWithIconNamed: #glamorousBrowse
+			shortcutKey: 'S' asShortcut) 
+				context: presenterInstance);"
+		beDisplayedAsGroup;
+		yourself
+]
+
+{ #category : 'commands' }
+StFinderPresenter class >> buildCommandsGroupWith: presenterInstance forRoot: rootCommandGroup [
+
+	rootCommandGroup
+		register: (self buildStFinderContextualGroupWith: presenterInstance)
+]
+
+{ #category : 'commands' }
+StFinderPresenter class >> buildSelectionOperationsGroupWith: presenterInstance [
+
+	^ (CmCommandGroup named: 'SelectionOperationsMenu') asSpecGroup
+		register: ((StFinderSelectAllCommand
+			forSpecWithIconNamed: #checkedBox
+			shortcutKey: 'A' asShortcut) 
+				context: presenterInstance);			
+		register: ((StFinderSelectNoneCommand 
+			forSpecWithIconNamed: #checkboxUnselected
+			shortcutKey: 'N' asShortcut)
+				context: presenterInstance);
+		beDisplayedAsGroup;
+		yourself
+]
+
+{ #category : 'commands' }
+StFinderPresenter class >> buildStFinderContextualGroupWith: presenterInstance [
+
+	^ (CmCommandGroup named: 'StFinderSelContextualMenu') asSpecGroup
+		register: (self buildBrowsingOperationsGroupWith: presenterInstance);
+		register: (self buildSelectionOperationsGroupWith: presenterInstance);
+		yourself
+]
+
 { #category : 'default values' }
 StFinderPresenter class >> defaultExplanation [
 
@@ -227,7 +279,9 @@ StFinderPresenter >> initializePresenters [
 
 	resultTree := self newTree
 		display: [ :result | result displayString ];
-		displayIcon: [ :result | result displayIcon ].
+		displayIcon: [ :result | result displayIcon ];
+		contextMenu: [ (self rootCommandsGroup / 'StFinderSelContextualMenu') beRoot asMenuPresenter ].
+		
 	previewSourcePresenter := self newCode.
 
 	resultButtonBar := self instantiate: StFinderResultButtonBar.

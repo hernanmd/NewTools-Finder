@@ -24,7 +24,7 @@ StFinderExpandAllCommand class >> defaultIconName [
 { #category : 'default' }
 StFinderExpandAllCommand class >> defaultName [ 
 
-	^'Finder Settings'
+	^ 'Expand all'
 ]
 
 { #category : 'default' }
@@ -36,5 +36,5 @@ StFinderExpandAllCommand class >> defaultShortcut [
 { #category : 'executing' }
 StFinderExpandAllCommand >> execute [
 
-	
+	self halt.
 ]
