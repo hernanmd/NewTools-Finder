@@ -106,16 +106,12 @@ StMethodFinderSend >> logInfo: e [
 	
 	^ String streamContents: [ : stream |
 		stream
+			<< e class name;
+			<< '[';
 			<< e messageText;
-			tab;
-			<< 'Receiver: ';
-			<< receiver asString;
-			tab;
-			<< 'Selector: ';
-			<< selector asString;
-			tab;
-			<< 'Arguments: ';
-			<< arguments asString ]
+			<< ']';
+			space.
+			self printOn: stream ]
 ]
 
 { #category : 'accessing' }

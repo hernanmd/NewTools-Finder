@@ -120,7 +120,9 @@ StFinderPresenter >> connectPresenters [
 	self connectSearchBar.
 
 	configButton action: [
-		(self instantiate: StFinderOptionsPresenter on: self) open ].
+		SettingBrowser new
+			rootNodes: (SettingBrowser currentTree nodeNamed: #finder) allChildren;
+			open ].
 
 	self connectSearchOptions.
 

@@ -3,9 +3,14 @@ Class {
 	#superclass : 'Object',
 	#classVars : [
 		'EvaluationTimeout',
+		'ExcludeTests',
+		'ExpandResults',
+		'IgnoreComments',
 		'LogErrorFile',
 		'LogErrorsToFile',
-		'LogErrorsToTranscript'
+		'LogErrorsToTranscript',
+		'SearchAsYouType',
+		'UseCompletion'
 	],
 	#category : 'NewTools-Finder-Core',
 	#package : 'NewTools-Finder',
@@ -32,6 +37,39 @@ StFinderSettings class >> evaluationTimeoutOn: aBuilder [
 ]
 
 { #category : 'system settings' }
+StFinderSettings class >> excludeTests [
+	"Modified by settings Finder: self classSide >> #logErrorsToTranscriptOn:"
+
+	^ ExcludeTests
+		ifNil: [ ExcludeTests := false ]
+]
+
+{ #category : 'system settings' }
+StFinderSettings class >> expandResults [
+	"Modified by settings Finder: self classSide >> #logErrorsToTranscriptOn:"
+
+	^ ExpandResults
+		ifNil: [ ExpandResults := false ]
+]
+
+{ #category : 'as yet unclassified' }
+StFinderSettings class >> expandResults: aBoolean [ 
+
+	ExpandResults := aBoolean
+]
+
+{ #category : 'system settings' }
+StFinderSettings class >> expandResultsOn: aBuilder [
+	<systemsettings>
+	(aBuilder setting: #expandResults)
+		parent: #finder;
+		default: false;
+		label: 'Expand all results by default';
+		description: 'All results with children will be expanded if true';
+		target: self
+]
+
+{ #category : 'system settings' }
 StFinderSettings class >> groupSettingsOn: aBuilder [
 	<systemsettings>
 
@@ -39,6 +77,14 @@ StFinderSettings class >> groupSettingsOn: aBuilder [
 		label: 'Finder';
 		description: '';
 		parent: #tools
+]
+
+{ #category : 'system settings' }
+StFinderSettings class >> ignoreComments [
+	"Modified by settings Finder: self classSide >> #logErrorsToTranscriptOn:"
+
+	^ IgnoreComments
+		ifNil: [ IgnoreComments := true ]
 ]
 
 { #category : 'system settings' }
@@ -60,7 +106,14 @@ StFinderSettings class >> logErrorFileReference [
 StFinderSettings class >> logErrorsToFile [
 	"Answer <true> if the receiver should log errors to a file"
 
-	^ self logErrorFile notEmpty
+	^ LogErrorsToFile 
+		ifNil: [ LogErrorFile := false ]
+]
+
+{ #category : 'as yet unclassified' }
+StFinderSettings class >> logErrorsToFile: aBoolean [ 
+
+	LogErrorFile := aBoolean 
 ]
 
 { #category : 'system settings' }
@@ -68,7 +121,7 @@ StFinderSettings class >> logErrorsToFileOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #logErrorsToFile)
 		parent: #finder;
-		default: true;
+		default: false;
 		label: 'Log errors to file';
 		description: 'Log evaluation errors in the examples search to a file';
 		target: self
@@ -82,6 +135,12 @@ StFinderSettings class >> logErrorsToTranscript [
 		ifNil: [ LogErrorsToTranscript := true ]
 ]
 
+{ #category : 'as yet unclassified' }
+StFinderSettings class >> logErrorsToTranscript: aBoolean [ 
+
+	LogErrorsToTranscript := aBoolean
+]
+
 { #category : 'system settings' }
 StFinderSettings class >> logErrorsToTranscriptOn: aBuilder [
 	<systemsettings>
@@ -90,5 +149,38 @@ StFinderSettings class >> logErrorsToTranscriptOn: aBuilder [
 		default: true;
 		label: 'Log errors to Transcript';
 		description: 'Log evaluation errors in the examples search to the Transcript';
+		target: self
+]
+
+{ #category : 'system settings' }
+StFinderSettings class >> searchAsYouType [
+	"Modified by settings Finder: self classSide >> #logErrorsToTranscriptOn:"
+
+	^ SearchAsYouType
+		ifNil: [ SearchAsYouType := false ]
+]
+
+{ #category : 'system settings' }
+StFinderSettings class >> useCompletion [
+	"Modified by settings Finder: self classSide >> #logErrorsToTranscriptOn:"
+
+	^ UseCompletion
+		ifNil: [ UseCompletion := false ]
+]
+
+{ #category : 'as yet unclassified' }
+StFinderSettings class >> useCompletion: aBoolean [ 
+
+	UseCompletion := aBoolean
+]
+
+{ #category : 'system settings' }
+StFinderSettings class >> useCompletionOn: aBuilder [
+	<systemsettings>
+	(aBuilder setting: #useCompletion)
+		parent: #finder;
+		default: false;
+		label: 'Use completion';
+		description: 'Enable or disable autocompletion in finder text field as you type';
 		target: self
 ]

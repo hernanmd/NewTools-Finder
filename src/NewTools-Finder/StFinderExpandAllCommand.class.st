@@ -2,7 +2,7 @@
 Command to open a settings browser focused on the Finder settings.
 "
 Class {
-	#name : 'StFinderSettingsCommand',
+	#name : 'StFinderExpandAllCommand',
 	#superclass : 'StFinderCommand',
 	#category : 'NewTools-Finder-Commands',
 	#package : 'NewTools-Finder',
@@ -10,33 +10,31 @@ Class {
 }
 
 { #category : 'default' }
-StFinderSettingsCommand class >> defaultDescription [
+StFinderExpandAllCommand class >> defaultDescription [
 
 	^ 'Command to open a settings browser focused on the Finder settings.'
 ]
 
 { #category : 'default' }
-StFinderSettingsCommand class >> defaultIconName [
+StFinderExpandAllCommand class >> defaultIconName [
 
 	^ #configuration
 ]
 
 { #category : 'default' }
-StFinderSettingsCommand class >> defaultName [ 
+StFinderExpandAllCommand class >> defaultName [ 
 
 	^'Finder Settings'
 ]
 
 { #category : 'default' }
-StFinderSettingsCommand class >> defaultShortcut [
+StFinderExpandAllCommand class >> defaultShortcut [
 
 	^ $f meta, $o meta
 ]
 
 { #category : 'executing' }
-StFinderSettingsCommand >> execute [
+StFinderExpandAllCommand >> execute [
 
-	SettingBrowser new
-		rootNodes: (SettingBrowser currentTree nodeNamed: #finder) allChildren;
-		open
+	
 ]
