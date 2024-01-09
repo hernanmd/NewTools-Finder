@@ -64,6 +64,13 @@ StFinderSearchBar >> searchInput [
 	^ searchInput
 ]
 
+{ #category : 'updating - widgets' }
+StFinderSearchBar >> searchMode [
+	"Answer a <StFinderSearch> with the currently selected search mode"
+	
+	^ searchModeDropList selectedItem
+]
+
 { #category : 'accessing' }
 StFinderSearchBar >> searchModeDropList [
 
@@ -74,6 +81,13 @@ StFinderSearchBar >> searchModeDropList [
 StFinderSearchBar >> searchModes: aListOfSearches [
 
 	searchModeDropList items: aListOfSearches
+]
+
+{ #category : 'accessing' }
+StFinderSearchBar >> searchText [
+	"Answer a <String> with the current text to search"
+
+	^ searchInput text
 ]
 
 { #category : 'updating - widgets' }

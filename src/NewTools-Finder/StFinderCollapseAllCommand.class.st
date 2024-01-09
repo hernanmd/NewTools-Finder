@@ -3,7 +3,7 @@ Command to open a settings browser focused on the Finder settings.
 "
 Class {
 	#name : 'StFinderCollapseAllCommand',
-	#superclass : 'StFinderCommand',
+	#superclass : 'StFinderListingCommand',
 	#category : 'NewTools-Finder-Commands',
 	#package : 'NewTools-Finder',
 	#tag : 'Commands'

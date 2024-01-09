@@ -25,6 +25,12 @@ StFinderSelectorResult >> browseAction [
 		selector: self content
 ]
 
+{ #category : 'copying' }
+StFinderSelectorResult >> copyTo: aWriteStream [ 
+
+	aWriteStream << self content
+]
+
 { #category : 'displaying' }
 StFinderSelectorResult >> displayIcon [
 
@@ -49,7 +55,9 @@ StFinderSelectorResult >> forFinderPreview: aSpCodePresenter [
 StFinderSelectorResult >> getCompiledMethod [
 	"Answer a <CompiledMethod> representing the currently found content"
 
-	^ self parent content >> self content
+	^ self parent isPragmaResult 
+		ifFalse: [ self parent content >> self content ]
+		ifTrue: [ self content ]
 ]
 
 { #category : 'testing' }

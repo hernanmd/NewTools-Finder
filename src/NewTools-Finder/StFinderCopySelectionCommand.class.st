@@ -29,3 +29,17 @@ StFinderCopySelectionCommand class >> defaultShortcut [
 
 	^ $f meta, $c meta
 ]
+
+{ #category : 'executing' }
+StFinderCopySelectionCommand >> execute [
+	"Copy the selected finder results to the clipboard"
+
+	| selectorsText |
+	selectorsText := String streamContents: [ : stream | 
+		self selectedItems do: [ : r |
+			r copyTo: stream.
+			stream cr ] ].
+	Clipboard 
+		clipboardText: selectorsText 
+		informing: self selectedItems size asString , ' selectors copied to the Clipboard'
+]

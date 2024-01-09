@@ -25,6 +25,12 @@ Class {
 	#tag : 'Search'
 }
 
+{ #category : 'testing' }
+StFinderSearch >> isFinderExampleSearch [
+
+	^ false
+]
+
 { #category : 'information' }
 StFinderSearch >> name [
 

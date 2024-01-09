@@ -49,6 +49,12 @@ StFinderExampleSearch >> evaluationTimeout [
 	^ StFinderSettings evaluationTimeout
 ]
 
+{ #category : 'testing' }
+StFinderExampleSearch >> isFinderExampleSearch [
+
+	^ true
+]
+
 { #category : 'information' }
 StFinderExampleSearch >> name [
 	"Returns the name of the search."

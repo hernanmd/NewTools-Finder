@@ -12,6 +12,12 @@ StFinderPackageResult class >> matches: aCollection [
 	^ false
 ]
 
+{ #category : 'copying' }
+StFinderPackageResult >> copyTo: aWriteStream [ 
+
+	aWriteStream << self content name
+]
+
 { #category : 'displaying' }
 StFinderPackageResult >> displayIcon [
 

@@ -18,6 +18,12 @@ StMethodFinderSend >> children [
 	^ Array empty
 ]
 
+{ #category : 'copying' }
+StMethodFinderSend >> copyTo: aWriteStream [ 
+
+	aWriteStream << self selector
+]
+
 { #category : 'accessing' }
 StMethodFinderSend >> displayIcon [
 
@@ -98,6 +104,18 @@ StMethodFinderSend >> hasVersionsAction [
 StMethodFinderSend >> implementersAction [
 
 	SystemNavigation default browseAllImplementorsOf: self selector
+]
+
+{ #category : 'testing' }
+StMethodFinderSend >> isClassResult [
+
+	^ false
+]
+
+{ #category : 'testing' }
+StMethodFinderSend >> isSelectorResult [
+
+	^ true
 ]
 
 { #category : 'accessing' }
@@ -190,9 +208,7 @@ StMethodFinderSend >> resultIn: expectedResult timeout: anInteger [
 { #category : 'accessing' }
 StMethodFinderSend >> sendersAction [
 
-	self halt.
 	self flag: #review. "StFinderSelectorResult>>sendersAction"
-
 	SystemNavigation default
 		browseSendersOf: self selector
 		name: 'Senders of ' , self selector

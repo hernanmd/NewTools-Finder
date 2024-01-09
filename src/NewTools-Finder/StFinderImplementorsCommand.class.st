@@ -15,7 +15,7 @@ StFinderImplementorsCommand class >> defaultDescription [
 { #category : 'initialization' }
 StFinderImplementorsCommand class >> defaultIconName [
 
-	^ #smallFind
+	^ #glamorousBrowse
 ]
 
 { #category : 'default' }
@@ -34,6 +34,7 @@ StFinderImplementorsCommand class >> defaultShortcut [
 StFinderImplementorsCommand >> canBeExecuted [ 
 
 	^ self resultTree selectedItems size = 1
+		and: [ self selectedItem isSelectorResult ]
 ]
 
 { #category : 'executing' }

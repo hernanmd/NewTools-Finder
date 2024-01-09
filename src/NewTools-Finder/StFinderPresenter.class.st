@@ -25,12 +25,15 @@ Class {
 StFinderPresenter class >> buildBrowsingOperationsGroupWith: presenterInstance [
 
 	^ (CmCommandGroup named: 'BrowseOperationsMenu') asSpecGroup
+		register: ((StFinderReferencesCommand
+			forSpecWithIconNamed: StFinderReferencesCommand defaultIconName
+			shortcutKey: StFinderReferencesCommand defaultShortcut) 				context: presenterInstance);
 		register: ((StFinderSendersCommand
-			forSpecWithIconNamed: #smallFind
+			forSpecWithIconNamed: StFinderSendersCommand defaultIconName
 			shortcutKey: StFinderSendersCommand defaultShortcut) 
 				context: presenterInstance);
 		register: ((StFinderImplementorsCommand
-			forSpecWithIconNamed: #glamorousBrowse
+			forSpecWithIconNamed: StFinderImplementorsCommand defaultIconName
 			shortcutKey: StFinderImplementorsCommand defaultShortcut) 
 				context: presenterInstance);
 		beDisplayedAsGroup;
@@ -56,10 +59,6 @@ StFinderPresenter class >> buildListingOperationsGroupWith: presenterInstance [
 			forSpecWithIconNamed: #refresh
 			shortcutKey: StFinderCollapseAllCommand defaultShortcut) 
 				context: presenterInstance);				
-		"register: ((PFCtxBrowsePkgCommand
-			forSpecWithIconNamed: #glamorousBrowse
-			shortcutKey: 'S' asShortcut) 
-				context: presenterInstance);"
 		beDisplayedAsGroup;
 		yourself
 ]
@@ -69,12 +68,16 @@ StFinderPresenter class >> buildSelectionOperationsGroupWith: presenterInstance 
 
 	^ (CmCommandGroup named: 'SelectionOperationsMenu') asSpecGroup
 		register: ((StFinderSelectAllCommand
-			forSpecWithIconNamed: #checkedBox
+			forSpecWithIconNamed: StFinderSelectAllCommand defaultIconName
 			shortcutKey: StFinderSelectAllCommand defaultShortcut) 
 				context: presenterInstance);			
 		register: ((StFinderSelectNoneCommand 
-			forSpecWithIconNamed: #checkboxUnselected
+			forSpecWithIconNamed: StFinderSelectNoneCommand defaultIconName
 			shortcutKey: StFinderSelectNoneCommand defaultShortcut)
+				context: presenterInstance);
+		register: ((StFinderCopySelectionCommand 
+			forSpecWithIconNamed: StFinderCopySelectionCommand defaultIconName
+			shortcutKey: StFinderCopySelectionCommand defaultShortcut)
 				context: presenterInstance);
 		beDisplayedAsGroup;
 		yourself
@@ -374,6 +377,13 @@ StFinderPresenter >> searchInPackages: aCollection [
 	self updateEnvironmentStatusFor: aCollection
 ]
 
+{ #category : 'accessing' }
+StFinderPresenter >> searchMode [
+	"Answer a <StFinderSearch> with the currently selected search mode"
+
+	^ searchBar searchMode
+]
+
 { #category : 'information' }
 StFinderPresenter >> selectedResult [
 
@@ -461,11 +471,7 @@ StFinderPresenter >> updateResultsWith: results [
 	resultTree
 		roots: results;
 		children: [ :result | result children ].
-	resultStatusBar pushMessage: (String streamContents: [ : stream |
-		stream
-			<< 'Found ';
-			<< results size asString;
-			<< ' results' ])
+	resultStatusBar pushMessage: (self updateStatusBarTextFrom: results)
 ]
 
 { #category : 'updating - widgets' }
@@ -474,4 +480,16 @@ StFinderPresenter >> updateSearchOptions: aCollection [
 	
 	searchOptions
 		ifNotNil: [ aCollection do: [ : selector | searchOptions perform: selector ] ]
+]
+
+{ #category : 'updating - widgets' }
+StFinderPresenter >> updateStatusBarTextFrom: results [
+
+	^ String streamContents: [ : stream |
+		stream
+			<< 'Search of ';
+			<< searchBar searchText;
+			<< ' found ';
+			<< results size asString;
+			<< ' results and took ' ]
 ]

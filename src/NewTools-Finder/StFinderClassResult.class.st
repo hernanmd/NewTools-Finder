@@ -37,6 +37,17 @@ StFinderClassResult >> content: aCompiledMethodOrClass [
 		ifFalse: [ aCompiledMethodOrClass ]
 ]
 
+{ #category : 'copying' }
+StFinderClassResult >> copyTo: aWriteStream [ 
+
+	aWriteStream << self content name.
+	self hasSelectorParent
+		ifTrue: [ 
+			aWriteStream
+				<< '>>#';
+				<< self parent content ]
+]
+
 { #category : 'displaying' }
 StFinderClassResult >> displayIcon [
 
@@ -63,7 +74,9 @@ StFinderClassResult >> forFinderPreview: aSpCodePresenter [
 StFinderClassResult >> getCompiledMethod [
 	"Answer a <CompiledMethod> representing the currently found content"
 
-	^ self content >> self parent content.
+	^ self parent content isCompiledMethod
+		ifTrue: [ self parent content ]
+		ifFalse: [ self content >> self parent content ]
 ]
 
 { #category : 'as yet unclassified' }

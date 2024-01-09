@@ -34,6 +34,7 @@ StFinderSendersCommand class >> defaultShortcut [
 StFinderSendersCommand >> canBeExecuted [ 
 
 	^ self resultTree selectedItems size = 1
+		and: [ self selectedItem isSelectorResult ]
 ]
 
 { #category : 'executing' }
