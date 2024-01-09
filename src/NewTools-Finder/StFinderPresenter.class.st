@@ -25,18 +25,14 @@ Class {
 StFinderPresenter class >> buildBrowsingOperationsGroupWith: presenterInstance [
 
 	^ (CmCommandGroup named: 'BrowseOperationsMenu') asSpecGroup
-		register: ((StFinderExpandAllCommand
-			forSpecWithIconNamed: #expandBox
-			shortcutKey: 'E' asShortcut) 
+		register: ((StFinderSendersCommand
+			forSpecWithIconNamed: #smallFind
+			shortcutKey: StFinderSendersCommand defaultShortcut) 
 				context: presenterInstance);
-		"register: ((PFCtxBrowseBaselineCommand
+		register: ((StFinderImplementorsCommand
 			forSpecWithIconNamed: #glamorousBrowse
-			shortcutKey: 'M' asShortcut) 
-				context: presenterInstance);				
-		register: ((PFCtxBrowsePkgCommand
-			forSpecWithIconNamed: #glamorousBrowse
-			shortcutKey: 'S' asShortcut) 
-				context: presenterInstance);"
+			shortcutKey: StFinderImplementorsCommand defaultShortcut) 
+				context: presenterInstance);
 		beDisplayedAsGroup;
 		yourself
 ]
@@ -49,16 +45,36 @@ StFinderPresenter class >> buildCommandsGroupWith: presenterInstance forRoot: ro
 ]
 
 { #category : 'commands' }
+StFinderPresenter class >> buildListingOperationsGroupWith: presenterInstance [
+
+	^ (CmCommandGroup named: 'ListingOperationsMenu') asSpecGroup
+		register: ((StFinderExpandAllCommand
+			forSpecWithIconNamed: #expandBox
+			shortcutKey: StFinderExpandAllCommand defaultShortcut) 
+				context: presenterInstance);
+		register: ((StFinderCollapseAllCommand
+			forSpecWithIconNamed: #refresh
+			shortcutKey: StFinderCollapseAllCommand defaultShortcut) 
+				context: presenterInstance);				
+		"register: ((PFCtxBrowsePkgCommand
+			forSpecWithIconNamed: #glamorousBrowse
+			shortcutKey: 'S' asShortcut) 
+				context: presenterInstance);"
+		beDisplayedAsGroup;
+		yourself
+]
+
+{ #category : 'commands' }
 StFinderPresenter class >> buildSelectionOperationsGroupWith: presenterInstance [
 
 	^ (CmCommandGroup named: 'SelectionOperationsMenu') asSpecGroup
 		register: ((StFinderSelectAllCommand
 			forSpecWithIconNamed: #checkedBox
-			shortcutKey: 'A' asShortcut) 
+			shortcutKey: StFinderSelectAllCommand defaultShortcut) 
 				context: presenterInstance);			
 		register: ((StFinderSelectNoneCommand 
 			forSpecWithIconNamed: #checkboxUnselected
-			shortcutKey: 'N' asShortcut)
+			shortcutKey: StFinderSelectNoneCommand defaultShortcut)
 				context: presenterInstance);
 		beDisplayedAsGroup;
 		yourself
@@ -69,6 +85,7 @@ StFinderPresenter class >> buildStFinderContextualGroupWith: presenterInstance [
 
 	^ (CmCommandGroup named: 'StFinderSelContextualMenu') asSpecGroup
 		register: (self buildBrowsingOperationsGroupWith: presenterInstance);
+		register: (self buildListingOperationsGroupWith: presenterInstance);
 		register: (self buildSelectionOperationsGroupWith: presenterInstance);
 		yourself
 ]
@@ -278,6 +295,7 @@ StFinderPresenter >> initializePresenters [
 	self updateEnvironmentStatusFor: self model selectedPackages.
 
 	resultTree := self newTree
+		beMultipleSelection;
 		display: [ :result | result displayString ];
 		displayIcon: [ :result | result displayIcon ];
 		contextMenu: [ (self rootCommandsGroup / 'StFinderSelContextualMenu') beRoot asMenuPresenter ].
@@ -360,6 +378,24 @@ StFinderPresenter >> searchInPackages: aCollection [
 StFinderPresenter >> selectedResult [
 
 	^ resultTree selectedItem
+]
+
+{ #category : 'accessing - properties' }
+StFinderPresenter >> selectedResults [
+	"Answer the receiver's <Collection> of selected results"
+
+	^ self application 
+		propertyAt: #selectedResults
+		ifAbsentPut: [ Set new ]
+]
+
+{ #category : 'accessing - properties' }
+StFinderPresenter >> selectedResults: aCollection [ 
+	"Set a <Collection> of results to be marked for future operations"
+
+	^ self application 
+		propertyAt: #selectedResults
+		put: aCollection asSet
 ]
 
 { #category : 'initialization' }

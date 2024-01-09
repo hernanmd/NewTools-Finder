@@ -24,10 +24,23 @@ StFinderSelectAllCommand class >> defaultName [
 	^ 'Select All'
 ]
 
+{ #category : 'initialization' }
+StFinderSelectAllCommand class >> defaultShortcut [
+
+	^ $f meta, $a meta
+]
+
+{ #category : 'testing' }
+StFinderSelectAllCommand >> canBeExecuted [ 
+
+	^ self selectedItems ~= self resultTreeItems size
+]
+
 { #category : 'executing' }
 StFinderSelectAllCommand >> execute [
-	"Select all uninstalled result items"
+	"Select all result items"
 
-	self context selectedResults: self resultItems.
-	self resultsTable refresh
+	self context selectedResults: self resultTreeItems.
+	self resultTree selectItems: self resultTreeItems.
+
 ]

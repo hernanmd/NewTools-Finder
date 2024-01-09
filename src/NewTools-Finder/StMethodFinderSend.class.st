@@ -190,6 +190,9 @@ StMethodFinderSend >> resultIn: expectedResult timeout: anInteger [
 { #category : 'accessing' }
 StMethodFinderSend >> sendersAction [
 
+	self halt.
+	self flag: #review. "StFinderSelectorResult>>sendersAction"
+
 	SystemNavigation default
 		browseSendersOf: self selector
 		name: 'Senders of ' , self selector

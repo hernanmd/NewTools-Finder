@@ -24,10 +24,22 @@ StFinderSelectNoneCommand class >> defaultName [
 	^ 'Select None'
 ]
 
+{ #category : 'initialization' }
+StFinderSelectNoneCommand class >> defaultShortcut [
+
+	^ $f meta, $m meta
+]
+
+{ #category : 'testing' }
+StFinderSelectNoneCommand >> canBeExecuted [ 
+
+	^ self selectedItems ~= 0.
+]
+
 { #category : 'executing' }
 StFinderSelectNoneCommand >> execute [
-	"Select all uninstalled result items"
+	"Unselect all result items"
 
 	self context selectedResults: Set empty.
-	self resultsTable refresh
+	self resultTree unselectAll
 ]

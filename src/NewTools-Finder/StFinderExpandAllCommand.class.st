@@ -12,13 +12,13 @@ Class {
 { #category : 'default' }
 StFinderExpandAllCommand class >> defaultDescription [
 
-	^ 'Command to open a settings browser focused on the Finder settings.'
+	^ 'Command to expand all displayed finder results.'
 ]
 
 { #category : 'default' }
 StFinderExpandAllCommand class >> defaultIconName [
 
-	^ #configuration
+	^ #expandBox
 ]
 
 { #category : 'default' }
@@ -30,11 +30,11 @@ StFinderExpandAllCommand class >> defaultName [
 { #category : 'default' }
 StFinderExpandAllCommand class >> defaultShortcut [
 
-	^ $f meta, $o meta
+	^ $x meta
 ]
 
 { #category : 'executing' }
 StFinderExpandAllCommand >> execute [
 
-	self halt.
+	self resultTree expandAll.
 ]
