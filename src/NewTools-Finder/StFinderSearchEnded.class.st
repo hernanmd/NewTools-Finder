@@ -5,7 +5,8 @@ Class {
 	#name : 'StFinderSearchEnded',
 	#superclass : 'Announcement',
 	#instVars : [
-		'results'
+		'results',
+		'time'
 	],
 	#category : 'NewTools-Finder-Announcement',
 	#package : 'NewTools-Finder',
@@ -19,6 +20,15 @@ StFinderSearchEnded class >> results: anObject [
 ]
 
 { #category : 'accessing' }
+StFinderSearchEnded class >> results: anObject time: aTime [
+
+	^ self new 
+		results: anObject; 
+		time: aTime;
+		yourself
+]
+
+{ #category : 'accessing' }
 StFinderSearchEnded >> results [
 
 	^ results
@@ -28,4 +38,16 @@ StFinderSearchEnded >> results [
 StFinderSearchEnded >> results: anObject [
 
 	results := anObject
+]
+
+{ #category : 'accessing' }
+StFinderSearchEnded >> time [
+
+	^ time
+]
+
+{ #category : 'accessing' }
+StFinderSearchEnded >> time: aTimeInMs [
+
+	time := aTimeInMs 
 ]

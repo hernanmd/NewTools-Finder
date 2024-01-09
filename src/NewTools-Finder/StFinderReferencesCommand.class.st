@@ -41,6 +41,6 @@ StFinderReferencesCommand >> canBeExecuted [
 StFinderReferencesCommand >> execute [
 	"Browse the selection references"
 
-	self selectedItem browseAction
+	self selectedItem referencesAction
 
 ]

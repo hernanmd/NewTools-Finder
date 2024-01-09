@@ -28,14 +28,6 @@ StFinderSearchBar >> defaultLayout [
 { #category : 'initialization' }
 StFinderSearchBar >> initializePresenters [
 
-	searchInput := self newSearchInput
-		               placeholder: 'Search... Hit return to accept';
-		               yourself.
-	searchButton := self newButton 
-		label: 'Search';
-		icon: (self iconNamed: #smallFind);
-		action: [ self searchBy: searchInput text ];
-		yourself.
 	searchModeDropList := self newDropList
 		help: 'Select the type of elements to search for';
 		display: [ :search | search name ];
@@ -43,7 +35,33 @@ StFinderSearchBar >> initializePresenters [
 			self 
 				updateSearchOptions: modeType;
 				updatePreview: modeType ];
-		yourself
+		yourself.
+
+	searchInput := self newSearchInput
+		               placeholder: self placeHolderText;
+		               yourself.
+	searchButton := self newButton 
+		label: 'Search';
+		icon: (self iconNamed: #smallFind);
+		action: [ self searchBy: searchInput text ];
+		yourself.
+
+		
+	self focusOrder add: searchInput.
+]
+
+{ #category : 'initialization' }
+StFinderSearchBar >> placeHolderText [
+
+	| modeText |
+	modeText :=  searchModeDropList selectedItem 
+		ifNotNil: [ : sm | sm name ]
+		ifNil: [ String empty ].
+	^ String streamContents: [ : stream |
+			stream
+				<< 'Search ';
+				<< modeText asLowercase;
+				<< '... Hit return to accept' ]
 ]
 
 { #category : 'accessing' }
@@ -88,6 +106,12 @@ StFinderSearchBar >> searchText [
 	"Answer a <String> with the current text to search"
 
 	^ searchInput text
+]
+
+{ #category : 'initialization' }
+StFinderSearchBar >> updatePlaceHolder: modeType [
+	
+	searchInput placeholder: modeType name
 ]
 
 { #category : 'updating - widgets' }

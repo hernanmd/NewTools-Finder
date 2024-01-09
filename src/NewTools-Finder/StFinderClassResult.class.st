@@ -53,6 +53,8 @@ StFinderClassResult >> displayIcon [
 
 	(self content inheritsFrom: Exception) ifTrue: [ ^ self iconNamed: #exception ].
 	self content isAbstract ifTrue: [ ^ self iconNamed: #classAbstract ].
+	self content isDeprecated ifTrue: [ ^ self iconNamed: #smallNew ].
+	self content isObsolete ifTrue: [ ^ self iconNamed: #error ].
 	^ self iconNamed: #class
 ]
 
@@ -141,6 +143,12 @@ StFinderClassResult >> isClassOrTrait: aClassOraTaCompositionElement [
 StFinderClassResult >> isClassResult [
 
 	^ true
+]
+
+{ #category : 'action' }
+StFinderClassResult >> referencesAction [
+
+	self navigation browseAllUsersOfClassOrTrait: self content
 ]
 
 { #category : 'as yet unclassified' }

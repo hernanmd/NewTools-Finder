@@ -25,6 +25,9 @@ Class {
 StFinderPresenter class >> buildBrowsingOperationsGroupWith: presenterInstance [
 
 	^ (CmCommandGroup named: 'BrowseOperationsMenu') asSpecGroup
+		register: ((StFinderBrowseCommand
+			forSpecWithIconNamed: StFinderBrowseCommand defaultIconName
+			shortcutKey: StFinderBrowseCommand defaultShortcut) 				context: presenterInstance);
 		register: ((StFinderReferencesCommand
 			forSpecWithIconNamed: StFinderReferencesCommand defaultIconName
 			shortcutKey: StFinderReferencesCommand defaultShortcut) 				context: presenterInstance);
@@ -297,17 +300,24 @@ StFinderPresenter >> initializePresenters [
 	environmentBar := self instantiate: StFinderEnvironmentBar.
 	self updateEnvironmentStatusFor: self model selectedPackages.
 
-	resultTree := self newTree
-		beMultipleSelection;
-		display: [ :result | result displayString ];
-		displayIcon: [ :result | result displayIcon ];
-		contextMenu: [ (self rootCommandsGroup / 'StFinderSelContextualMenu') beRoot asMenuPresenter ].
+	self initializeResultTree.
 		
 	previewSourcePresenter := self newCode.
 
 	resultButtonBar := self instantiate: StFinderResultButtonBar.
 
-	resultStatusBar := self newStatusBar
+	resultStatusBar := self newStatusBar.
+	self focusOrder add: searchBar.
+]
+
+{ #category : 'initialization' }
+StFinderPresenter >> initializeResultTree [
+
+	resultTree := self newTree
+		beMultipleSelection;
+		display: [ :result | result displayString ];
+		displayIcon: [ :result | result displayIcon ];
+		contextMenu: [ (self rootCommandsGroup / 'StFinderSelContextualMenu') beRoot asMenuPresenter ].
 ]
 
 { #category : 'initialization' }
@@ -432,7 +442,7 @@ StFinderPresenter >> setWindowIconTo: aSpWindowPresenter [
 StFinderPresenter >> subscribeToAnnouncements [
 
 	self model whenSearchStarted: [ self notifySearchStarted ].
-	self model whenSearchEnded: [ :results | self updateResultsWith: results ].
+	self model whenSearchEnded: [ :results : time | self updateResultsWith: results time: time ].
 	self model whenSearchTypesChanged: [ self searchBar updateSearchModes ]
 ]
 
@@ -465,13 +475,15 @@ StFinderPresenter >> updateResults [
 ]
 
 { #category : 'updating - widgets' }
-StFinderPresenter >> updateResultsWith: results [
+StFinderPresenter >> updateResultsWith: results time: time [
 	"Call to update resultTree with results."
 
 	resultTree
 		roots: results;
 		children: [ :result | result children ].
-	resultStatusBar pushMessage: (self updateStatusBarTextFrom: results)
+	StFinderSettings expandResults
+		ifTrue: [ resultTree expandAll ].
+	resultStatusBar pushMessage: (self updateStatusBarTextFrom: results time: time)
 ]
 
 { #category : 'updating - widgets' }
@@ -483,13 +495,15 @@ StFinderPresenter >> updateSearchOptions: aCollection [
 ]
 
 { #category : 'updating - widgets' }
-StFinderPresenter >> updateStatusBarTextFrom: results [
+StFinderPresenter >> updateStatusBarTextFrom: results time: time [
 
 	^ String streamContents: [ : stream |
 		stream
 			<< 'Search of ';
-			<< searchBar searchText;
+			<< searchBar searchText surroundedBySingleQuotes;
 			<< ' found ';
 			<< results size asString;
-			<< ' results and took ' ]
+			<< ' results and took ';
+			<< time asStringWithCommas;
+			<< ' ms' ]
 ]

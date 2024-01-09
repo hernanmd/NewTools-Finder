@@ -20,7 +20,8 @@ Class {
 		'currentSearch',
 		'results',
 		'useExact',
-		'useCase'
+		'useCase',
+		'time'
 	],
 	#category : 'NewTools-Finder-Core',
 	#package : 'NewTools-Finder',
@@ -122,7 +123,7 @@ StFinderModel >> search [
 
 	[ : job |
 		self searchStarted.
-		results := self search: searchString.
+		time := Time millisecondsToRun: [ results := self search: searchString ].
 		self searchEnded 
 	] asJob
 			title: 'Searching...';
@@ -142,7 +143,6 @@ StFinderModel >> search: aString [
 
 { #category : 'searching' }
 StFinderModel >> searchBy: aString [
-
 	"Perform a search by aString."
 
 	self searchString: aString.
@@ -156,7 +156,9 @@ StFinderModel >> searchEnded [
 	"This method is used internally and called whenever a search has finished."
 
 	self announcer announce:
-		(StFinderSearchEnded results: self results)
+		(StFinderSearchEnded 
+			results: self results 
+			time: self time)
 ]
 
 { #category : 'accessing' }
@@ -231,6 +233,11 @@ StFinderModel >> selectedPackagesByName: aCollection [
 	searchEnvironment := environment forPackageNames: aCollection
 ]
 
+{ #category : 'accessing' }
+StFinderModel >> time [
+	^ time
+]
+
 { #category : 'information' }
 StFinderModel >> unselectedPackages [
 
@@ -285,7 +292,7 @@ StFinderModel >> whenSearchEnded: aBlock [
 	block := [ :announcement :ann |
 	         aBlock
 		         cull: announcement results
-		         cull: announcement
+		         cull: announcement time
 		         cull: ann ].
 	self announcer when: StFinderSearchEnded do: block for: self
 ]

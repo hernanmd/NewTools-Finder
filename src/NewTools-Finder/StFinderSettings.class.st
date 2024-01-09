@@ -52,7 +52,7 @@ StFinderSettings class >> expandResults [
 		ifNil: [ ExpandResults := false ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'system settings' }
 StFinderSettings class >> expandResults: aBoolean [ 
 
 	ExpandResults := aBoolean
@@ -110,7 +110,7 @@ StFinderSettings class >> logErrorsToFile [
 		ifNil: [ LogErrorFile := false ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'system settings' }
 StFinderSettings class >> logErrorsToFile: aBoolean [ 
 
 	LogErrorFile := aBoolean 
@@ -135,7 +135,7 @@ StFinderSettings class >> logErrorsToTranscript [
 		ifNil: [ LogErrorsToTranscript := true ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'system settings' }
 StFinderSettings class >> logErrorsToTranscript: aBoolean [ 
 
 	LogErrorsToTranscript := aBoolean
@@ -168,7 +168,7 @@ StFinderSettings class >> useCompletion [
 		ifNil: [ UseCompletion := false ]
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'system settings' }
 StFinderSettings class >> useCompletion: aBoolean [ 
 
 	UseCompletion := aBoolean
