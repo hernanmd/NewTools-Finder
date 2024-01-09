@@ -33,7 +33,7 @@ StFinderSelectAllCommand class >> defaultShortcut [
 { #category : 'testing' }
 StFinderSelectAllCommand >> canBeExecuted [ 
 
-	^ self selectedItems ~= self resultTreeItems size
+	^ super canBeExecuted and: [ self selectedItems ~= self resultTreeItems size ]
 ]
 
 { #category : 'executing' }

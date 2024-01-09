@@ -154,15 +154,34 @@ StFinderSettings class >> logErrorsToTranscriptOn: aBuilder [
 
 { #category : 'system settings' }
 StFinderSettings class >> searchAsYouType [
-	"Modified by settings Finder: self classSide >> #logErrorsToTranscriptOn:"
+	"Modified by settings Finder: self classSide >> #searchAsYouTypeOn:"
 
 	^ SearchAsYouType
 		ifNil: [ SearchAsYouType := false ]
 ]
 
 { #category : 'system settings' }
+StFinderSettings class >> searchAsYouType: aBoolean [
+	"Modified by settings Finder: self classSide >> #searchAsYouTypeOn:"
+
+	SearchAsYouType := aBoolean
+]
+
+{ #category : 'system settings' }
+StFinderSettings class >> searchAsYouTypeOn: aBuilder [
+	<systemsettings>
+	
+	(aBuilder setting: #searchAsYouType)
+		parent: #finder;
+		default: false;
+		label: 'Search as you type';
+		description: 'Present results as you type';
+		target: self
+]
+
+{ #category : 'system settings' }
 StFinderSettings class >> useCompletion [
-	"Modified by settings Finder: self classSide >> #logErrorsToTranscriptOn:"
+	"Modified by settings Finder: self classSide >> #useCompletionOn:"
 
 	^ UseCompletion
 		ifNil: [ UseCompletion := false ]

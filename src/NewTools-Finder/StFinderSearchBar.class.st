@@ -26,7 +26,45 @@ StFinderSearchBar >> defaultLayout [
 ]
 
 { #category : 'initialization' }
+StFinderSearchBar >> initializeFocus [
+
+	self focusOrder 
+		add: searchInput;
+		add: searchModeDropList;
+		add: searchButton 
+]
+
+{ #category : 'initialization' }
 StFinderSearchBar >> initializePresenters [
+
+	self 
+		initializeSearchModes;
+		initializeSearchInput;
+		initializeSearchButton;
+		initializeFocus.
+]
+
+{ #category : 'initialization' }
+StFinderSearchBar >> initializeSearchButton [
+
+	searchButton := self newButton 
+		label: 'Search';
+		icon: (self iconNamed: #smallFind);
+		action: [ self searchBy: searchInput text ];
+		yourself.
+]
+
+{ #category : 'initialization' }
+StFinderSearchBar >> initializeSearchInput [
+
+	searchInput := self newSearchInput
+		               placeholder: self placeHolderText;
+							whenTextChangedDo: [ :aString | self updateSearch: aString ];		
+		               yourself.
+]
+
+{ #category : 'initialization' }
+StFinderSearchBar >> initializeSearchModes [
 
 	searchModeDropList := self newDropList
 		help: 'Select the type of elements to search for';
@@ -36,18 +74,6 @@ StFinderSearchBar >> initializePresenters [
 				updateSearchOptions: modeType;
 				updatePreview: modeType ];
 		yourself.
-
-	searchInput := self newSearchInput
-		               placeholder: self placeHolderText;
-		               yourself.
-	searchButton := self newButton 
-		label: 'Search';
-		icon: (self iconNamed: #smallFind);
-		action: [ self searchBy: searchInput text ];
-		yourself.
-
-		
-	self focusOrder add: searchInput.
 ]
 
 { #category : 'initialization' }
@@ -120,6 +146,13 @@ StFinderSearchBar >> updatePreview: aStFinderSelectorSearch [
 
 	owner updatePreview: aStFinderSelectorSearch
 
+]
+
+{ #category : 'updating - widgets' }
+StFinderSearchBar >> updateSearch: aString [
+
+	(StFinderSettings searchAsYouType and: [ aString size >= 3 ])
+		ifTrue: [ self searchBy: aString ]
 ]
 
 { #category : 'updating - widgets' }

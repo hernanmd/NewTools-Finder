@@ -1,3 +1,7 @@
+"
+Implements a search for given example expressions.
+
+"
 Class {
 	#name : 'StFinderExampleSearch',
 	#superclass : 'StFinderSearch',

@@ -33,8 +33,9 @@ StFinderBrowseCommand class >> defaultShortcut [
 { #category : 'testing' }
 StFinderBrowseCommand >> canBeExecuted [ 
 
-	^ self resultTree selectedItems size = 1
-		and: [ self selectedItem isClassResult ]
+	^ super canBeExecuted and: [ 
+		self resultTree selectedItems size = 1
+			and: [ self selectedItem isClassResult ] ]
 ]
 
 { #category : 'executing' }

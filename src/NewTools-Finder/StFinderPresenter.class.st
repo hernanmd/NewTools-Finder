@@ -468,13 +468,6 @@ StFinderPresenter >> updatePreview: aStFinderSearch [
 ]
 
 { #category : 'updating - widgets' }
-StFinderPresenter >> updateResults [
-	"Call to update resultTree from the model."
-
-	self updateResultsWith: self model results
-]
-
-{ #category : 'updating - widgets' }
 StFinderPresenter >> updateResultsWith: results time: time [
 	"Call to update resultTree with results."
 

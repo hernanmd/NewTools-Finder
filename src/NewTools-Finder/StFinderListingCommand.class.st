@@ -9,6 +9,6 @@ Class {
 { #category : 'testing' }
 StFinderListingCommand >> canBeExecuted [ 
 
-	^ self context searchMode isFinderExampleSearch not
+	^ super canBeExecuted and: [ self context searchMode isFinderExampleSearch not ]
 
 ]

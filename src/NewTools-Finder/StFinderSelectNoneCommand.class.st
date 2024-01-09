@@ -33,7 +33,7 @@ StFinderSelectNoneCommand class >> defaultShortcut [
 { #category : 'testing' }
 StFinderSelectNoneCommand >> canBeExecuted [ 
 
-	^ self selectedItems ~= 0.
+	^ super canBeExecuted and: [ self selectedItems ~= 0 ]
 ]
 
 { #category : 'executing' }

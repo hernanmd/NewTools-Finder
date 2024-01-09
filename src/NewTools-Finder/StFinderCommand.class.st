@@ -18,6 +18,13 @@ StFinderCommand >> applicationClass [
 	^ self application class
 ]
 
+{ #category : 'testing' }
+StFinderCommand >> canBeExecuted [
+	"See superimplementor's comment"
+
+	^ self resultTreeItems notEmpty
+]
+
 { #category : 'accessing' }
 StFinderCommand >> resultTree [
 
