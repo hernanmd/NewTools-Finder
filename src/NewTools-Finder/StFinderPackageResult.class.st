@@ -41,3 +41,13 @@ StFinderPackageResult >> isPackageResult [
 
 	^ true
 ]
+
+{ #category : 'private' }
+StFinderPackageResult >> selectItemIn: aSpTreePresenter [ 
+
+	| pathIndexCollection |
+	pathIndexCollection := aSpTreePresenter pathIndexOf: { self }.
+	aSpTreePresenter 
+		selectPath: pathIndexCollection scrollToSelection: true;
+		clickAtPath: pathIndexCollection
+]

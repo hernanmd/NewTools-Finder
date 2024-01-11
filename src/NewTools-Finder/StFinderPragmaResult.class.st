@@ -32,6 +32,12 @@ StFinderPragmaResult >> forFinderPreview: aSpCodePresenter [
 				in: aSpCodePresenter ]
 ]
 
+{ #category : 'instance creation' }
+StFinderPragmaResult >> getCompiledMethodFrom: aStFinderSelectorResult [ 
+
+	^ self content method
+]
+
 { #category : 'testing' }
 StFinderPragmaResult >> isPragmaResult [
 
@@ -43,4 +49,15 @@ StFinderPragmaResult >> resultPreview [
 	"Private - See superimplementor's comment"
 
 	^ self shouldBeImplemented 
+]
+
+{ #category : 'private' }
+StFinderPragmaResult >> selectItemIn: aSpTreePresenter [ 
+
+	| pathIndexCollection |
+	pathIndexCollection := aSpTreePresenter pathIndexOf: { self }.
+	aSpTreePresenter 
+		expandPath: pathIndexCollection;	
+		selectPath: pathIndexCollection scrollToSelection: true;
+		clickAtPath: pathIndexCollection
 ]

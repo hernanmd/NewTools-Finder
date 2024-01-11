@@ -85,6 +85,12 @@ StFinderSearch >> setSearchStrategyFrom: aDictionary [
 	searchSelector := aDictionary keyAtValue: true.
 ]
 
+{ #category : 'information' }
+StFinderSearch >> updateDefaultPreview: aSpCodePresenter [ 
+
+	aSpCodePresenter text: 'Search for ' , self name
+]
+
 { #category : 'accessing' }
 StFinderSearch >> validSearchOptions [
 	"Answer a <Collection> of valid search options for the receiver"

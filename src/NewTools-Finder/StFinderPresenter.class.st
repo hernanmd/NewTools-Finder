@@ -205,13 +205,15 @@ StFinderPresenter >> connectPresenters [
 		whenAllPackagesSelectedDo: [ self searchInAllPackages ];
 		whenPackagesSelectedDo: [ self openPackageChooserDialog ].
 
-	resultTree whenSelectedItemChangedDo: [ :newResult |
-		newResult ifNil: [ self resultButtonBar disableAll ] ifNotNil: [
-			newResult forFinderPreview: previewSourcePresenter.
-			self resultButtonBar enableButtonsFor: newResult ] ].
+	resultTree 
+		whenSelectedItemChangedDo: [ :newResult |
+			newResult 
+				ifNil: [ self resultButtonBar disableAll ] 
+				ifNotNil: [
+					newResult forFinderPreview: previewSourcePresenter.
+					self resultButtonBar enableButtonsFor: newResult ] ].
 
 	self connectResultButtons.
-
 	self subscribeToAnnouncements
 ]
 
@@ -230,9 +232,7 @@ StFinderPresenter >> connectResultButtons [
 StFinderPresenter >> connectSearchBar [
 
 	searchBar
-		whenSubmitSearchDo: [ :text |
-			self model searchBy: text.
-			previewSourcePresenter clearContent ];
+		whenSubmitSearchDo: [ :text | self model searchBy: text ];
 		whenSearchModeChangedDo: [ :new | self model currentSearch: new ]
 ]
 
@@ -286,6 +286,16 @@ StFinderPresenter >> initialExtentForWindow [
 ]
 
 { #category : 'initialization' }
+StFinderPresenter >> initializeFocus [
+
+	self focusOrder 
+		add: searchBar;
+		add: resultTree;
+		add: environmentBar;
+		add: previewSourcePresenter.
+]
+
+{ #category : 'initialization' }
 StFinderPresenter >> initializePresenters [
 
 	searchBar := self instantiate: StFinderSearchBar.
@@ -307,7 +317,7 @@ StFinderPresenter >> initializePresenters [
 	resultButtonBar := self instantiate: StFinderResultButtonBar.
 
 	resultStatusBar := self newStatusBar.
-	self focusOrder add: searchBar.
+	self initializeFocus.
 ]
 
 { #category : 'initialization' }
@@ -394,6 +404,13 @@ StFinderPresenter >> searchMode [
 	^ searchBar searchMode
 ]
 
+{ #category : 'accessing' }
+StFinderPresenter >> searchText [
+	"Answer a <String> with the currently typed text in the search bar"
+	
+	^ self searchBar searchText
+]
+
 { #category : 'information' }
 StFinderPresenter >> selectedResult [
 
@@ -456,7 +473,8 @@ StFinderPresenter >> updateEnvironmentStatusFor: packages [
 StFinderPresenter >> updatePreview: aStFinderSearch [ 
 
 	self flag: #toDo.
-	previewSourcePresenter ifNotNil: [ : p | p text: aStFinderSearch previewText ].
+	previewSourcePresenter ifNotNil: [ : p | 
+		self searchMode updateDefaultPreview: p ].
 	"| newPresenter presenterToReplace |
 
 	newPresenter := self instantiate: aStFinderSearch previewPresenter.
@@ -468,14 +486,41 @@ StFinderPresenter >> updatePreview: aStFinderSearch [
 ]
 
 { #category : 'updating - widgets' }
+StFinderPresenter >> updateResultsBehavior [
+	"Private - Callback to control events after a new search has finished"
+	
+	StFinderSettings expandResults
+		ifTrue: [ resultTree expandAll ].
+
+	resultTree roots 
+		ifNotEmpty: [ : items | self updateResultsSelection: items ]
+]
+
+{ #category : 'updating - widgets' }
+StFinderPresenter >> updateResultsSelection: aCollection [
+	"Private - aCollection represents the found items. 
+	Search and select an exact match between the search text in aCollection, if possible. If not found then select the first item.
+	For expansion use the current settings"
+	
+	| itemToSelect |
+	itemToSelect := aCollection
+		                detect: [ :item | item matches: self searchText ]
+		                ifFound: [ :item | item ]
+		                ifNone: [ aCollection first ].
+	resultTree selectItem: itemToSelect.
+	itemToSelect hasChildren 
+		ifFalse: [ ^ self ].
+	itemToSelect selectItemIn: resultTree.
+]
+
+{ #category : 'updating - widgets' }
 StFinderPresenter >> updateResultsWith: results time: time [
 	"Call to update resultTree with results."
 
 	resultTree
 		roots: results;
 		children: [ :result | result children ].
-	StFinderSettings expandResults
-		ifTrue: [ resultTree expandAll ].
+	self updateResultsBehavior.
 	resultStatusBar pushMessage: (self updateStatusBarTextFrom: results time: time)
 ]
 
@@ -493,6 +538,8 @@ StFinderPresenter >> updateStatusBarTextFrom: results time: time [
 	^ String streamContents: [ : stream |
 		stream
 			<< 'Search of ';
+			<< searchBar searchModeName;
+			<< ' for ';
 			<< searchBar searchText surroundedBySingleQuotes;
 			<< ' found ';
 			<< results size asString;

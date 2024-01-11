@@ -81,6 +81,12 @@ StFinderClassResult >> getCompiledMethod [
 		ifFalse: [ self content >> self parent content ]
 ]
 
+{ #category : 'instance creation' }
+StFinderClassResult >> getCompiledMethodFrom: aStFinderSelectorResult [ 
+
+	^ self content >> aStFinderSelectorResult content
+]
+
 { #category : 'as yet unclassified' }
 StFinderClassResult >> hasBrowseAction [
 
@@ -149,6 +155,16 @@ StFinderClassResult >> isClassResult [
 StFinderClassResult >> referencesAction [
 
 	self navigation browseAllUsersOfClassOrTrait: self content
+]
+
+{ #category : 'as yet unclassified' }
+StFinderClassResult >> selectItemIn: aSpTreePresenter [ 
+
+	| pathIndexCollection |
+	pathIndexCollection := aSpTreePresenter pathIndexOf: { self }.
+	aSpTreePresenter 
+		selectPath: pathIndexCollection scrollToSelection: true;
+		clickAtPath: pathIndexCollection
 ]
 
 { #category : 'as yet unclassified' }

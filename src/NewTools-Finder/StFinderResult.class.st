@@ -21,6 +21,7 @@ Class {
 
 { #category : 'instance creation' }
 StFinderResult class >> newFor: aCompiledMethod [
+	"Answer a <Class> matching aCompiledMethod to be represented as result item"
 
 	^ self allSubclasses
 		detect: [ : subclass | subclass matches: aCompiledMethod ]
@@ -100,6 +101,12 @@ StFinderResult >> hasBrowseAction [
 ]
 
 { #category : 'testing' }
+StFinderResult >> hasChildren [
+
+	^ self children notEmpty
+]
+
+{ #category : 'testing' }
 StFinderResult >> hasHierarchyAction [
 
 	^ false
@@ -174,6 +181,13 @@ StFinderResult >> isSelectorResult [
 	^ false
 ]
 
+{ #category : 'testing' }
+StFinderResult >> matches: aString [ 
+	"Answer <true> if the receiver's displayed text match exactly aString"
+	
+	^ self displayString = aString
+]
+
 { #category : 'system tool access' }
 StFinderResult >> navigation [
 	"We should check how to do it via the stApplication but ok for now"
@@ -192,6 +206,14 @@ StFinderResult >> parent [
 StFinderResult >> parent: anObject [
 
 	parent := anObject
+]
+
+{ #category : 'printing' }
+StFinderResult >> printOn: aStream [
+
+	super printOn: aStream.
+	aStream space.
+	self content printOn: aStream.
 ]
 
 { #category : 'action' }

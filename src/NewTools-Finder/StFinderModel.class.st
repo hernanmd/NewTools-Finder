@@ -133,7 +133,7 @@ StFinderModel >> search [
 
 { #category : 'accessing' }
 StFinderModel >> search: aString [ 
-	"Main search callback method. Answer a ..."
+	"Main search callback method. Answer a <Collection> of results"
 
 	^ (currentSearch setSearchStrategyFrom: self searchOptions)
 		search: searchString

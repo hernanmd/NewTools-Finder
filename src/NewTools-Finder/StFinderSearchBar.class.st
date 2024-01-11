@@ -122,6 +122,13 @@ StFinderSearchBar >> searchModeDropList [
 ]
 
 { #category : 'updating - widgets' }
+StFinderSearchBar >> searchModeName [
+	"Answer a <String> representing the currently selected selection mode"
+	
+	^ self searchMode name
+]
+
+{ #category : 'updating - widgets' }
 StFinderSearchBar >> searchModes: aListOfSearches [
 
 	searchModeDropList items: aListOfSearches

@@ -55,9 +55,7 @@ StFinderSelectorResult >> forFinderPreview: aSpCodePresenter [
 StFinderSelectorResult >> getCompiledMethod [
 	"Answer a <CompiledMethod> representing the currently found content"
 
-	^ self parent isPragmaResult 
-		ifFalse: [ self parent content >> self content ]
-		ifTrue: [ self content ]
+	^ self parent getCompiledMethodFrom: self
 ]
 
 { #category : 'testing' }
@@ -132,6 +130,18 @@ StFinderSelectorResult >> inheritanceAction [
 StFinderSelectorResult >> isSelectorResult [
 
 	^ true
+]
+
+{ #category : 'private' }
+StFinderSelectorResult >> selectItemIn: aSpTreePresenter [ 
+
+	| pathIndexCollection selectionPathAtItem |
+	pathIndexCollection := aSpTreePresenter pathIndexOf: { self }.
+	selectionPathAtItem := pathIndexCollection , #(1).
+	aSpTreePresenter 
+		expandPath: pathIndexCollection;
+		selectPath: selectionPathAtItem scrollToSelection: true;
+		clickAtPath: selectionPathAtItem
 ]
 
 { #category : 'action' }
