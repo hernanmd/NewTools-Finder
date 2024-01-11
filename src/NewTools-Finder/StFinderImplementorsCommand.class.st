@@ -1,3 +1,7 @@
+"
+Command to spawn a browser of Implementors on the selected result item in the Finder tool.
+
+"
 Class {
 	#name : 'StFinderImplementorsCommand',
 	#superclass : 'StFinderCommand',

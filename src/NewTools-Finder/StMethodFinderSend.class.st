@@ -184,6 +184,12 @@ StMethodFinderSend >> previewText [
 ]
 
 { #category : 'accessing' }
+StMethodFinderSend >> profile [
+
+	self shouldBeImplemented
+]
+
+{ #category : 'accessing' }
 StMethodFinderSend >> resultIn: expectedResult timeout: anInteger [
 
 	[ [ ^ expectedResult = (self evaluateWithTimeOut: anInteger) ]

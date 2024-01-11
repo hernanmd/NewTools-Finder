@@ -1,3 +1,6 @@
+"
+Abstract class to group behavior for listing related operations for result items.
+"
 Class {
 	#name : 'StFinderListingCommand',
 	#superclass : 'StFinderCommand',

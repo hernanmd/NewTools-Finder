@@ -60,6 +60,10 @@ StFinderPresenter class >> buildExecutionOperationsGroupWith: presenterInstance 
 			forSpecWithIconNamed: StFinderDebugItCommand defaultIconName
 			shortcutKey: StFinderDebugItCommand defaultShortcut) context: presenterInstance);
 
+		register: ((StFinderProfileItCommand
+			forSpecWithIconNamed: StFinderProfileItCommand defaultIconName
+			shortcutKey: StFinderProfileItCommand defaultShortcut) context: presenterInstance);
+			
 		beDisplayedAsGroup;
 		yourself
 ]

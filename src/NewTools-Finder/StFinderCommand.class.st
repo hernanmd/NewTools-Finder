@@ -1,3 +1,8 @@
+"
+Abstract class grouping behavior for Finder tool operations. 
+It is based in the Commander frameworks.
+
+"
 Class {
 	#name : 'StFinderCommand',
 	#superclass : 'CmCommand',

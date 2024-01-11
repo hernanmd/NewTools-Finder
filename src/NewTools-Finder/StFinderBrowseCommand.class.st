@@ -1,3 +1,6 @@
+"
+Command to spawn a browser opened on the selected result item.
+"
 Class {
 	#name : 'StFinderBrowseCommand',
 	#superclass : 'StFinderCommand',

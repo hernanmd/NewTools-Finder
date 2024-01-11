@@ -1,3 +1,8 @@
+"
+Implements global settings for the Finder tool.
+
+See class side for details.
+"
 Class {
 	#name : 'StFinderSettings',
 	#superclass : 'Object',

@@ -1,6 +1,10 @@
+"
+Command to debug a resulting expression from the Examples search mode in the Finder tool
+
+"
 Class {
 	#name : 'StFinderDebugItCommand',
-	#superclass : 'StFinderCommand',
+	#superclass : 'StFinderExecutionCommand',
 	#category : 'NewTools-Finder-Commands',
 	#package : 'NewTools-Finder',
 	#tag : 'Commands'
@@ -21,7 +25,7 @@ StFinderDebugItCommand class >> defaultIconName [
 { #category : 'default' }
 StFinderDebugItCommand class >> defaultName [ 
 
-	^ 'Debug selection'
+	^ 'Debug It'
 ]
 
 { #category : 'initialization' }
@@ -30,16 +34,10 @@ StFinderDebugItCommand class >> defaultShortcut [
 	^ $d meta
 ]
 
-{ #category : 'testing' }
-StFinderDebugItCommand >> canBeExecuted [ 
-
-	^ super canBeExecuted and: [ self selectedItems ~= 0 and: [ self selectedItem isExampleResult ] ]
-]
-
 { #category : 'executing' }
 StFinderDebugItCommand >> execute [
 	"Debug the selected example result"
 
-	self selectedItem debugIt
+	self selectedItem content debug
 
 ]
