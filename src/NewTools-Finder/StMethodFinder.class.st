@@ -17,7 +17,7 @@ Class {
 StMethodFinder >> findMethodsByExampleInput: inputCollection andExpectedResult: expectedResult timeout: anInteger [
 	"Search for methods which giving each elements of input returns the corresponding elements of outputs."
 	
-	^ (self possibleSolutionsForInput: inputCollection) select: [ :send |
+	^ (self possibleSolutionsForInput: inputCollection) asSet select: [ :send |
 		  send 
 			resultIn: (expectedResult evaluateWithTimeOut: anInteger)
 			timeout: anInteger ]

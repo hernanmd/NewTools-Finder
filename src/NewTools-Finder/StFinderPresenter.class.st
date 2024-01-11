@@ -27,18 +27,19 @@ StFinderPresenter class >> buildBrowsingOperationsGroupWith: presenterInstance [
 	^ (CmCommandGroup named: 'BrowseOperationsMenu') asSpecGroup
 		register: ((StFinderBrowseCommand
 			forSpecWithIconNamed: StFinderBrowseCommand defaultIconName
-			shortcutKey: StFinderBrowseCommand defaultShortcut) 				context: presenterInstance);
+			shortcutKey: StFinderBrowseCommand defaultShortcut) context: presenterInstance);
+			
 		register: ((StFinderReferencesCommand
 			forSpecWithIconNamed: StFinderReferencesCommand defaultIconName
-			shortcutKey: StFinderReferencesCommand defaultShortcut) 				context: presenterInstance);
+			shortcutKey: StFinderReferencesCommand defaultShortcut) context: presenterInstance);
+			
 		register: ((StFinderSendersCommand
 			forSpecWithIconNamed: StFinderSendersCommand defaultIconName
-			shortcutKey: StFinderSendersCommand defaultShortcut) 
-				context: presenterInstance);
+			shortcutKey: StFinderSendersCommand defaultShortcut) context: presenterInstance);
+			
 		register: ((StFinderImplementorsCommand
 			forSpecWithIconNamed: StFinderImplementorsCommand defaultIconName
-			shortcutKey: StFinderImplementorsCommand defaultShortcut) 
-				context: presenterInstance);
+			shortcutKey: StFinderImplementorsCommand defaultShortcut) context: presenterInstance);
 		beDisplayedAsGroup;
 		yourself
 ]
@@ -48,6 +49,19 @@ StFinderPresenter class >> buildCommandsGroupWith: presenterInstance forRoot: ro
 
 	rootCommandGroup
 		register: (self buildStFinderContextualGroupWith: presenterInstance)
+]
+
+{ #category : 'commands' }
+StFinderPresenter class >> buildExecutionOperationsGroupWith: presenterInstance [
+
+	^ (CmCommandGroup named: 'ExecutionOperationsMenu') asSpecGroup
+
+		register: ((StFinderDebugItCommand
+			forSpecWithIconNamed: StFinderDebugItCommand defaultIconName
+			shortcutKey: StFinderDebugItCommand defaultShortcut) context: presenterInstance);
+
+		beDisplayedAsGroup;
+		yourself
 ]
 
 { #category : 'commands' }
@@ -90,6 +104,7 @@ StFinderPresenter class >> buildSelectionOperationsGroupWith: presenterInstance 
 StFinderPresenter class >> buildStFinderContextualGroupWith: presenterInstance [
 
 	^ (CmCommandGroup named: 'StFinderSelContextualMenu') asSpecGroup
+		register: (self buildExecutionOperationsGroupWith: presenterInstance);	
 		register: (self buildBrowsingOperationsGroupWith: presenterInstance);
 		register: (self buildListingOperationsGroupWith: presenterInstance);
 		register: (self buildSelectionOperationsGroupWith: presenterInstance);

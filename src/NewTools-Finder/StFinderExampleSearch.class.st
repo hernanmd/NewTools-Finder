@@ -21,7 +21,7 @@ StFinderExampleSearch >> buildResult: aListOfStMethodFinderSend [
 
 		foundResult := StFinderSelectorResult new content: methodSend.
 		results
-			detect: [ :elem | elem content = methodSend ]
+			detect: [ :elem | 	elem content = methodSend ]
 			ifFound: [ :elem | elem addChild: foundResult ]
 			ifNone: [
 				| newResult |

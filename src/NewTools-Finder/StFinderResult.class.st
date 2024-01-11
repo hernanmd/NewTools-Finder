@@ -164,6 +164,12 @@ StFinderResult >> isClassResult [
 ]
 
 { #category : 'testing' }
+StFinderResult >> isExampleResult [
+
+	^ false
+]
+
+{ #category : 'testing' }
 StFinderResult >> isPackageResult [
 
 	^ false

@@ -13,6 +13,15 @@ Class {
 	#tag : 'Search'
 }
 
+{ #category : 'comparing' }
+StMethodFinderSend >> = aStMethodFinderSend [
+
+	^ self species == aStMethodFinderSend species
+		and: [ receiver == aStMethodFinderSend receiver
+		and: [ selector == aStMethodFinderSend selector
+		and: [ arguments = aStMethodFinderSend arguments ] ] ]
+]
+
 { #category : 'accessing' }
 StMethodFinderSend >> children [
 	^ Array empty
@@ -22,6 +31,22 @@ StMethodFinderSend >> children [
 StMethodFinderSend >> copyTo: aWriteStream [ 
 
 	aWriteStream << self selector
+]
+
+{ #category : 'comparing' }
+StMethodFinderSend >> debug [
+
+	| process suspendedContext debugSession |
+	
+	process := [ receiver perform: selector withArguments: arguments ] newProcess.
+	suspendedContext := process suspendedContext.
+	
+	debugSession := (OupsDebugRequest newForContext: suspendedContext)
+		process: process;
+		label: 'debug it';
+		submit;
+		debugSession.
+	3 timesRepeat: [ debugSession stepInto ]
 ]
 
 { #category : 'accessing' }
@@ -104,6 +129,13 @@ StMethodFinderSend >> hasSendersAction [
 StMethodFinderSend >> hasVersionsAction [
 
 	^ false
+]
+
+{ #category : 'comparing' }
+StMethodFinderSend >> hash [
+
+	^ receiver hash bitXor: selector hash
+
 ]
 
 { #category : 'accessing' }

@@ -15,6 +15,12 @@ StFinderExampleResult class >> matches: aCollection [
 	^ false
 ]
 
+{ #category : 'do-its' }
+StFinderExampleResult >> debugIt [
+
+	self content debug.
+]
+
 { #category : 'displaying' }
 StFinderExampleResult >> displayIcon [
 
@@ -37,6 +43,12 @@ StFinderExampleResult >> forFinderPreview: aSpCodePresenter [
 StFinderExampleResult >> getCompiledMethodFrom: aStFinderSelectorResult [ 
 
 	^ self content receiver class lookupSelector: self content selector
+]
+
+{ #category : 'testing' }
+StFinderExampleResult >> isExampleResult [
+
+	^ true
 ]
 
 { #category : 'private' }
