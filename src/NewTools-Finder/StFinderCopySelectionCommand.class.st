@@ -9,7 +9,7 @@ Class {
 { #category : 'default' }
 StFinderCopySelectionCommand class >> defaultDescription [
 
-	^ 'Command copy the selected results'
+	^ 'Copy the selected results'
 ]
 
 { #category : 'initialization' }

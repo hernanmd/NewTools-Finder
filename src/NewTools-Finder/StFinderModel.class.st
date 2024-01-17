@@ -14,7 +14,6 @@ Class {
 	#instVars : [
 		'searchString',
 		'useRegex',
-		'environment',
 		'searchEnvironment',
 		'availableSearches',
 		'currentSearch',
@@ -56,7 +55,7 @@ StFinderModel >> addSearch: aFinderSearch [
 StFinderModel >> availablePackages [
 	"Returns for searching available packages by name."
 
-	^ environment packages
+	^ searchEnvironment packages
 		  collect: [ :package | package name ]
 		  as: OrderedCollection
 ]
@@ -96,8 +95,6 @@ StFinderModel >> initialize [
 		                     collect: [ :search | search new ]
 		                     as: OrderedCollection.
 	currentSearch := availableSearches first.
-
-	environment := RBBrowserEnvironment new.
 	self selectAllPackages
 ]
 
@@ -137,7 +134,7 @@ StFinderModel >> search: aString [
 
 	^ (currentSearch setSearchStrategyFrom: self searchOptions)
 		search: searchString
-		in: environment.
+		in: searchEnvironment.
 
 ]
 
@@ -163,15 +160,15 @@ StFinderModel >> searchEnded [
 
 { #category : 'accessing' }
 StFinderModel >> searchOptions [
-	"Answer a <Dictionary> of searching options"
+	"Answer a <Dictionary> of searching options. This dictionary is set according to the receiver's selected options so their combinatios match a single search selector. At any point only a single entry of this dictionary can be <true>"
 	
 	^ Dictionary new
 		at: #searchByRegexCaseInsensitive:in: put: (useRegex and: [ useCase not ]);
 		at: #searchByRegexCaseSensitive:in: put: (useRegex and: [ useCase]);
-		at: #searchByStringExactSensitiveCase:in: put: (useExact and: [ useCase ]);
-		at: #searchByStringExactInsensitiveCase:in: put: (useExact and: [ useCase not ]);
-		at: #searchByStringSensitiveCase:in: put: (useExact not and: [ useCase ]);
-		at: #searchBySubstring:in: put: (useExact not and: [ useCase not ]);
+		at: #searchByStringExactSensitiveCase:in: put: (useExact and: [ useCase and: [ useRegex not ] ]);
+		at: #searchByStringExactInsensitiveCase:in: put: (useExact and: [ useCase not and: [ useRegex not ] ]);
+		at: #searchByStringSensitiveCase:in: put: (useExact not and: [ useCase and: [ useRegex not ] ]);
+		at: #searchBySubstring:in: put: (useExact not and: [ useCase not and: [ useRegex not ] ]);
 		yourself
 
 ]
@@ -211,10 +208,12 @@ StFinderModel >> searchTypesChanged [
 
 { #category : 'selection' }
 StFinderModel >> selectAllPackages [
-
 	"Selects all packages for searching."
 
-	searchEnvironment := environment forPackages: environment packages
+	| globalEnv |
+	
+	globalEnv := RBBrowserEnvironment new.
+	searchEnvironment := globalEnv forPackages: globalEnv packages
 ]
 
 { #category : 'information' }
@@ -227,10 +226,9 @@ StFinderModel >> selectedPackages [
 
 { #category : 'selection' }
 StFinderModel >> selectedPackagesByName: aCollection [
-
 	"Selects all packages given in aCollection by their names for searching."
 
-	searchEnvironment := environment forPackageNames: aCollection
+	searchEnvironment := RBBrowserEnvironment new forPackageNames: aCollection
 ]
 
 { #category : 'accessing' }

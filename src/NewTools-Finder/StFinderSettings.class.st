@@ -35,7 +35,7 @@ StFinderSettings class >> evaluationTimeoutOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #evaluationTimeout)
 		parent: #finder;
-		default: 50;
+		default: 500;
 		label: 'Evaluation timeout';
 		description: 'Maximum timeout delay for individual calls in Examples search. Expects an integer giving the number of miliseconds';
 		target: self

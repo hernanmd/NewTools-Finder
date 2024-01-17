@@ -45,6 +45,12 @@ StFinderSearchOptions >> activateAll [
 	caseCheckBox enabled: true.
 ]
 
+{ #category : 'accessing' }
+StFinderSearchOptions >> caseCheckBox [
+
+	^ caseCheckBox
+]
+
 { #category : 'initialization' }
 StFinderSearchOptions >> deactivateAll [
 	"Deactivate all the receiver's search options"
@@ -89,6 +95,12 @@ StFinderSearchOptions >> enableRegex [
 	regexpCheckBox enabled: true.
 ]
 
+{ #category : 'accessing' }
+StFinderSearchOptions >> exactCheckBox [
+
+	^ exactCheckBox
+]
+
 { #category : 'initialization' }
 StFinderSearchOptions >> initializePresenters [
 
@@ -106,6 +118,12 @@ StFinderSearchOptions >> initializePresenters [
 		label: 'Case';
 		help: 'Use match case';
 		yourself
+]
+
+{ #category : 'accessing' }
+StFinderSearchOptions >> regexpCheckBox [
+
+	^ regexpCheckBox
 ]
 
 { #category : 'events' }

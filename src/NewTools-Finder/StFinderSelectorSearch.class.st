@@ -64,7 +64,7 @@ StFinderSelectorSearch >> searchByRegexCaseSensitive: aString in: aRBBrowserEnvi
 	regex := aString asRegex.
 	^ self 
 		buildResult: (self 
-			searchMethods: [ :method | regex search: method name ] 
+			searchMethods: [ :method | regex search: method selector ] 
 			in: aRBBrowserEnvironment)
 ]
 
