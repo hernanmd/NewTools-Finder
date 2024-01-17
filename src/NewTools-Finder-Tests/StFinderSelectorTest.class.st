@@ -14,6 +14,43 @@ StFinderSelectorTest >> setUp [
 ]
 
 { #category : 'tests' }
+StFinderSelectorTest >> testSearchForExactStringMissing [
+
+	| results searchPattern |
+	
+	self openInstance.
+	searchPattern := 'abcSelector'.
+	presenter searchOptions exactCheckBox click.
+	presenter searchBar searchInput text: searchPattern.
+	
+	presenterModel 
+		searchString: searchPattern;
+		search.
+	results := presenter resultTree roots.
+	self assertEmpty: results
+
+]
+
+{ #category : 'tests' }
+StFinderSelectorTest >> testSearchForExactStringSucess [
+
+	| results searchPattern |
+	
+	self openInstance.
+	searchPattern := 'abcSelectorSearchForRegexpStartWithoutCase'.
+	presenter searchOptions exactCheckBox click.
+	presenter searchBar searchInput text: searchPattern.
+	
+	presenterModel 
+		searchString: searchPattern;
+		search.
+	results := presenter resultTree roots.
+	self 
+		assert: results size
+		equals: 1.
+]
+
+{ #category : 'tests' }
 StFinderSelectorTest >> testSearchForRegexpStartWithCaseInsensitive [
 
 	| results searchPattern |

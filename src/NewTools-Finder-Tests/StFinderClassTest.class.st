@@ -19,7 +19,7 @@ StFinderClassTest >> testSearchForRegexpStartWithCaseInsensitive [
 	| results searchPattern |
 	
 	self openInstance.
-	searchPattern := '^StFinderM.*'.
+	searchPattern := '^StFinderMockA'.
 	presenter searchOptions regexpCheckBox click.
 	presenter searchBar searchInput text: searchPattern.
 	
@@ -29,8 +29,8 @@ StFinderClassTest >> testSearchForRegexpStartWithCaseInsensitive [
 	results := presenter resultTree roots.
 
 	self 
-		assertCollection: (results collect: #content)
-		hasSameElements: #(#StFinderMock).
+		assertCollection: (results collect: [ : r | r content name ])
+		hasSameElements: #(#StFinderMockA #StFinderMocka).
 ]
 
 { #category : 'tests' }
@@ -39,7 +39,7 @@ StFinderClassTest >> testSearchForRegexpStartWithCaseSensitive [
 	| results searchPattern |
 	
 	self openInstance.
-	searchPattern := '^StFinderM.*'.
+	searchPattern := '^StFinderMockA'.
 	presenter searchOptions regexpCheckBox click.
 	presenter searchOptions caseCheckBox click.
 	presenter searchBar searchInput text: searchPattern.
@@ -60,6 +60,7 @@ StFinderClassTest >> testSubstringSearchNonExistingSelector [
 	
 	presenterModel 
 		currentSearch: StFinderSelectorSearch new;	
-		search: 'NonExistingClass'.
+		searchString: 'NonExistingClass';
+		search.
 	self assertEmpty: presenter resultTree roots
 ]

@@ -228,7 +228,7 @@ StFinderModel >> selectedPackages [
 StFinderModel >> selectedPackagesByName: aCollection [
 	"Selects all packages given in aCollection by their names for searching."
 
-	searchEnvironment := searchEnvironment forPackageNames: aCollection
+	searchEnvironment := RBBrowserEnvironment new forPackageNames: aCollection
 ]
 
 { #category : 'accessing' }

@@ -90,7 +90,7 @@ StFinderClassSearch >> searchBySubstring: aString in: anEnvironment [
 		in: anEnvironment)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'searching' }
 StFinderClassSearch >> searchClasses: aSelectBlock in: anEnvironment [
 
 	^ OrderedCollection streamContents: [ :stream |
