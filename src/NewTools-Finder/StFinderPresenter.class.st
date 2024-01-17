@@ -423,6 +423,13 @@ StFinderPresenter >> searchMode [
 	^ searchBar searchMode
 ]
 
+{ #category : 'initialization' }
+StFinderPresenter >> searchOptions [
+	"Answer the receiver's <StFinderSearchOptions>"
+
+	^ searchOptions
+]
+
 { #category : 'accessing' }
 StFinderPresenter >> searchText [
 	"Answer a <String> with the currently typed text in the search bar"
