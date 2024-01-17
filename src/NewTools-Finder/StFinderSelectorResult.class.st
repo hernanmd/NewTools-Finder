@@ -113,7 +113,7 @@ StFinderSelectorResult >> hierarchyAction [
 { #category : 'action' }
 StFinderSelectorResult >> implementersAction [
 
-	self navigation browseAllImplementorsOf: content
+	self navigation browseAllImplementorsOf: self selectorToBrowse.
 ]
 
 { #category : 'action' }
@@ -145,12 +145,22 @@ StFinderSelectorResult >> selectItemIn: aSpTreePresenter [
 ]
 
 { #category : 'action' }
+StFinderSelectorResult >> selectorToBrowse [
+
+	| selectorToBrowse |
+
+	^ selectorToBrowse := content isSymbol
+		ifFalse: [ content selectorForFinder ]
+		ifTrue: [ content ].
+]
+
+{ #category : 'action' }
 StFinderSelectorResult >> sendersAction [
 
 	self navigation
-		browseSendersOf: content
-		name: 'Senders of ' , content asString
-		autoSelect: content asString
+		browseSendersOf: self selectorToBrowse
+		name: 'Senders of ' , self selectorToBrowse asString
+		autoSelect: self selectorToBrowse asString
 ]
 
 { #category : 'action' }

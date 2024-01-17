@@ -199,6 +199,13 @@ StMethodFinderSend >> resultIn: expectedResult timeout: anInteger [
 ]
 
 { #category : 'accessing' }
+StMethodFinderSend >> selectorForFinder [
+	"Answer a <Symbol> with the receiver's selector for the Finder tool"
+
+	^ self selector
+]
+
+{ #category : 'accessing' }
 StMethodFinderSend >> sendersAction [
 
 	self flag: #review. "StFinderSelectorResult>>sendersAction"
