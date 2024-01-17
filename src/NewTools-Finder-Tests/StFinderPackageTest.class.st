@@ -1,63 +1,63 @@
 Class {
-	#name : 'StFinderClassTest',
+	#name : 'StFinderPackageTest',
 	#superclass : 'StFinderTest',
 	#category : 'NewTools-Finder-Tests',
 	#package : 'NewTools-Finder-Tests'
 }
 
 { #category : 'running' }
-StFinderClassTest >> setUp [
+StFinderPackageTest >> setUp [
 
 	super setUp.
-	presenterModel currentSearch: StFinderClassSearch new
+	presenterModel currentSearch: StFinderPackageSearch new
 	
 ]
 
 { #category : 'tests' }
-StFinderClassTest >> testSearchForExactCaseInsensitiveStringMissing [
+StFinderPackageTest >> testSearchForExactCaseInsensitiveStringMissing [
 
 	self openInstance.
 	self setExactAndCaseInsensitive.
-	self doSearch: 'stfindermock'.
+	self doSearch: 'newtools-finder'.
 
 	self assertEmpty: presenter resultTree roots.
 
 ]
 
 { #category : 'tests' }
-StFinderClassTest >> testSearchForExactCaseInsensitiveStringSucess [
+StFinderPackageTest >> testSearchForExactCaseInsensitiveStringSucess [
 
 	| results |
 	
 	self openInstance.
 	self setExactAndCaseInsensitive.
-	self doSearch: 'stfindermocka'.
+	self doSearch: 'newtools-finder-tests'.
 
 	results := presenter resultTree roots.
 	self 
 		assertCollection: (results collect: [ : r | r content name ])
-		hasSameElements: #(#StFinderMockA #StFinderMocka).
+		hasSameElements: #('NewTools-Finder-Tests').
 ]
 
 { #category : 'tests' }
-StFinderClassTest >> testSearchForExactCaseSensitiveStringMissing [
+StFinderPackageTest >> testSearchForExactCaseSensitiveStringMissing [
 
 	self openInstance.
 	self setExactAndCaseSensitive.
-	self doSearch: 'StFinderMock'.
+	self doSearch: 'NewTools-Finder'.	
 
 	self assertEmpty: presenter resultTree roots.
 
 ]
 
 { #category : 'tests' }
-StFinderClassTest >> testSearchForExactCaseSensitiveStringSucess [
+StFinderPackageTest >> testSearchForExactCaseSensitiveStringSucess [
 
 	| results |
 	
 	self openInstance.
 	self setExactAndCaseSensitive.
-	self doSearch: 'StFinderMockA'.
+	self doSearch: 'NewTools-Finder-Tests'.
 
 	results := presenter resultTree roots.
 	self 
@@ -66,28 +66,28 @@ StFinderClassTest >> testSearchForExactCaseSensitiveStringSucess [
 ]
 
 { #category : 'tests' }
-StFinderClassTest >> testSearchForRegexpStartWithCaseInsensitive [
+StFinderPackageTest >> testSearchForRegexpStartWithCaseInsensitive [
 
 	| results |
 	
 	self openInstance.
 	self setRegexAndCaseInsensitive.
-	self doSearch: '^StFinderMockA'.	
+	self doSearch: '^newTools-finder'.	
 	results := presenter resultTree roots.
 
 	self 
 		assertCollection: (results collect: [ : r | r content name ])
-		hasSameElements: #(#StFinderMockA #StFinderMocka).
+		hasSameElements: #(#'NewTools-Finder-Tests').
 ]
 
 { #category : 'tests' }
-StFinderClassTest >> testSearchForRegexpStartWithCaseSensitive [
+StFinderPackageTest >> testSearchForRegexpStartWithCaseSensitive [
 
 	| results |
 	
 	self openInstance.
 	self setRegexAndCaseSensitive.
-	self doSearch: '^StFinderMockA'.
+	self doSearch: '^NewTools-Finder'.	
 	results := presenter resultTree roots.
 	self 
 		assert: results size
@@ -95,10 +95,10 @@ StFinderClassTest >> testSearchForRegexpStartWithCaseSensitive [
 ]
 
 { #category : 'tests' }
-StFinderClassTest >> testSubstringSearchNonExistingClass [
+StFinderPackageTest >> testSubstringSearchNonExistingPackage [
 
 	self openInstance.
-	self doSearch: 'NonExistingClass'.
-
+	
+	self doSearch: 'NonExistingPackage'.
 	self assertEmpty: presenter resultTree roots
 ]

@@ -14,36 +14,51 @@ StFinderSelectorTest >> setUp [
 ]
 
 { #category : 'tests' }
-StFinderSelectorTest >> testSearchForExactStringMissing [
+StFinderSelectorTest >> testSearchForExactCaseInsensitiveStringMissing [
 
-	| results searchPattern |
-	
 	self openInstance.
-	searchPattern := 'abcSelector'.
-	presenter searchOptions exactCheckBox click.
-	presenter searchBar searchInput text: searchPattern.
-	
-	presenterModel 
-		searchString: searchPattern;
-		search.
-	results := presenter resultTree roots.
-	self assertEmpty: results
+	self setExactAndCaseInsensitive.
+	self doSearch: 'abcSelector'.
+
+	self assertEmpty: presenter resultTree roots.
 
 ]
 
 { #category : 'tests' }
-StFinderSelectorTest >> testSearchForExactStringSucess [
+StFinderSelectorTest >> testSearchForExactCaseInsensitiveStringSucess [
 
-	| results searchPattern |
+	| results |
 	
 	self openInstance.
-	searchPattern := 'abcSelectorSearchForRegexpStartWithoutCase'.
-	presenter searchOptions exactCheckBox click.
-	presenter searchBar searchInput text: searchPattern.
+	self setExactAndCaseInsensitive.
+	self doSearch: 'abcSelectorSearchForRegexpStartWithoutCase'.
+
+	results := presenter resultTree roots.
+	self 
+		assert: results size
+		equals: 1.
+]
+
+{ #category : 'tests' }
+StFinderSelectorTest >> testSearchForExactCaseSensitiveStringMissing [
+
+	self openInstance.
+	self setExactAndCaseSensitive.
+	self doSearch: 'abcselectorSearchForRegexpStartWithoutCase'.	
+
+	self assertEmpty: presenter resultTree roots.
+
+]
+
+{ #category : 'tests' }
+StFinderSelectorTest >> testSearchForExactCaseSensitiveStringSucess [
+
+	| results |
 	
-	presenterModel 
-		searchString: searchPattern;
-		search.
+	self openInstance.
+	self setExactAndCaseSensitive.
+	self doSearch: 'abcSelectorSearchForRegexpStartWithoutCase'.
+
 	results := presenter resultTree roots.
 	self 
 		assert: results size
@@ -53,16 +68,11 @@ StFinderSelectorTest >> testSearchForExactStringSucess [
 { #category : 'tests' }
 StFinderSelectorTest >> testSearchForRegexpStartWithCaseInsensitive [
 
-	| results searchPattern |
+	| results |
 	
 	self openInstance.
-	searchPattern := '^aBC.*'.
-	presenter searchOptions regexpCheckBox click.
-	presenter searchBar searchInput text: searchPattern.
-	
-	presenterModel 
-		searchString: searchPattern;
-		search.
+	self setRegexAndCaseInsensitive.
+	self doSearch: '^aBC.*'.
 	results := presenter resultTree roots.
 
 	self 
@@ -73,24 +83,19 @@ StFinderSelectorTest >> testSearchForRegexpStartWithCaseInsensitive [
 { #category : 'tests' }
 StFinderSelectorTest >> testSearchForRegexpStartWithCaseSensitive [
 
-	| results searchPattern |
+	| results |
 	
 	self openInstance.
-	searchPattern := '^aBC.*'.
-	presenter searchOptions regexpCheckBox click.
-	presenter searchOptions caseCheckBox click.
-	presenter searchBar searchInput text: searchPattern.
-	
-	presenterModel 
-		searchString: searchPattern;
-		search.
+	self setRegexAndCaseSensitive.
+	self doSearch: '^aBC.*'.
+
 	results := presenter resultTree roots.
 	self 
 		assert: results size
 		equals: 1.
 ]
 
-{ #category : 'tests' }
+{ #category : 'as yet unclassified' }
 StFinderSelectorTest >> testSubstringSearchNonExistingSelector [
 
 	self openInstance.
