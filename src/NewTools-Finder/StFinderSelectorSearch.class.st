@@ -52,7 +52,7 @@ StFinderSelectorSearch >> searchByRegexCaseInsensitive: aString in: anEnvironmen
 	regex := aString asRegexIgnoringCase.
 	^ self buildResult: 
 		(self 
-			searchMethods: [ :method | regex search: method selector asString ] 
+			searchMethods: [ :method | regex search: method selector ] 
 			in: anEnvironment)
 ]
 
