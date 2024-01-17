@@ -66,6 +66,34 @@ StFinderSelectorTest >> testSearchForExactCaseSensitiveStringSucess [
 ]
 
 { #category : 'tests' }
+StFinderSelectorTest >> testSearchForRegexpEndsWithCaseInsensitive [
+
+	| results |
+	
+	self setRegexAndCaseInsensitive.
+	self doSearch: '.*EndsWithAbc$'.
+	results := presenter resultTree roots.
+
+	self 
+		assertCollection: (results collect: #content)
+		hasSameElements: #(#selectorSearchForRegexpWithCaseEndsWithAbc #selectorSearchForRegexpWithoutCaseEndsWithabc).
+]
+
+{ #category : 'tests' }
+StFinderSelectorTest >> testSearchForRegexpEndsWithCaseSensitive [
+
+	| results |
+	
+	self setRegexAndCaseSensitive.
+	self doSearch: '.*EndsWithAbc$'.
+	results := presenter resultTree roots.
+
+	self 
+		assertCollection: (results collect: #content)
+		hasSameElements: #(#selectorSearchForRegexpWithCaseEndsWithAbc).
+]
+
+{ #category : 'tests' }
 StFinderSelectorTest >> testSearchForRegexpStartWithCaseInsensitive [
 
 	| results |
