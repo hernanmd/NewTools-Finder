@@ -31,6 +31,13 @@ StFinderSettings class >> evaluationTimeout [
 ]
 
 { #category : 'system settings' }
+StFinderSettings class >> evaluationTimeout: aNumber [
+	"Modified by settings Finder: self classSide >> #evaluationTimeoutOn:"
+
+	EvaluationTimeout := aNumber
+]
+
+{ #category : 'system settings' }
 StFinderSettings class >> evaluationTimeoutOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #evaluationTimeout)
